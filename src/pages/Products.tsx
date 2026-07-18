@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { Search, SlidersHorizontal, ChevronRight, ChevronLeft, Star } from 'lucide-react'
+import { Search, SlidersHorizontal } from 'lucide-react'
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/product/ProductCard'
 
@@ -45,7 +45,7 @@ export const Products: React.FC = () => {
         .filter(Boolean)
     )
     if (types.size === 0) return ['Mawar', 'Baby\'s breath', 'Krisan', 'Tulip', 'Carnation']
-    return Array.from(types)
+    return Array.from(types) as string[]
   }, [products])
 
   // Toggle flower type selection
