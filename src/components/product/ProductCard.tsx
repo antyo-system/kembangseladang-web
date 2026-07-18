@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Plus, Star } from 'lucide-react'
+import { Star } from 'lucide-react'
 import { useCartStore } from '../../store/useCartStore'
 import type { Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
-import { Button } from '../ui/Button'
 
 interface ProductCardProps {
   product: Product
@@ -30,14 +29,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const productImage = product.image || FALLBACK_BOUQUET_IMAGES[imageIndex]
 
-  // Mock review details
-  const mockRating = 5.0
-  const mockReviewCount = 12 + (imageIndex * 7)
 
   return (
-    <div className="group bg-white rounded-3xl border border-charcoal-100 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-full">
+    <div className="group bg-white rounded-3xl border border-charcoal-100 p-4 hover:shadow-lg transition-all duration-300 flex flex-col h-full items-center text-center space-y-3">
       {/* Product Image Panel */}
-      <Link to={`/products/${product.id}`} className="block relative aspect-[4/5] overflow-hidden bg-cream-50 select-none">
+      <Link to={`/products/${product.id}`} className="block relative aspect-square w-full overflow-hidden rounded-2xl bg-cream-50 select-none">
         <img
           src={productImage}
           alt={product.name}
@@ -47,60 +43,46 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         
         {/* Badges */}
         {product.is_arranged && (
-          <span className="absolute top-4 left-4 bg-charcoal-900/90 backdrop-blur-sm text-white text-[9px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">
+          <span className="absolute top-3 left-3 bg-charcoal-900/90 text-white text-[8px] font-bold tracking-wider uppercase px-2 py-0.5 rounded">
             Best Seller
           </span>
         )}
       </Link>
 
       {/* Content */}
-      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-        <div>
-          <div className="text-[10px] font-bold text-gold-500 tracking-widest uppercase mb-1">
-            {product.flower_type || 'Bunga Potong'}
-          </div>
-          
+      <div className="flex-1 flex flex-col justify-between w-full space-y-2">
+        <div className="space-y-1">
           <Link to={`/products/${product.id}`} className="block">
             <h3 className="font-display text-sm font-bold text-charcoal-900 group-hover:text-primary-600 transition-colors line-clamp-1 leading-snug">
               {product.name}
             </h3>
           </Link>
           
+          <div className="text-xs font-semibold text-charcoal-600">
+            {formatRupiah(product.base_price)}
+          </div>
+          
           {/* Mock Rating Stars */}
-          <div className="flex items-center space-x-1 mt-1 text-gold-400">
+          <div className="flex items-center justify-center space-x-1 text-gold-400">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3 h-3 fill-current" />
+                <Star key={i} className="w-3 h-3.5 fill-current" />
               ))}
             </div>
-            <span className="text-[10px] text-charcoal-400 font-medium pt-0.5">
-              {mockRating.toFixed(1)} ({mockReviewCount})
-            </span>
           </div>
-
-          <p className="text-xs text-charcoal-500 line-clamp-2 mt-2 leading-relaxed">
-            {product.description || 'Tidak ada deskripsi produk.'}
-          </p>
         </div>
 
         {/* Action Panel */}
-        <div className="flex items-center justify-between pt-3 border-t border-charcoal-50">
-          <span className="font-display text-sm font-bold text-charcoal-900">
-            {formatRupiah(product.base_price)}
-          </span>
-          
-          <Button
-            variant="ghost"
-            size="sm"
+        <div className="pt-2">
+          <button
             onClick={(e) => {
               e.preventDefault()
               addItem(product)
             }}
-            className="rounded-lg p-2 hover:bg-primary-50 text-charcoal-700 hover:text-primary-600 cursor-pointer"
-            aria-label="Tambah ke keranjang"
+            className="w-full border border-charcoal-900 text-charcoal-900 hover:bg-charcoal-900 hover:text-white rounded-full py-2 text-[10px] font-bold tracking-widest transition-all duration-300 uppercase cursor-pointer"
           >
-            <Plus className="w-4 h-4" />
-          </Button>
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>

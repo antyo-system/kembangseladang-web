@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
           
           {/* Hero Left Content */}
           <div className="space-y-6 text-center lg:text-left">
-            <div className="inline-flex items-center space-x-2 bg-primary-50 border border-primary-100 px-3.5 py-1.5 rounded-full text-primary-700 text-xs font-semibold">
+            <div className="inline-flex items-center space-x-2 bg-charcoal-50 border border-charcoal-200 px-3.5 py-1.5 rounded-full text-charcoal-700 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Florist Premium Tangerang Selatan</span>
             </div>
@@ -38,7 +38,7 @@ export const Home: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 pt-4">
               <Link to="/products">
-                <Button variant="primary" size="lg" className="w-full sm:w-auto shadow-lg shadow-primary-500/15">
+                <Button variant="primary" size="lg" className="w-full sm:w-auto shadow-md active:scale-98">
                   <span>Lihat Katalog</span>
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -53,8 +53,7 @@ export const Home: React.FC = () => {
 
           {/* Hero Right Image (WOW Graphic element) */}
           <div className="relative mx-auto max-w-md lg:max-w-none w-full">
-            <div className="absolute -inset-2 bg-gradient-to-r from-primary-400 to-gold-400 rounded-[2.5rem] blur-xl opacity-30 animate-pulse" />
-            <div className="relative bg-white p-4 rounded-[2.5rem] border border-primary-100 shadow-xl overflow-hidden aspect-[4/5]">
+            <div className="relative bg-white p-4 rounded-[2.5rem] border border-charcoal-100 shadow-sm overflow-hidden aspect-[4/5]">
               <img
                 src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&q=80&w=800"
                 alt="Beautiful Flower Arrangement"
@@ -63,7 +62,7 @@ export const Home: React.FC = () => {
             </div>
             
             {/* Float badge */}
-            <div className="absolute -bottom-4 -left-4 glass p-4 rounded-2xl border border-primary-100 shadow-lg flex items-center space-x-3 animate-float max-w-[200px]">
+            <div className="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-charcoal-100 shadow-sm flex items-center space-x-3 animate-float max-w-[200px]">
               <span className="text-2xl">🌹</span>
               <div>
                 <p className="font-bold text-xs text-charcoal-900">100% Segar</p>
@@ -79,8 +78,8 @@ export const Home: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          <div className="glass p-8 rounded-3xl border border-primary-100/50 shadow-sm flex flex-col items-center text-center space-y-4">
-            <div className="p-4 bg-primary-50 text-primary-600 rounded-2xl">
+          <div className="bg-white p-8 rounded-3xl border border-charcoal-100 shadow-sm flex flex-col items-center text-center space-y-4">
+            <div className="p-4 bg-charcoal-50 text-charcoal-700 rounded-2xl">
               <Sparkles className="w-6 h-6" />
             </div>
             <h3 className="font-display text-lg font-bold text-charcoal-900">Desain Premium</h3>
@@ -89,8 +88,8 @@ export const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="glass p-8 rounded-3xl border border-primary-100/50 shadow-sm flex flex-col items-center text-center space-y-4">
-            <div className="p-4 bg-primary-50 text-primary-600 rounded-2xl">
+          <div className="bg-white p-8 rounded-3xl border border-charcoal-100 shadow-sm flex flex-col items-center text-center space-y-4">
+            <div className="p-4 bg-charcoal-50 text-charcoal-700 rounded-2xl">
               <Truck className="w-6 h-6" />
             </div>
             <h3 className="font-display text-lg font-bold text-charcoal-900">Pengiriman Cepat</h3>
@@ -99,8 +98,8 @@ export const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="glass p-8 rounded-3xl border border-primary-100/50 shadow-sm flex flex-col items-center text-center space-y-4">
-            <div className="p-4 bg-primary-50 text-primary-600 rounded-2xl">
+          <div className="bg-white p-8 rounded-3xl border border-charcoal-100 shadow-sm flex flex-col items-center text-center space-y-4">
+            <div className="p-4 bg-charcoal-50 text-charcoal-700 rounded-2xl">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <h3 className="font-display text-lg font-bold text-charcoal-900">Layanan Personal</h3>

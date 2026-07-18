@@ -44,47 +44,49 @@ export const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-3 items-center">
+        <div className="flex justify-between items-center w-full">
           
           {/* Left: Navigation links (Desktop) */}
-          <nav className="hidden md:flex space-x-6 items-center">
-            {leftLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-[11px] font-bold tracking-widest transition-colors duration-200 hover:text-primary-600 ${
-                  isActive(link.path) ? 'text-primary-600' : 'text-charcoal-700'
-                }`}
+          <div className="w-1/3 flex justify-start">
+            <nav className="hidden md:flex gap-6 items-center">
+              {leftLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`text-[11px] font-bold tracking-widest transition-colors duration-200 hover:text-primary-600 ${
+                    isActive(link.path) ? 'text-primary-600' : 'text-charcoal-700'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+            
+            {/* Mobile hamburger menu (Left side on mobile) */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 rounded-xl hover:bg-primary-50 text-charcoal-800 transition-all cursor-pointer"
               >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
-          
-          {/* Mobile hamburger menu (Left side on mobile) */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-xl hover:bg-primary-50 text-charcoal-800 transition-all cursor-pointer"
-            >
-              {isOpen ? <X className="w-5.5 h-5.5" /> : <Menu className="w-5.5 h-5.5" />}
-            </button>
+                {isOpen ? <X className="w-5.5 h-5.5" /> : <Menu className="w-5.5 h-5.5" />}
+              </button>
+            </div>
           </div>
 
           {/* Center: Brand Logo */}
-          <div className="flex justify-center">
-            <Link to="/" className="text-center select-none group">
-              <span className="font-display text-xl sm:text-2xl font-bold tracking-widest text-charcoal-900 group-hover:text-primary-600 transition-colors uppercase">
+          <div className="w-1/3 flex justify-center text-center">
+            <Link to="/" className="inline-block select-none group">
+              <span className="font-display text-lg sm:text-2xl font-bold tracking-widest text-charcoal-900 group-hover:text-primary-600 transition-colors uppercase whitespace-nowrap">
                 Kembang Seladang
               </span>
-              <span className="text-[9px] block tracking-[0.25em] text-gold-500 font-bold uppercase mt-0.5">
+              <span className="text-[8px] sm:text-[9px] block tracking-[0.25em] text-gold-500 font-bold uppercase mt-0.5 whitespace-nowrap">
                 Flower & Bouquet Expertise
               </span>
             </Link>
           </div>
 
           {/* Right: Actions (User, Search, Cart/Chart) */}
-          <div className="flex items-center justify-end space-x-2 sm:space-x-4">
+          <div className="w-1/3 flex items-center justify-end gap-1.5 sm:gap-3">
             {/* Search */}
             <button
               className="p-2 rounded-full hover:bg-primary-50 text-charcoal-700 hover:text-primary-600 transition-colors cursor-pointer"

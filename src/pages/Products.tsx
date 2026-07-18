@@ -3,68 +3,49 @@ import { Search, SlidersHorizontal } from 'lucide-react'
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/product/ProductCard'
 
-// Category Slide mockup data with images like Three Bouquets screenshot
+// Mock categories matching mockup exactly
 const CATEGORY_SLIDES = [
-  { name: 'Bouquet', image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Bloom Boxes', image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Vase', image: 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Cake & Gift', image: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Standing Flower', image: 'https://images.unsplash.com/photo-1546842931-886c185b4c8c?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Flower Board', image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=400' }
+  { name: 'BOUQUET', image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&q=80&w=400' },
+  { name: 'BLOOM BOX', image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&q=80&w=400' },
+  { name: 'VASE', image: 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&q=80&w=400' },
+  { name: 'CAKE', image: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=400' }
 ]
 
 const FILTER_COLORS = [
-  { name: 'Biru', class: 'bg-blue-600' },
-  { name: 'Hijau', class: 'bg-emerald-600' },
-  { name: 'Oranye', class: 'bg-orange-500' },
-  { name: 'Abu-Abu', class: 'bg-gray-200' },
-  { name: 'Merah Muda', class: 'bg-pink-300' },
-  { name: 'Ungu', class: 'bg-purple-600' },
-  { name: 'Merah', class: 'bg-red-600' },
-  { name: 'Putih', class: 'bg-white border border-charcoal-200' },
-  { name: 'Kuning', class: 'bg-yellow-400' }
+  { name: 'White', class: 'bg-white border border-charcoal-350' },
+  { name: 'Red', class: 'bg-red-650' },
+  { name: 'Yellow', class: 'bg-yellow-450' },
+  { name: 'Green', class: 'bg-emerald-650' },
+  { name: 'Blue', class: 'bg-blue-650' },
+  { name: 'Multi', class: 'bg-gradient-to-tr from-pink-400 via-yellow-400 to-teal-400' }
 ]
+
+const MOCK_FLOWER_TYPES = ['Rose', 'Lily', 'Tulip', 'Sunflower', 'Hydrangea']
 
 export const Products: React.FC = () => {
   const { data: products, isLoading } = useProducts()
   
-  // State variables for searching/filtering
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('Semua')
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
   const [selectedFlowerTypes, setSelectedFlowerTypes] = useState<string[]>([])
-  const [maxPrice, setMaxPrice] = useState<number>(2000000)
+  const [maxPrice, setMaxPrice] = useState<number>(2500000)
   const [sortBy, setSortBy] = useState('terbaru')
 
-  // Available flower types for checkbox list (from actual products + default mock ones if empty)
-  const flowerTypes = useMemo(() => {
-    if (!products) return ['Mawar', 'Baby\'s breath', 'Krisan', 'Tulip', 'Carnation']
-    const types = new Set(
-      products
-        .map((p) => p.flower_type?.trim())
-        .filter(Boolean)
-    )
-    if (types.size === 0) return ['Mawar', 'Baby\'s breath', 'Krisan', 'Tulip', 'Carnation']
-    return Array.from(types) as string[]
-  }, [products])
-
-  // Toggle flower type selection
   const handleFlowerTypeToggle = (type: string) => {
     setSelectedFlowerTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     )
   }
 
-  // Clear all filters
   const handleClearFilters = () => {
     setSearchQuery('')
     setSelectedCategory('Semua')
     setSelectedColor(null)
     setSelectedFlowerTypes([])
-    setMaxPrice(2000000)
+    setMaxPrice(2500000)
   }
 
-  // Filter & Sort core logic
   const filteredProducts = useMemo(() => {
     if (!products) return []
 
@@ -85,9 +66,19 @@ export const Products: React.FC = () => {
 
         const matchesFlowerType =
           selectedFlowerTypes.length === 0 ||
-          selectedFlowerTypes.some((type) =>
-            (product.flower_type || '').toLowerCase().includes(type.toLowerCase())
-          )
+          selectedFlowerTypes.some((type) => {
+            // map 'Rose' check to database 'mawar', etc
+            const typeMapping: { [key: string]: string } = {
+              'rose': 'mawar',
+              'lily': 'lily',
+              'tulip': 'tulip',
+              'sunflower': 'matahari',
+              'hydrangea': 'hortensia'
+            }
+            const term = typeMapping[type.toLowerCase()] || type.toLowerCase()
+            return (product.flower_type || '').toLowerCase().includes(term) ||
+                   product.name.toLowerCase().includes(term)
+          })
 
         const matchesPrice = product.base_price <= maxPrice
 
@@ -101,38 +92,48 @@ export const Products: React.FC = () => {
   }, [products, searchQuery, selectedCategory, selectedColor, selectedFlowerTypes, maxPrice, sortBy])
 
   return (
-    <div className="pt-28 pb-20 space-y-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+    <div className="pt-28 pb-20 space-y-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
       
-      {/* Category Horizontal Slider Section (mocked after treeboquet/threebouquets category layout) */}
-      <section className="relative group">
-        <h2 className="text-center font-display text-2xl font-bold text-charcoal-900 tracking-wider uppercase mb-6">
-          Kategori Pilihan
-        </h2>
-        
-        {/* Slider row */}
-        <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory">
+      {/* Category Horizontal Slider Section (mocked exactly after screenshot) */}
+      <section className="bg-white rounded-[2rem] border border-charcoal-100 p-6 sm:p-8">
+        <div className="flex justify-center gap-8 sm:gap-14 overflow-x-auto pb-2 scrollbar-none">
+          {/* Option to show all */}
+          <button
+            onClick={() => setSelectedCategory('Semua')}
+            className="flex flex-col items-center space-y-3 cursor-pointer group"
+          >
+            <div className={`w-18 h-18 sm:w-22 sm:h-22 rounded-full overflow-hidden border p-0.5 transition-all duration-300 flex items-center justify-center bg-charcoal-50 ${
+              selectedCategory === 'Semua' ? 'border-charcoal-900 scale-105 shadow-sm' : 'border-charcoal-100 group-hover:scale-102'
+            }`}>
+              <span className="text-xl">💐</span>
+            </div>
+            <span className={`text-[10px] sm:text-[11px] font-bold tracking-widest uppercase transition-colors ${
+              selectedCategory === 'Semua' ? 'text-charcoal-900 border-b border-charcoal-900 pb-0.5' : 'text-charcoal-500 group-hover:text-charcoal-900'
+            }`}>
+              ALL PRODUCTS
+            </span>
+          </button>
+
           {CATEGORY_SLIDES.map((slide) => (
             <button
               key={slide.name}
               onClick={() => setSelectedCategory(slide.name)}
-              className={`flex-shrink-0 w-44 sm:w-56 snap-start bg-white border rounded-3xl overflow-hidden group/slide hover:shadow-md transition-all duration-300 relative text-left cursor-pointer ${
-                selectedCategory === slide.name ? 'border-primary-600 shadow-sm ring-1 ring-primary-600' : 'border-charcoal-100'
-              }`}
+              className="flex flex-col items-center space-y-3 cursor-pointer group"
             >
-              {/* Slide image */}
-              <div className="aspect-[4/3] w-full overflow-hidden bg-cream-50 select-none">
+              <div className={`w-18 h-18 sm:w-22 sm:h-22 rounded-full overflow-hidden border p-0.5 transition-all duration-300 ${
+                selectedCategory === slide.name ? 'border-charcoal-900 scale-105 shadow-sm' : 'border-charcoal-100 group-hover:scale-102'
+              }`}>
                 <img
                   src={slide.image}
                   alt={slide.name}
-                  className="w-full h-full object-cover group-hover/slide:scale-102 transition-transform duration-500"
+                  className="w-full h-full object-cover rounded-full"
                 />
               </div>
-              {/* Name footer */}
-              <div className="p-3 text-center bg-white border-t border-charcoal-100">
-                <span className="text-xs font-bold tracking-wider text-charcoal-800 uppercase">
-                  {slide.name}
-                </span>
-              </div>
+              <span className={`text-[10px] sm:text-[11px] font-bold tracking-widest uppercase transition-colors ${
+                selectedCategory === slide.name ? 'text-charcoal-900 border-b border-charcoal-900 pb-0.5' : 'text-charcoal-500 group-hover:text-charcoal-900'
+              }`}>
+                {slide.name}
+              </span>
             </button>
           ))}
         </div>
@@ -154,50 +155,54 @@ export const Products: React.FC = () => {
         <div className="flex items-center justify-between gap-4">
           <button
             onClick={handleClearFilters}
-            className="text-xs font-semibold text-charcoal-500 hover:text-primary-600 transition-colors cursor-pointer"
+            className="text-xs font-bold tracking-wider text-charcoal-500 hover:text-primary-600 transition-colors uppercase cursor-pointer"
           >
-            Reset Filter
+            Clear Filters
           </button>
           <div className="flex items-center space-x-2 bg-charcoal-50 px-3 py-2 rounded-2xl border border-charcoal-100">
             <SlidersHorizontal className="w-3.5 h-3.5 text-charcoal-500" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-transparent text-xs font-bold text-charcoal-700 focus:outline-none cursor-pointer pr-2"
+              className="bg-transparent text-xs font-bold text-charcoal-700 focus:outline-none cursor-pointer pr-2 uppercase"
             >
               <option value="terbaru">TERBARU</option>
-              <option value="termurah">HARGA: TERMURAH</option>
-              <option value="termahal">HARGA: TERMAHAL</option>
+              <option value="termurah">Harga: Termurah</option>
+              <option value="termahal">Harga: Termahal</option>
             </select>
           </div>
         </div>
       </div>
 
-      {/* Split Layout: Left sidebar filter, Right product grid */}
+      {/* Split Layout: Left sidebar filters, Right product grid */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         
         {/* Left column sidebar filters */}
-        <aside className="space-y-8 bg-white p-6 rounded-3xl border border-charcoal-100 lg:sticky lg:top-28">
+        <aside className="space-y-6 bg-white p-6 rounded-3xl border border-charcoal-100 lg:sticky lg:top-28">
           
+          <h2 className="text-sm font-bold tracking-widest uppercase text-charcoal-900 border-b border-charcoal-100 pb-3">
+            FILTERS
+          </h2>
+
           {/* Price Range Filter */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold tracking-widest uppercase text-charcoal-800">
-              Filter Harga
+            <h3 className="text-xs font-bold text-charcoal-850 uppercase">
+              Price
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <input
                 type="range"
-                min="50000"
-                max="2000000"
+                min="250000"
+                max="2500000"
                 step="50000"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full accent-primary-600 cursor-pointer h-1.5 bg-charcoal-100 rounded-lg"
+                className="w-full accent-charcoal-900 cursor-pointer h-1 bg-charcoal-100 rounded-lg"
               />
-              <div className="flex justify-between items-center text-xs font-semibold text-charcoal-600">
-                <span>Rp50rb</span>
-                <span className="text-primary-700 bg-primary-50 px-2 py-0.5 rounded">
-                  Max: Rp{(maxPrice / 1000).toLocaleString('id-ID')}rb
+              <div className="flex justify-between items-center text-[10px] font-bold text-charcoal-500">
+                <span>Rp 250k</span>
+                <span className="text-charcoal-900">
+                  Rp {(maxPrice / 1000).toLocaleString('id-ID')}k+
                 </span>
               </div>
             </div>
@@ -207,20 +212,21 @@ export const Products: React.FC = () => {
 
           {/* Color Palette Selector */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold tracking-widest uppercase text-charcoal-800">
-              Warna Bunga
+            <h3 className="text-xs font-bold text-charcoal-850 uppercase">
+              Color
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-3">
               {FILTER_COLORS.map((color) => (
                 <button
                   key={color.name}
                   onClick={() => setSelectedColor(selectedColor === color.name ? null : color.name)}
-                  className={`w-7 h-7 rounded-full transition-all duration-300 relative ${color.class} ${
-                    selectedColor === color.name ? 'scale-110 ring-2 ring-primary-500 ring-offset-2' : 'hover:scale-105'
+                  className={`flex items-center space-x-2 text-[10px] font-bold text-charcoal-600 cursor-pointer hover:text-charcoal-900 transition-all ${
+                    selectedColor === color.name ? 'scale-102 font-extrabold text-charcoal-900' : ''
                   }`}
-                  title={color.name}
-                  aria-label={`Pilih warna ${color.name}`}
-                />
+                >
+                  <span className={`w-3.5 h-3.5 rounded-full shrink-0 ${color.class}`} />
+                  <span>{color.name}</span>
+                </button>
               ))}
             </div>
           </div>
@@ -229,19 +235,19 @@ export const Products: React.FC = () => {
 
           {/* Flower Type Checkbox List */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold tracking-widest uppercase text-charcoal-800">
-              Jenis Bunga
+            <h3 className="text-xs font-bold text-charcoal-850 uppercase">
+              Flower Type
             </h3>
-            <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-              {flowerTypes.map((type) => (
-                <label key={type} className="flex items-center space-x-3 text-xs text-charcoal-600 hover:text-charcoal-900 cursor-pointer">
+            <div className="space-y-3">
+              {MOCK_FLOWER_TYPES.map((type) => (
+                <label key={type} className="flex items-center space-x-3 text-[10px] font-bold text-charcoal-600 hover:text-charcoal-900 cursor-pointer uppercase tracking-wider">
                   <input
                     type="checkbox"
                     checked={selectedFlowerTypes.includes(type)}
                     onChange={() => handleFlowerTypeToggle(type)}
-                    className="w-4 h-4 rounded text-primary-600 accent-primary-600 border-charcoal-300 focus:ring-primary-500 cursor-pointer"
+                    className="w-4 h-4 rounded text-charcoal-900 accent-charcoal-900 border-charcoal-300 focus:ring-charcoal-950 cursor-pointer"
                   />
-                  <span className="capitalize">{type}</span>
+                  <span>{type}</span>
                 </label>
               ))}
             </div>
@@ -260,7 +266,7 @@ export const Products: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="space-y-4">
-                  <div className="aspect-[4/5] skeleton rounded-3xl" />
+                  <div className="aspect-square skeleton rounded-3xl" />
                   <div className="h-4 skeleton w-2/3" />
                   <div className="h-4 skeleton w-1/3" />
                 </div>
