@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Sparkles, Send, ShieldCheck, Truck } from 'lucide-react'
+import { ArrowRight, Send } from 'lucide-react'
 import { useProducts } from '../hooks/useProducts'
 import { useArticles } from '../hooks/useArticles'
 import { ProductCard } from '../components/product/ProductCard'
@@ -15,102 +15,8 @@ export const Home: React.FC = () => {
   const latestArticles = articles?.slice(0, 3) || []
 
   return (
-    <div className="space-y-24 pb-20">
+    <div className="pt-24 space-y-16 pb-20">
       
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-gradient-hero">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Hero Left Content */}
-          <div className="space-y-6 text-center lg:text-left">
-            <div className="inline-flex items-center space-x-2 bg-charcoal-50 border border-charcoal-200 px-3.5 py-1.5 rounded-full text-charcoal-700 text-xs font-semibold">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Florist Premium Tangerang Selatan</span>
-            </div>
-            
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-charcoal-900 leading-tight">
-              Sentuhan Kasih Lewat Keindahan <span className="text-primary-600 block">Bunga Segar</span>
-            </h1>
-            
-            <p className="text-sm sm:text-base text-charcoal-600 max-w-lg mx-auto lg:mx-0 leading-relaxed text-balance">
-              Kembang Seladang merangkai mawar segar pilihan dan aneka bunga premium untuk setiap pesan cinta, ucapan selamat, hingga dekorasi momen istimewa Anda.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 pt-4">
-              <Link to="/products">
-                <Button variant="primary" size="lg" className="w-full sm:w-auto shadow-md active:scale-98">
-                  <span>Lihat Katalog</span>
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-              <Link to="/about">
-                <Button variant="cream" size="lg" className="w-full sm:w-auto">
-                  Tentang Kami
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Hero Right Image (WOW Graphic element) */}
-          <div className="relative mx-auto max-w-md lg:max-w-none w-full">
-            <div className="relative bg-white p-4 rounded-[2.5rem] border border-charcoal-100 shadow-sm overflow-hidden aspect-[4/5]">
-              <img
-                src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&q=80&w=800"
-                alt="Beautiful Flower Arrangement"
-                className="w-full h-full object-cover rounded-[2rem] hover:scale-102 transition-transform duration-700"
-              />
-            </div>
-            
-            {/* Float badge */}
-            <div className="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-charcoal-100 shadow-sm flex items-center space-x-3 animate-float max-w-[200px]">
-              <span className="text-2xl">🌹</span>
-              <div>
-                <p className="font-bold text-xs text-charcoal-900">100% Segar</p>
-                <p className="text-[10px] text-charcoal-500">Dipetik & dirangkai hari ini</p>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-      </section>
-
-      {/* Trust Badges */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          <div className="bg-white p-8 rounded-3xl border border-charcoal-100 shadow-sm flex flex-col items-center text-center space-y-4">
-            <div className="p-4 bg-charcoal-50 text-charcoal-700 rounded-2xl">
-              <Sparkles className="w-6 h-6" />
-            </div>
-            <h3 className="font-display text-lg font-bold text-charcoal-900">Desain Premium</h3>
-            <p className="text-xs text-charcoal-500 text-balance leading-relaxed">
-              Setiap buket dirangkai oleh florist berpengalaman dengan detail keindahan yang khas dan personal.
-            </p>
-          </div>
-
-          <div className="bg-white p-8 rounded-3xl border border-charcoal-100 shadow-sm flex flex-col items-center text-center space-y-4">
-            <div className="p-4 bg-charcoal-50 text-charcoal-700 rounded-2xl">
-              <Truck className="w-6 h-6" />
-            </div>
-            <h3 className="font-display text-lg font-bold text-charcoal-900">Pengiriman Cepat</h3>
-            <p className="text-xs text-charcoal-500 text-balance leading-relaxed">
-              Layanan kurir khusus menjamin rangkaian bunga sampai ke tangan penerima dalam kondisi prima.
-            </p>
-          </div>
-
-          <div className="bg-white p-8 rounded-3xl border border-charcoal-100 shadow-sm flex flex-col items-center text-center space-y-4">
-            <div className="p-4 bg-charcoal-50 text-charcoal-700 rounded-2xl">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <h3 className="font-display text-lg font-bold text-charcoal-900">Layanan Personal</h3>
-            <p className="text-xs text-charcoal-500 text-balance leading-relaxed">
-              Konsultasi gratis, konfirmasi foto sebelum kirim, dan update rute via WhatsApp.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
       {/* Featured Products */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 text-center sm:text-left">

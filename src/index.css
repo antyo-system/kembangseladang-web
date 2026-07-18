@@ -2,7 +2,7 @@
 
 /* ===== Design Tokens ===== */
 @theme {
-  --font-display: 'Playfair Display', serif;
+  --font-display: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
 
   --color-primary-50: #fdf2f8;
