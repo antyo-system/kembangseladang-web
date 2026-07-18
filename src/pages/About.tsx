@@ -3,7 +3,7 @@ import { Sparkles, Calendar, Heart, ShieldCheck } from 'lucide-react'
 
 export const About: React.FC = () => {
   return (
-    <div className="pt-28 pb-20 space-y-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-10 sm:pt-12 pb-20 space-y-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       {/* Intro Banner */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

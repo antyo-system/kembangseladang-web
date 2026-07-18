@@ -30,7 +30,7 @@ export const Articles: React.FC = () => {
   }, [articles, searchQuery, selectedCategory])
 
   return (
-    <div className="pt-28 pb-20 space-y-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-10 sm:pt-12 pb-20 space-y-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       {/* Header Info */}
       <div className="text-center space-y-4 max-w-xl mx-auto">

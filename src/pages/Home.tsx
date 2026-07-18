@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
   const latestArticles = articles?.slice(0, 3) || []
 
   return (
-    <div className="pt-24 space-y-16 pb-20">
+    <div className="pt-10 sm:pt-12 space-y-16 pb-20">
       
       {/* Featured Products */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -37,10 +37,10 @@ export const Home: React.FC = () => {
         </div>
 
         {productsLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="space-y-4">
-                <div className="aspect-square skeleton rounded-3xl" />
+              <div key={i} className="space-y-3">
+                <div className="aspect-square skeleton rounded-none" />
                 <div className="h-4 skeleton w-2/3" />
                 <div className="h-4 skeleton w-1/3" />
               </div>
@@ -51,7 +51,7 @@ export const Home: React.FC = () => {
             Katalog bunga sedang dimuat. Silakan chat kami via WhatsApp untuk order cepat.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

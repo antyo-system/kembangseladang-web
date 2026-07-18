@@ -35,7 +35,7 @@ export const ProductDetail: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-pulse">
+      <div className="pt-10 sm:pt-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-pulse">
         <div className="h-6 bg-cream-200 w-24 rounded-lg" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="aspect-square bg-cream-200 rounded-[2rem]" />
@@ -51,7 +51,7 @@ export const ProductDetail: React.FC = () => {
 
   if (isError || !product) {
     return (
-      <div className="pt-32 pb-20 text-center space-y-4 max-w-md mx-auto px-4">
+      <div className="pt-16 pb-20 text-center space-y-4 max-w-md mx-auto px-4">
         <p className="font-display text-xl font-bold text-charcoal-800">
           Produk Tidak Ditemukan
         </p>
@@ -66,7 +66,7 @@ export const ProductDetail: React.FC = () => {
   }
 
   return (
-    <div className="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="pt-10 sm:pt-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       
       {/* Back Button / Navigation */}
       <div>

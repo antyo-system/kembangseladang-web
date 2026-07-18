@@ -86,7 +86,7 @@ export const ArticleDetail: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="pt-28 pb-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-pulse">
+      <div className="pt-10 sm:pt-12 pb-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-pulse">
         <div className="h-6 bg-cream-200 w-20 rounded-lg" />
         <div className="h-10 bg-cream-200 w-3/4 rounded-lg" />
         <div className="aspect-[16/8] bg-cream-200 rounded-[2rem]" />
@@ -101,7 +101,7 @@ export const ArticleDetail: React.FC = () => {
 
   if (isError || !article) {
     return (
-      <div className="pt-32 pb-20 text-center space-y-4 max-w-md mx-auto px-4">
+      <div className="pt-16 pb-20 text-center space-y-4 max-w-md mx-auto px-4">
         <p className="font-display text-xl font-bold text-charcoal-800">
           Artikel Tidak Ditemukan
         </p>
@@ -120,7 +120,7 @@ export const ArticleDetail: React.FC = () => {
     : new Date(article.created_at)
 
   return (
-    <div className="pt-28 pb-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="pt-10 sm:pt-12 pb-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       
       {/* Back Button */}
       <div>

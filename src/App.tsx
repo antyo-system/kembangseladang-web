@@ -4,7 +4,6 @@ import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { WhatsAppFAB } from './components/layout/WhatsAppFAB'
 import { CartDrawer } from './components/cart/CartDrawer'
-import { Home } from './pages/Home'
 import { Products } from './pages/Products'
 import { ProductDetail } from './pages/ProductDetail'
 import { Articles } from './pages/Articles'
@@ -26,7 +25,7 @@ export const App: React.FC = () => {
       {/* Main Pages Outlet */}
       <main className="flex-grow">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Products />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/articles" element={<Articles />} />
