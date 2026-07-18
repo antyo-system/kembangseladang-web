@@ -19,7 +19,7 @@ export const App: React.FC = () => {
   const handleCartClose = () => setIsCartOpen(false)
 
   return (
-    <div className="flex flex-col min-h-screen bg-cream-50">
+    <div className="flex flex-col min-h-screen bg-white">
       {/* Header Layout */}
       <Header onCartOpen={handleCartOpen} />
 
