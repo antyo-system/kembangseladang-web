@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Calendar, ArrowRight } from 'lucide-react'
-import { Article } from '../../hooks/useArticles'
+import type { Article } from '../../hooks/useArticles'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Plus } from 'lucide-react'
-import { Product, useCartStore } from '../../store/useCartStore'
+import { useCartStore } from '../../store/useCartStore'
+import type { Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
 import { Button } from '../ui/Button'
 

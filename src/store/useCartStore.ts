@@ -13,6 +13,7 @@ export interface Product {
   unit?: string
   is_arranged?: boolean
   image?: string // From database, might be null/empty
+  created_at?: string
 }
 
 export interface CartItem {

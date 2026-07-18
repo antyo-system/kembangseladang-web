@@ -1,4 +1,4 @@
-import { CartItem } from '../store/useCartStore'
+import type { CartItem } from '../store/useCartStore'
 import { formatRupiah } from './formatCurrency'
 
 const WHATSAPP_NUMBER = '6287772636627' // Priska

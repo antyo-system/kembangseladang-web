@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
-import { Product } from '../store/useCartStore'
+import type { Product } from '../store/useCartStore'
 
 export function useProducts() {
   return useQuery({
