@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ShoppingBag, Search, User, Menu, X } from 'lucide-react'
+import { ShoppingCart, Search, User, Menu, X } from 'lucide-react'
 import { useCartStore } from '../../store/useCartStore'
 
 interface HeaderProps {
@@ -27,9 +27,8 @@ export const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
 
   const leftLinks = [
     { name: 'HOME', path: '/' },
-    { name: 'ARTICLE', path: '/articles' },
+    { name: 'ARTICLES', path: '/articles' },
     { name: 'ABOUT', path: '/about' },
-    { name: 'CONTACT', path: '/contact' },
   ]
 
   const isActive = (path: string) => {
@@ -43,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
         isScrolled ? 'py-3 shadow-sm' : 'py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex justify-between items-center w-full">
           
           {/* Left: Navigation links (Desktop) */}
@@ -76,17 +75,18 @@ export const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
           {/* Center: Brand Logo */}
           <div className="w-1/3 flex justify-center text-center">
             <Link to="/" className="inline-block select-none group">
-              <span className="font-display text-lg sm:text-2xl font-bold tracking-widest text-charcoal-900 group-hover:text-primary-600 transition-colors uppercase whitespace-nowrap">
-                Kembang Seladang
-              </span>
-              <span className="text-[8px] sm:text-[9px] block tracking-[0.25em] text-gold-500 font-bold uppercase mt-0.5 whitespace-nowrap">
-                Flower & Bouquet Expertise
+              <span className="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal-900 group-hover:text-primary-600 transition-colors whitespace-nowrap flex items-center justify-center">
+                <span>Kembang</span>
+                <svg className="w-5 h-5 text-charcoal-900 fill-current mx-1 -mt-0.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 12c-1.5-1.5-3.5-1.8-4-4 0 2 1.5 3.5 4 4zm0 0c1.5-1.5 3.5-1.8 4-4 0 2-1.5 3.5-4 4zm0 0c0-2.5.5-5 .5-5s-1 2.5-.5 5z" />
+                </svg>
+                <span>Seladang</span>
               </span>
             </Link>
           </div>
 
           {/* Right: Actions (User, Search, Cart/Chart) */}
-          <div className="w-1/3 flex items-center justify-end gap-1.5 sm:gap-3">
+          <div className="w-1/3 flex items-center justify-end gap-1 sm:gap-2">
             {/* Search */}
             <button
               className="p-2 rounded-full hover:bg-primary-50 text-charcoal-700 hover:text-primary-600 transition-colors cursor-pointer"
@@ -110,9 +110,9 @@ export const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
               className="relative p-2 rounded-full hover:bg-primary-50 text-charcoal-700 hover:text-primary-600 transition-colors cursor-pointer"
               aria-label="Keranjang"
             >
-              <ShoppingBag className="w-4.5 h-4.5" />
-              {totalItems > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-primary-600 text-white text-[9px] font-bold w-4.5 h-4.5 flex items-center justify-center rounded-full border border-white">
+              <ShoppingCart className="w-4.5 h-4.5" />
+              {totalItems >= 0 && (
+                <span className="absolute -top-0.5 -right-0.5 bg-charcoal-900 text-white text-[8px] font-bold w-4.5 h-4.5 flex items-center justify-center rounded-full">
                   {totalItems}
                 </span>
               )}
