@@ -8,7 +8,7 @@ const CATEGORY_SLIDES = [
     value: 'bunga-potong-segar',
     label: 'Bunga Potong Segar',
     description: 'Tangkai fresh untuk custom dan dekorasi.',
-    image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=700',
+    image: '/images/categories/bunga-potong-segar.jpg',
     terms: [
       'bunga potong',
       'bunga segar',
@@ -30,21 +30,21 @@ const CATEGORY_SLIDES = [
     value: 'buket-bunga',
     label: 'Buket Bunga',
     description: 'Hadiah cantik untuk momen spesial.',
-    image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&q=80&w=700',
+    image: '/images/categories/buket-bunga.jpg',
     terms: ['buket', 'bouquet', 'hand bouquet', 'bunga tangan'],
   },
   {
     value: 'rangkaian-meja',
     label: 'Rangkaian Meja',
     description: 'Sentuhan elegan untuk meja dan ruangan.',
-    image: 'https://images.unsplash.com/photo-1546842931-886c185b4c8c?auto=format&fit=crop&q=80&w=700',
+    image: '/images/categories/rangkaian-meja.jpg',
     terms: ['rangkaian meja', 'table', 'centerpiece', 'meja', 'vas', 'vase', 'bloom box'],
   },
   {
     value: 'standing-flower',
     label: 'Standing Flower',
     description: 'Ucapan besar untuk acara dan peresmian.',
-    image: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=700',
+    image: '/images/categories/standing-flower.jpg',
     terms: ['standing', 'standing flower', 'papan bunga', 'grand opening', 'duka cita', 'congratulations'],
   },
 ]
