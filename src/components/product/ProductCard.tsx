@@ -6,6 +6,7 @@ import type { Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
 import { getProductDiscountPercentage, getProductOriginalPrice } from '../../utils/productPricing'
 import { formatSoldCount, getProductSoldCount } from '../../utils/productSales'
+import { getProductRating } from '../../utils/productRatings'
 
 interface ProductCardProps {
   product: Product
@@ -31,10 +32,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const originalPrice = getProductOriginalPrice(product)
   const discountPercentage = getProductDiscountPercentage(product)
   const soldCount = getProductSoldCount(product)
-
+  const { rating } = getProductRating(product.id)
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden border border-charcoal-100 bg-white transition-colors duration-200 hover:border-charcoal-300">
+    <article className="group flex h-full flex-col overflow-hidden border border-charcoal-100 bg-white transition-all duration-300 hover:border-primary-300 hover:shadow-md rounded-md">
       <Link
         to={`/products/${product.id}`}
         className="relative block aspect-square w-full overflow-hidden bg-cream-50 select-none"
@@ -42,52 +43,65 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <img
           src={productImage}
           alt={product.name}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           loading="lazy"
         />
         
-        {discountPercentage > 0 ? (
-          <span className="absolute left-2 top-2 bg-primary-100 px-2 py-1 text-[9px] font-bold uppercase tracking-widest text-charcoal-900">
-            Sale
-          </span>
-        ) : product.is_arranged && (
-          <span className="absolute left-2 top-2 bg-charcoal-900 px-2 py-1 text-[9px] font-bold uppercase tracking-widest text-white">
-            Terlaris
-          </span>
+        {/* Discount Badge Shopee style - Yellow flag at top right */}
+        {discountPercentage > 0 && (
+          <div className="absolute right-0 top-0 bg-[#ffd124] text-[#ee4d2d] px-1.5 py-1 text-[11px] font-extrabold rounded-bl-sm z-10 shadow-sm leading-none">
+            -{discountPercentage}%
+          </div>
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col justify-between gap-3 p-3">
-        <Link to={`/products/${product.id}`} className="block">
-          <h3 className="line-clamp-2 min-h-[2.35rem] text-sm font-semibold leading-snug text-charcoal-900 transition-colors group-hover:text-primary-600">
-            {product.name}
-          </h3>
-        </Link>
+      <div className="flex flex-1 flex-col justify-between gap-2 p-3">
+        <div className="flex flex-col gap-1">
+          <Link to={`/products/${product.id}`} className="block">
+            <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-charcoal-900 transition-colors group-hover:text-primary-600">
+              {product.name}
+            </h3>
+          </Link>
 
-        <div className="flex items-end justify-between gap-2">
-          <div className="min-w-0 space-y-1">
+          {/* Shopee-style thin bordered promotion tag */}
+          <div className="flex flex-wrap gap-1">
+            <span className="border border-primary-200 bg-primary-50 px-1.5 py-0.5 text-[9px] font-semibold text-primary-700 rounded-sm leading-none">
+              Garansi Segar
+            </span>
+            <span className="border border-gold-300 bg-cream-50 px-1.5 py-0.5 text-[9px] font-semibold text-gold-600 rounded-sm leading-none">
+              Free Card
+            </span>
+          </div>
+
+          {/* Sold Count Row */}
+          <div className="flex items-center gap-1.5 text-[11px] text-charcoal-500 select-none mt-0.5">
+            <span className="text-charcoal-600">
+              {soldCount > 0 ? `${formatSoldCount(soldCount)} terjual` : ''}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-end justify-between gap-2 pt-1 border-t border-dashed border-charcoal-100">
+          <div className="min-w-0">
             {discountPercentage > 0 && (
-              <span className="inline-flex border border-primary-600 bg-primary-600 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
-                Hemat {discountPercentage}%
-              </span>
-            )}
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] font-medium uppercase tracking-wide text-charcoal-400">
-              <span>Mulai dari</span>
-              {soldCount > 0 && (
-                <span className="font-semibold normal-case tracking-normal text-charcoal-500">
-                  {formatSoldCount(soldCount)} terjual
+              <div className="mb-0.5">
+                <span className="inline-flex border border-primary-100 bg-primary-50 px-1 py-0.5 text-[9px] font-extrabold uppercase tracking-wide text-primary-600 rounded-sm">
+                  Hemat {discountPercentage}%
                 </span>
-              )}
-            </div>
+              </div>
+            )}
+            
             <div className="flex flex-col gap-0.5">
-              <p className="whitespace-nowrap text-[13px] font-bold text-charcoal-900 sm:text-sm">
-                {formatRupiah(product.base_price)}
-              </p>
-              {originalPrice && (
-                <p className="whitespace-nowrap text-[11px] font-semibold text-charcoal-400 line-through">
-                  {formatRupiah(originalPrice)}
-                </p>
-              )}
+              <div className="flex flex-wrap items-baseline gap-x-1.5">
+                <span className="text-base font-extrabold text-primary-600 whitespace-nowrap">
+                  {formatRupiah(product.base_price)}
+                </span>
+                {originalPrice && (
+                  <span className="text-[11px] font-semibold text-charcoal-400 line-through whitespace-nowrap">
+                    {formatRupiah(originalPrice)}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
@@ -97,11 +111,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               e.preventDefault()
               addItem(product)
             }}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-charcoal-900 text-charcoal-900 transition-colors hover:bg-charcoal-900 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-primary-600 bg-white text-primary-600 shadow-sm transition-all hover:bg-primary-600 hover:text-white hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
             aria-label={`Tambah ${product.name} ke keranjang`}
             title="Tambah ke keranjang"
           >
-            <Plus className="h-4 w-4" strokeWidth={2} />
+            <Plus className="h-4 w-4" strokeWidth={2.5} />
           </button>
         </div>
       </div>
