@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Flower2, ShoppingCart, Search, User, Menu, X } from 'lucide-react'
+import { ShoppingCart, Search, User, Menu, X } from 'lucide-react'
 import { useCartStore } from '../../store/useCartStore'
 
 interface HeaderProps {
@@ -65,9 +65,8 @@ export const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
             className="inline-flex items-center justify-center whitespace-nowrap font-serif text-base font-semibold leading-none tracking-normal text-charcoal-900 transition-colors hover:text-primary-600 sm:text-xl"
             aria-label="Kembang Seladang"
           >
-            <span>Kembang</span>
-            <Flower2 className="mx-1 h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
-            <span>Seladang</span>
+            <img src="/logo.png" alt="Logo Kembang Seladang" className="mr-2 h-7 w-7 object-contain sm:h-8 sm:w-8" />
+            <span>Kembang Seladang</span>
           </Link>
         </div>
 
