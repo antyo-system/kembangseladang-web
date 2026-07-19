@@ -183,8 +183,16 @@ export const Products: React.FC = () => {
           )
 
         const matchesPrice = product.base_price <= maxPrice
+        const matchesLive = product.is_live !== false
 
-        return matchesSearch && matchesCategory && matchesColor && matchesFlowerType && matchesPrice
+        return (
+          matchesSearch &&
+          matchesCategory &&
+          matchesColor &&
+          matchesFlowerType &&
+          matchesPrice &&
+          matchesLive
+        )
       })
       .sort((a, b) => {
         if (sortBy === 'termurah') return a.base_price - b.base_price

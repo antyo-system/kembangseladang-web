@@ -11,7 +11,7 @@ export const Home: React.FC = () => {
   const { data: products, isLoading: productsLoading } = useProducts()
   const { data: articles, isLoading: articlesLoading } = useArticles()
 
-  const featuredProducts = products?.slice(0, 4) || []
+  const featuredProducts = (products || []).filter((p) => p.is_live !== false).slice(0, 4)
   const latestArticles = articles?.slice(0, 3) || []
 
   return (

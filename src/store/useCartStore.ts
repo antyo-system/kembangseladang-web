@@ -16,6 +16,7 @@ export interface Product {
   unit?: string
   is_arranged?: boolean
   image?: string // From database, might be null/empty
+  is_live?: boolean
   created_at?: string
 }
 
