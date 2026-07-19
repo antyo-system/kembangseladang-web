@@ -4,6 +4,8 @@ import { Plus } from 'lucide-react'
 import { useCartStore } from '../../store/useCartStore'
 import type { Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
+import { getProductDiscountPercentage, getProductOriginalPrice } from '../../utils/productPricing'
+import { formatSoldCount, getProductSoldCount } from '../../utils/productSales'
 
 interface ProductCardProps {
   product: Product
@@ -26,6 +28,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   ) % FALLBACK_BOUQUET_IMAGES.length
 
   const productImage = product.image || FALLBACK_BOUQUET_IMAGES[imageIndex]
+  const originalPrice = getProductOriginalPrice(product)
+  const discountPercentage = getProductDiscountPercentage(product)
+  const soldCount = getProductSoldCount(product)
 
 
   return (
@@ -41,7 +46,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           loading="lazy"
         />
         
-        {product.is_arranged && (
+        {discountPercentage > 0 ? (
+          <span className="absolute left-2 top-2 bg-primary-100 px-2 py-1 text-[9px] font-bold uppercase tracking-widest text-charcoal-900">
+            Sale
+          </span>
+        ) : product.is_arranged && (
           <span className="absolute left-2 top-2 bg-charcoal-900 px-2 py-1 text-[9px] font-bold uppercase tracking-widest text-white">
             Terlaris
           </span>
@@ -56,13 +65,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </Link>
 
         <div className="flex items-end justify-between gap-2">
-          <div className="min-w-0">
-            <p className="text-[10px] font-medium uppercase tracking-wide text-charcoal-400">
-              Mulai dari
-            </p>
-            <p className="whitespace-nowrap text-[13px] font-bold text-charcoal-900 sm:text-sm">
-              {formatRupiah(product.base_price)}
-            </p>
+          <div className="min-w-0 space-y-1">
+            {discountPercentage > 0 && (
+              <span className="inline-flex border border-primary-600 bg-primary-600 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
+                Hemat {discountPercentage}%
+              </span>
+            )}
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] font-medium uppercase tracking-wide text-charcoal-400">
+              <span>Mulai dari</span>
+              {soldCount > 0 && (
+                <span className="font-semibold normal-case tracking-normal text-charcoal-500">
+                  {formatSoldCount(soldCount)} terjual
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <p className="whitespace-nowrap text-[13px] font-bold text-charcoal-900 sm:text-sm">
+                {formatRupiah(product.base_price)}
+              </p>
+              {originalPrice && (
+                <p className="whitespace-nowrap text-[11px] font-semibold text-charcoal-400 line-through">
+                  {formatRupiah(originalPrice)}
+                </p>
+              )}
+            </div>
           </div>
 
           <button

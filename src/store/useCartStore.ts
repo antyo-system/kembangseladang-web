@@ -1,11 +1,14 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { getProductPrice } from '../utils/productPricing'
 
 export interface Product {
   id: string
   code: string
   name: string
   base_price: number
+  original_price?: number | null
+  sold_count?: number | null
   description: string
   flower_type?: string
   color?: string
@@ -74,7 +77,7 @@ export const useCartStore = create<CartStore>()(
       
       getTotalPrice: () => {
         return get().items.reduce(
-          (total, item) => total + item.product.base_price * item.quantity,
+          (total, item) => total + getProductPrice(item.product) * item.quantity,
           0
         )
       },

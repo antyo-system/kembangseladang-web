@@ -5,6 +5,8 @@ import { useProduct } from '../hooks/useProducts'
 import { useCartStore } from '../store/useCartStore'
 import { formatRupiah } from '../utils/formatCurrency'
 import { buildCartMessage, buildWhatsAppUrl } from '../utils/whatsapp'
+import { getProductDiscountPercentage, getProductOriginalPrice } from '../utils/productPricing'
+import { formatSoldCount, getProductSoldCount } from '../utils/productSales'
 import { Button } from '../components/ui/Button'
 
 export const ProductDetail: React.FC = () => {
@@ -65,6 +67,10 @@ export const ProductDetail: React.FC = () => {
     )
   }
 
+  const originalPrice = getProductOriginalPrice(product)
+  const discountPercentage = getProductDiscountPercentage(product)
+  const soldCount = getProductSoldCount(product)
+
   return (
     <div className="pt-10 sm:pt-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       
@@ -96,7 +102,11 @@ export const ProductDetail: React.FC = () => {
             </div>
           )}
           
-          {product.is_arranged && (
+          {discountPercentage > 0 ? (
+            <span className="absolute top-8 left-8 bg-primary-100 text-charcoal-900 text-[10px] font-bold tracking-wide uppercase px-3 py-1.5 rounded-lg shadow-sm">
+              Sale
+            </span>
+          ) : product.is_arranged && (
             <span className="absolute top-8 left-8 bg-primary-600 text-white text-[10px] font-bold tracking-wide uppercase px-3 py-1.5 rounded-lg shadow-sm">
               Rangkaian Premium
             </span>
@@ -116,8 +126,27 @@ export const ProductDetail: React.FC = () => {
               {product.name}
             </h1>
             
-            <div className="font-display text-2xl font-bold text-primary-700">
-              {formatRupiah(product.base_price)}
+            <div className="space-y-2">
+              {discountPercentage > 0 && (
+                <span className="inline-flex border border-primary-600 bg-primary-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+                  Hemat {discountPercentage}%
+                </span>
+              )}
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <span className="font-display text-2xl font-bold text-primary-700">
+                  {formatRupiah(product.base_price)}
+                </span>
+                {originalPrice && (
+                  <span className="text-base font-semibold text-charcoal-400 line-through">
+                    {formatRupiah(originalPrice)}
+                  </span>
+                )}
+              </div>
+              {soldCount > 0 && (
+                <p className="text-xs font-semibold text-charcoal-500">
+                  {formatSoldCount(soldCount)} terjual
+                </p>
+              )}
             </div>
           </div>
 

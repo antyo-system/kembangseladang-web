@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useCartStore } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
 import { buildCartMessage, buildWhatsAppUrl } from '../../utils/whatsapp'
+import { getProductOriginalPrice, getProductPrice } from '../../utils/productPricing'
 import { Button } from '../ui/Button'
 
 interface CartDrawerProps {
@@ -80,7 +81,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                   </Button>
                 </div>
               ) : (
-                items.map((item) => (
+                items.map((item) => {
+                  const originalPrice = getProductOriginalPrice(item.product)
+                  const currentLineTotal = getProductPrice(item.product) * item.quantity
+                  const originalLineTotal = originalPrice ? originalPrice * item.quantity : null
+
+                  return (
                   <div
                     key={item.product.id}
                     className="flex bg-white p-4 rounded-2xl border border-primary-100/50 shadow-sm space-x-4 items-start"
@@ -138,13 +144,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                         </div>
                         
                         {/* Price */}
-                        <span className="font-semibold text-sm text-primary-700">
-                          {formatRupiah(item.product.base_price * item.quantity)}
-                        </span>
+                        <div className="text-right">
+                          <span className="block font-semibold text-sm text-primary-700">
+                            {formatRupiah(currentLineTotal)}
+                          </span>
+                          {originalLineTotal && (
+                            <span className="block text-[11px] font-medium text-charcoal-400 line-through">
+                              {formatRupiah(originalLineTotal)}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                ))
+                  )
+                })
               )}
             </div>
 
