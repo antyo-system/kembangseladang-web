@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { ChevronLeft, ChevronRight, Send, Sparkles, Percent, Wand2 } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Send, Sparkles, Wand2, Truck } from 'lucide-react'
 
 interface SlideItem {
   id: number
@@ -32,13 +32,13 @@ export const PromoBanner: React.FC = () => {
     },
     {
       id: 2,
-      title: 'Diskon 10% untuk Pesanan Pertama!',
-      subtitle: 'Klaim penawaran spesial ini dengan menunjukkan kode promo KEMBANG10 saat memesan melalui WhatsApp kami hari ini.',
-      badge: 'Penawaran Terbatas',
-      badgeIcon: <Percent className="w-3.5 h-3.5 mr-1" />,
-      ctaText: 'Klaim Diskon',
-      ctaLink: 'https://wa.me/6287772636627?text=Halo%20Kak%20Priska%2C%20saya%20mau%20klaim%20diskon%2010%25%20untuk%20order%20pertama%20dengan%20kode%20KEMBANG10.',
-      image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=1200&q=80',
+      title: 'Pengiriman Hari Yang Sama (Sameday)',
+      subtitle: 'Butuh rangkaian bunga mendadak? Kami melayani pengiriman instant/sameday di wilayah Tangerang Selatan & sekitarnya.',
+      badge: 'Layanan Express',
+      badgeIcon: <Truck className="w-3.5 h-3.5 mr-1" />,
+      ctaText: 'Pesan Cepat',
+      ctaLink: 'https://wa.me/6287772636627?text=Halo%20Kak%20Priska%2C%20saya%20butuh%20order%20bunga%20cepat%20untuk%20dikirim%20hari%20ini.',
+      image: 'https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&w=1200&q=80',
       bgColor: 'from-amber-900/90 via-charcoal-900/80 to-charcoal-900/40'
     },
     {
