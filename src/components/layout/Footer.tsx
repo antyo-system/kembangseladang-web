@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-4 pt-2">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/kembangseladang/"
                 target="_blank"
                 rel="noreferrer"
                 className="p-2 bg-charcoal-800 hover:bg-primary-600 rounded-full text-charcoal-300 hover:text-white transition-all duration-300 hover:-translate-y-1"
@@ -87,7 +87,14 @@ export const Footer: React.FC = () => {
                 <MapPin className="w-5 h-5 text-primary-400 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-charcoal-200">Toko Fisik</p>
-                  <p className="text-xs text-charcoal-500">Bintaro, Tangerang Selatan</p>
+                  <a
+                    href="https://share.google/YxQVId3hVxgn9mInO"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block mt-0.5 text-xs text-charcoal-500 hover:text-primary-400 transition-colors"
+                  >
+                    Jl. Kepodang No.68, Rempoa, Kec. Ciputat Tim., Kota Tangerang Selatan, Banten 15412.
+                  </a>
                 </div>
               </li>
             </ul>

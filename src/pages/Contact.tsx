@@ -67,9 +67,14 @@ export const Contact: React.FC = () => {
             </div>
             <div>
               <p className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400">Alamat Toko</p>
-              <p className="text-sm font-semibold text-charcoal-800 leading-normal text-balance">
-                Bintaro Sektor 9, Tangerang Selatan, Banten
-              </p>
+              <a
+                href="https://share.google/YxQVId3hVxgn9mInO"
+                target="_blank"
+                rel="noreferrer"
+                className="block mt-0.5 text-sm font-semibold text-charcoal-800 leading-normal text-balance hover:text-primary-600 transition-colors"
+              >
+                Jl. Kepodang No.68, Rempoa, Kec. Ciputat Tim., Kota Tangerang Selatan, Banten 15412.
+              </a>
             </div>
           </div>
 

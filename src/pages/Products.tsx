@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { PanelLeftClose, PanelLeftOpen, Search, SlidersHorizontal } from 'lucide-react'
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/product/ProductCard'
+import { PromoBanner } from '../components/promo/PromoBanner'
 
 const CATEGORY_SLIDES = [
   {
@@ -212,6 +213,8 @@ export const Products: React.FC = () => {
 
   return (
     <div className="pt-8 sm:pt-10 pb-20 space-y-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+      <PromoBanner />
+
       <section className="space-y-4" aria-labelledby="category-slider-title">
         <div className="space-y-1">
           <h1 id="category-slider-title" className="font-display text-xl font-bold text-charcoal-900 sm:text-2xl">

@@ -6,7 +6,6 @@ import type { Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
 import { getProductDiscountPercentage, getProductOriginalPrice } from '../../utils/productPricing'
 import { formatSoldCount, getProductSoldCount } from '../../utils/productSales'
-import { getProductRating } from '../../utils/productRatings'
 
 interface ProductCardProps {
   product: Product
@@ -32,7 +31,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const originalPrice = getProductOriginalPrice(product)
   const discountPercentage = getProductDiscountPercentage(product)
   const soldCount = getProductSoldCount(product)
-  const { rating } = getProductRating(product.id)
 
   return (
     <article className="group flex h-full flex-col overflow-hidden border border-charcoal-100 bg-white transition-all duration-300 hover:border-primary-300 hover:shadow-md rounded-md">
