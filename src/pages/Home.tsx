@@ -5,6 +5,7 @@ import { useProducts } from '../hooks/useProducts'
 import { useArticles } from '../hooks/useArticles'
 import { ProductCard } from '../components/product/ProductCard'
 import { ArticleCard } from '../components/article/ArticleCard'
+import { FlashSaleSection } from '../components/home/FlashSaleSection'
 import { Button } from '../components/ui/Button'
 
 export const Home: React.FC = () => {
@@ -15,7 +16,9 @@ export const Home: React.FC = () => {
   const latestArticles = articles?.slice(0, 3) || []
 
   return (
-    <div className="pt-10 sm:pt-12 space-y-16 pb-20">
+    <div className="pt-6 sm:pt-8 space-y-12 pb-20">
+      {/* Flash Sale Banner Section */}
+      <FlashSaleSection />
       
       {/* Featured Products */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
