@@ -21,7 +21,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         {article.cover_image ? (
           <img
             src={article.cover_image}
-            alt={article.title}
+            alt={article.cover_image_alt || article.title}
             className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
           />
         ) : (

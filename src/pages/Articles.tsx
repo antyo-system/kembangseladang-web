@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import { useArticles } from '../hooks/useArticles'
 import { ArticleCard } from '../components/article/ArticleCard'
@@ -7,6 +7,20 @@ export const Articles: React.FC = () => {
   const { data: articles, isLoading } = useArticles()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('Semua')
+
+  useEffect(() => {
+    document.title = 'Blog & Tips Florist Bunga Segar | Kembang Seladang'
+    let metaDesc = document.querySelector('meta[name="description"]')
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta')
+      metaDesc.setAttribute('name', 'description')
+      document.head.appendChild(metaDesc)
+    }
+    metaDesc.setAttribute(
+      'content',
+      'Kumpulan artikel tips merawat bunga mawar, inspirasi hand bouquet nikah, kado buket ulang tahun, dan informasi terkini dari Toko Bunga Kembang Seladang.'
+    )
+  }, [])
 
   const categories = useMemo(() => {
     if (!articles) return ['Semua']
@@ -20,7 +34,8 @@ export const Articles: React.FC = () => {
     return articles.filter((article) => {
       const matchesSearch =
         article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
+        article.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (article.focus_keyword || '').toLowerCase().includes(searchQuery.toLowerCase())
       
       const matchesCategory =
         selectedCategory === 'Semua' || article.category === selectedCategory
@@ -35,7 +50,7 @@ export const Articles: React.FC = () => {
       {/* Header Info */}
       <div className="text-center space-y-4 max-w-xl mx-auto">
         <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-charcoal-900">
-          Tips & Artikel Florist
+          Tips & Artikel Florist Kembang Seladang
         </h1>
         <p className="text-sm text-charcoal-500 text-balance leading-relaxed">
           Temukan panduan praktis merawat bunga hias, inspirasi dekorasi perkawinan, serta info terbaru seputar kado bunga.
@@ -50,7 +65,7 @@ export const Articles: React.FC = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
           <input
             type="text"
-            placeholder="Cari artikel tips..."
+            placeholder="Cari artikel tips mawar, wisuda..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-cream-50 pl-10 pr-4 py-2.5 rounded-xl text-xs font-semibold border-2 border-transparent focus:border-primary-200 focus:bg-white focus:outline-none transition-all"
