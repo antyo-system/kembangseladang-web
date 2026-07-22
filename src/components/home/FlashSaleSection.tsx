@@ -119,12 +119,12 @@ export const FlashSaleSection: React.FC = () => {
 
                 {/* Brand Dark Pink Scarcity Progress Bar */}
                 <div className="pt-1">
-                  <div className="w-full h-3.5 bg-pink-50 rounded-full overflow-hidden relative flex items-center justify-center border border-pink-100">
+                  <div className="w-full h-4 bg-pink-100/80 rounded-full overflow-hidden relative flex items-center justify-center border border-pink-200">
                     <div
-                      className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-700 rounded-full"
-                      style={{ width: `${stockInfo.soldPercent}%` }}
+                      className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-pink-600 via-rose-600 to-pink-700 rounded-full transition-all duration-300"
+                      style={{ width: `${Math.max(15, stockInfo.soldPercent)}%` }}
                     />
-                    <span className="relative z-10 text-[9px] font-extrabold text-white uppercase tracking-wider drop-shadow-xs">
+                    <span className="relative z-10 text-[9px] font-black text-white uppercase tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                       {stockInfo.statusText}
                     </span>
                   </div>

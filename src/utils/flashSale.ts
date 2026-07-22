@@ -70,10 +70,41 @@ function hashString(str: string): number {
   return Math.abs(hash)
 }
 
-export function rotateFlashSaleProducts<T extends { stock_qty?: number | null }>(pool: T[], sessionKey: string, count: number = 6): T[] {
+export function rotateFlashSaleProducts<T extends { id: string; stock_qty?: number | null }>(
+  pool: T[],
+  sessionKey: string,
+  count: number = 6,
+  pinnedIds: string[] = []
+): T[] {
+  // Only pick products that are IN STOCK (stock_qty === undefined || stock_qty === null || stock_qty > 0)
   const inStockPool = (pool || []).filter(p => p.stock_qty === undefined || p.stock_qty === null || p.stock_qty > 0)
   
   if (inStockPool.length === 0) return []
+
+  // If there are pinned products specified by Admin (via Drag & Drop / Pin button)
+  if (pinnedIds && pinnedIds.length > 0) {
+    const pinnedProducts = inStockPool.filter(p => pinnedIds.includes(p.id))
+    const unpinnedProducts = inStockPool.filter(p => !pinnedIds.includes(p.id))
+
+    if (pinnedProducts.length >= count) {
+      return pinnedProducts.slice(0, count)
+    }
+
+    const remainingCount = count - pinnedProducts.length
+    const seed = hashString(sessionKey)
+    const shuffled = [...unpinnedProducts]
+
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const pseudoRandom = Math.abs(Math.sin(seed + i))
+      const j = Math.floor(pseudoRandom * (i + 1))
+      const temp = shuffled[i]
+      shuffled[i] = shuffled[j]
+      shuffled[j] = temp
+    }
+
+    return [...pinnedProducts, ...shuffled.slice(0, remainingCount)]
+  }
+
   if (inStockPool.length <= count) return [...inStockPool]
 
   const seed = hashString(sessionKey)
