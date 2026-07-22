@@ -47,12 +47,15 @@ function isMissingOptionalProductColumn(error: { message?: string; details?: str
   )
 }
 
-function applyProductDefaults(products: unknown[] | null, defaults: Partial<Pick<Product, 'original_price' | 'sold_count' | 'is_live'>>) {
+function applyProductDefaults(products: unknown[] | null, defaults: Partial<Pick<Product, 'original_price' | 'sold_count' | 'is_live'>> = {}) {
   return (products || []).map((product) => {
-    const p = product as Product
+    const p = (product || {}) as Product
     return {
       ...p,
       is_live: (p as any).is_live !== false,
+      is_flash_sale: (p as any).is_flash_sale === true,
+      sold_count: p.sold_count ?? 0,
+      original_price: p.original_price ?? null,
       ...defaults,
     }
   }) as Product[]
@@ -71,23 +74,30 @@ export function useProducts() {
   return useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      for (const candidate of PRODUCT_SELECT_CANDIDATES) {
+      try {
         const { data, error } = await supabase
           .from('products')
-          .select(candidate.columns)
+          .select('*')
           .order('created_at', { ascending: false })
 
-        if (!error) {
-          return applyProductDefaults(data, candidate.defaults)
+        if (!error && data) {
+          return applyProductDefaults(data)
         }
 
-        if (!isMissingOptionalProductColumn(error)) {
-          console.error('Error fetching products:', error)
-          throw error
+        const fallback = await supabase
+          .from('products')
+          .select('*')
+
+        if (!fallback.error && fallback.data) {
+          return applyProductDefaults(fallback.data)
         }
+
+        console.error('Error fetching products on storefront:', error || fallback.error)
+        return []
+      } catch (err) {
+        console.error('Unexpected error fetching products on storefront:', err)
+        return []
       }
-
-      throw new Error('Gagal mengambil produk karena schema katalog tidak kompatibel.')
     }
   })
 }

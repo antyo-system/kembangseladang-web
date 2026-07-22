@@ -24,9 +24,23 @@ export const FlashSaleSection: React.FC = () => {
     return (products || []).filter((p) => p.base_price > 0)
   }, [products])
 
+  const pinnedIds = useMemo(() => {
+    // 1. Check DB pinned flag
+    const dbPinned = (products || []).filter((p: any) => p.is_flash_sale === true).map((p) => p.id)
+    if (dbPinned.length > 0) return dbPinned
+
+    // 2. Fallback to LocalStorage pinned IDs
+    try {
+      const local = JSON.parse(localStorage.getItem('ks_pinned_flash_sale_ids') || '[]')
+      if (Array.isArray(local) && local.length > 0) return local
+    } catch (e) {}
+
+    return []
+  }, [products])
+
   const activeProducts = useMemo(() => {
-    return rotateFlashSaleProducts(flashSalePool, session.sessionKey, 6)
-  }, [flashSalePool, session.sessionKey])
+    return rotateFlashSaleProducts(flashSalePool, session.sessionKey, 6, pinnedIds)
+  }, [flashSalePool, session.sessionKey, pinnedIds])
 
   if (isLoading || activeProducts.length === 0) return null
 
