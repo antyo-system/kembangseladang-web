@@ -1,6 +1,6 @@
 /**
  * Flash Sale Engine Utility Functions for Storefront
- * Handles auto-cycling session calculation, deterministic product rotation, and Shopee-style stock progress bars.
+ * Handles auto-cycling session calculation, in-stock product rotation, and Kembang Seladang brand-aligned stock bars.
  */
 
 export interface FlashSaleSession {
@@ -20,6 +20,7 @@ export interface FlashSaleStockInfo {
   soldPercent: number
   remainingStock: number
   statusText: string
+  unitLabel: string
   isSoldOut: boolean
 }
 
@@ -69,12 +70,14 @@ function hashString(str: string): number {
   return Math.abs(hash)
 }
 
-export function rotateFlashSaleProducts<T>(pool: T[], sessionKey: string, count: number = 6): T[] {
-  if (!pool || pool.length === 0) return []
-  if (pool.length <= count) return [...pool]
+export function rotateFlashSaleProducts<T extends { stock_qty?: number | null }>(pool: T[], sessionKey: string, count: number = 6): T[] {
+  const inStockPool = (pool || []).filter(p => p.stock_qty === undefined || p.stock_qty === null || p.stock_qty > 0)
+  
+  if (inStockPool.length === 0) return []
+  if (inStockPool.length <= count) return [...inStockPool]
 
   const seed = hashString(sessionKey)
-  const shuffled = [...pool]
+  const shuffled = [...inStockPool]
 
   for (let i = shuffled.length - 1; i > 0; i--) {
     const pseudoRandom = Math.abs(Math.sin(seed + i))
@@ -91,13 +94,38 @@ export function calculateFlashSaleStock(
   productId: string,
   sessionKey: string,
   quotaPerSession: number = 5,
-  realSoldCount?: number | null
+  realSoldCount?: number | null,
+  realStockQty?: number | null,
+  unit: string = 'buket'
 ): FlashSaleStockInfo {
   const seed = hashString(`${sessionKey}-${productId}`)
   const quota = Math.max(1, quotaPerSession)
-  
+  const unitLabel = unit || 'buket'
+
+  if (typeof realStockQty === 'number') {
+    const remainingStock = Math.max(0, realStockQty)
+    const isSoldOut = remainingStock === 0
+    const soldPercent = isSoldOut ? 100 : Math.min(95, Math.max(20, Math.round(((quota - Math.min(quota, remainingStock)) / quota) * 100)))
+
+    let statusText = `Sisa ${remainingStock} ${unitLabel}`
+    if (isSoldOut) {
+      statusText = 'STOK HABIS'
+    } else if (remainingStock <= 2) {
+      statusText = `SISA ${remainingStock} ${unitLabel.toUpperCase()}!`
+    }
+
+    return {
+      soldCount: Math.max(0, quota - remainingStock),
+      quota,
+      soldPercent,
+      remainingStock,
+      statusText,
+      unitLabel,
+      isSoldOut,
+    }
+  }
+
   const pseudoRandomRatio = 0.35 + ((seed % 55) / 100)
-  
   let soldCount = Math.floor(quota * pseudoRandomRatio)
   if (typeof realSoldCount === 'number' && realSoldCount > 0) {
     soldCount = Math.min(quota, (realSoldCount % quota) + soldCount)
@@ -108,13 +136,11 @@ export function calculateFlashSaleStock(
   const soldPercent = Math.min(100, Math.round((soldCount / quota) * 100))
   const isSoldOut = remainingStock === 0
 
-  let statusText = 'STOK TERBATAS'
+  let statusText = `Sisa ${remainingStock} ${unitLabel}`
   if (isSoldOut) {
-    statusText = 'HABIS'
+    statusText = 'STOK HABIS'
   } else if (remainingStock <= 2) {
-    statusText = `TERSISA ${remainingStock} BUKET!`
-  } else {
-    statusText = `TERJUAL ${soldPercent}%`
+    statusText = `SISA ${remainingStock} ${unitLabel.toUpperCase()}!`
   }
 
   return {
@@ -123,6 +149,7 @@ export function calculateFlashSaleStock(
     soldPercent,
     remainingStock,
     statusText,
+    unitLabel,
     isSoldOut,
   }
 }

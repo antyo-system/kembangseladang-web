@@ -14,6 +14,7 @@ export interface Product {
   color?: string
   stem_length?: string
   unit?: string
+  stock_qty?: number | null
   is_arranged?: boolean
   image?: string // From database, might be null/empty
   is_live?: boolean
