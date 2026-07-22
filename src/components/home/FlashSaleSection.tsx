@@ -11,6 +11,16 @@ export const FlashSaleSection: React.FC = () => {
   const { data: products, isLoading } = useProducts()
   const [now, setNow] = useState(new Date())
 
+  // Check if Flash Sale is active (ON / OFF)
+  const isFlashSaleActive = useMemo(() => {
+    try {
+      const saved = localStorage.getItem('ks_flash_sale_active')
+      return saved === null ? true : saved !== 'false'
+    } catch (e) {
+      return true
+    }
+  }, [])
+
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000)
     return () => clearInterval(timer)
@@ -42,7 +52,7 @@ export const FlashSaleSection: React.FC = () => {
     return rotateFlashSaleProducts(flashSalePool, session.sessionKey, 6, pinnedIds)
   }, [flashSalePool, session.sessionKey, pinnedIds])
 
-  if (isLoading || activeProducts.length === 0) return null
+  if (!isFlashSaleActive || isLoading || activeProducts.length === 0) return null
 
   return (
     <div className="bg-white border border-charcoal-100 p-4 sm:p-5 space-y-4 rounded-none font-sans">
