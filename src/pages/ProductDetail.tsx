@@ -7,6 +7,7 @@ import { formatRupiah } from '../utils/formatCurrency'
 import { buildCartMessage, buildWhatsAppUrl } from '../utils/whatsapp'
 import { getProductDiscountPercentage, getProductOriginalPrice } from '../utils/productPricing'
 import { formatSoldCount, getProductSoldCount } from '../utils/productSales'
+import { calculateFlowerFreshness } from '../utils/flowerFreshness'
 import { Button } from '../components/ui/Button'
 
 export const ProductDetail: React.FC = () => {
@@ -176,9 +177,30 @@ export const ProductDetail: React.FC = () => {
             </div>
             <div>
               <p className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400">Status Stok</p>
-              <p className="text-sm font-semibold text-emerald-600">Bunga Segar Ready</p>
+              {(() => {
+                const fresh = calculateFlowerFreshness(product.created_at)
+                if (fresh.status === 'EXPIRED') {
+                  return <p className="text-sm font-bold text-amber-700">📦 Pre-Order (Est. Restok H+1)</p>
+                }
+                if (fresh.status === 'PROMO_READY') {
+                  return <p className="text-sm font-bold text-amber-600">🟡 Promo Segar Hari ke-{fresh.currentDay}</p>
+                }
+                return <p className="text-sm font-semibold text-emerald-600">🟢 Bunga Segar Ready (Hari ke-{fresh.currentDay})</p>
+              })()}
             </div>
           </div>
+
+          {/* Pre-Order Banner if Day 5+ */}
+          {calculateFlowerFreshness(product.created_at).status === 'EXPIRED' && (
+            <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl space-y-1">
+              <p className="text-xs font-extrabold text-amber-900 flex items-center gap-1.5">
+                📦 Pre-Order Bunga Segar Kulakan Baru (Restok H+1)
+              </p>
+              <p className="text-[11px] text-amber-800 font-medium leading-relaxed">
+                Stok mekar ready hari ini sudah habis. Pesanan Anda akan dikulakan segar langsung dari petani pada jadwal pasokan berikutnya (Estimasi Kirim Besok).
+              </p>
+            </div>
+          )}
 
           <div className="h-px bg-cream-100" />
 
@@ -227,16 +249,19 @@ export const ProductDetail: React.FC = () => {
                   </>
                 )}
               </Button>
-              
               <Button
-                variant="primary"
-                size="lg"
-                onClick={handleBuyNowDirect}
-                className="flex-1 rounded-xl shadow-lg shadow-primary-500/15"
-              >
-                <Send className="w-4.5 h-4.5 mr-2" />
-                <span>Pesan Langsung</span>
-              </Button>
+                  onClick={handleBuyNowDirect}
+                  variant="primary"
+                  size="lg"
+                  className="w-full bg-primary-600 text-white font-bold py-3.5 hover:bg-primary-700 shadow-md flex items-center justify-center space-x-2 transition-all cursor-pointer rounded-xl"
+                >
+                  <Send className="w-5 h-5 fill-current" />
+                  <span>
+                    {calculateFlowerFreshness(product.created_at).status === 'EXPIRED' 
+                      ? 'Pre-Order Bunga Segar via WA' 
+                      : 'Pesan Langsung'}
+                  </span>
+                </Button>
             </div>
 
           </div>
