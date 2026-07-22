@@ -3,6 +3,7 @@ import { PanelLeftClose, PanelLeftOpen, Search, SlidersHorizontal } from 'lucide
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/product/ProductCard'
 import { PromoBanner } from '../components/promo/PromoBanner'
+import { FlashSaleSection } from '../components/home/FlashSaleSection'
 
 const CATEGORY_SLIDES = [
   {
@@ -213,6 +214,7 @@ export const Products: React.FC = () => {
 
   return (
     <div className="pt-8 sm:pt-10 pb-20 space-y-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+      <FlashSaleSection />
       <PromoBanner />
 
       <section className="space-y-4" aria-labelledby="category-slider-title">

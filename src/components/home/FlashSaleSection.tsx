@@ -21,7 +21,9 @@ export const FlashSaleSection: React.FC = () => {
   const session = useMemo(() => getFlashSaleSession(3, now), [now])
 
   const flashSalePool = useMemo(() => {
-    return (products || []).filter((p) => p.is_live !== false && p.base_price > 0 && p.is_arranged !== false)
+    const valid = (products || []).filter((p) => p.is_live !== false && p.base_price > 0)
+    if (valid.length > 0) return valid
+    return (products || []).filter((p) => p.base_price > 0)
   }, [products])
 
   const activeProducts = useMemo(() => {
