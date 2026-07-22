@@ -1,25 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Zap, ChevronRight } from 'lucide-react'
-import { useProducts } from '../../hooks/useProducts'
+import { useProducts, useFlashSaleConfig } from '../../hooks/useProducts'
 import { type Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
 import { getProductOriginalPrice, getProductDiscountPercentage } from '../../utils/productPricing'
 import { getFlashSaleSession, rotateFlashSaleProducts, calculateFlashSaleStock } from '../../utils/flashSale'
 
 export const FlashSaleSection: React.FC = () => {
-  const { data: products, isLoading } = useProducts()
+  const { data: products, isLoading: isProductsLoading } = useProducts()
+  const { data: remoteConfig, isLoading: isConfigLoading } = useFlashSaleConfig()
   const [now, setNow] = useState(new Date())
-
-  // Check if Flash Sale is active (ON / OFF)
-  const isFlashSaleActive = useMemo(() => {
-    try {
-      const saved = localStorage.getItem('ks_flash_sale_active')
-      return saved === null ? true : saved !== 'false'
-    } catch (e) {
-      return true
-    }
-  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000)
@@ -28,6 +19,19 @@ export const FlashSaleSection: React.FC = () => {
 
   const session = useMemo(() => getFlashSaleSession(3, now), [now])
 
+  // Check if Flash Sale is active (ON / OFF)
+  const isFlashSaleActive = useMemo(() => {
+    if (remoteConfig && typeof remoteConfig.active === 'boolean') {
+      return remoteConfig.active
+    }
+    try {
+      const saved = localStorage.getItem('ks_flash_sale_active')
+      return saved === null ? true : saved !== 'false'
+    } catch (e) {
+      return true
+    }
+  }, [remoteConfig])
+
   const flashSalePool = useMemo(() => {
     const valid = (products || []).filter((p) => p.is_live !== false && p.base_price > 0)
     if (valid.length > 0) return valid
@@ -35,9 +39,10 @@ export const FlashSaleSection: React.FC = () => {
   }, [products])
 
   const pinnedIds = useMemo(() => {
-    // 1. Check DB pinned flag
-    const dbPinned = (products || []).filter((p: any) => p.is_flash_sale === true).map((p) => p.id)
-    if (dbPinned.length > 0) return dbPinned
+    // 1. Check Supabase Remote Config
+    if (remoteConfig && Array.isArray(remoteConfig.pinnedIds) && remoteConfig.pinnedIds.length > 0) {
+      return remoteConfig.pinnedIds
+    }
 
     // 2. Fallback to LocalStorage pinned IDs
     try {
@@ -46,13 +51,13 @@ export const FlashSaleSection: React.FC = () => {
     } catch (e) {}
 
     return []
-  }, [products])
+  }, [remoteConfig])
 
   const activeProducts = useMemo(() => {
     return rotateFlashSaleProducts(flashSalePool, session.sessionKey, 6, pinnedIds)
   }, [flashSalePool, session.sessionKey, pinnedIds])
 
-  if (!isFlashSaleActive || isLoading || activeProducts.length === 0) return null
+  if (!isFlashSaleActive || isProductsLoading || isConfigLoading || activeProducts.length === 0) return null
 
   return (
     <div className="bg-white border border-charcoal-100 p-4 sm:p-5 space-y-4 rounded-none font-sans">

@@ -48,17 +48,19 @@ function isMissingOptionalProductColumn(error: { message?: string; details?: str
 }
 
 function applyProductDefaults(products: unknown[] | null, defaults: Partial<Pick<Product, 'original_price' | 'sold_count' | 'is_live'>> = {}) {
-  return (products || []).map((product) => {
-    const p = (product || {}) as Product
-    return {
-      ...p,
-      is_live: (p as any).is_live !== false,
-      is_flash_sale: (p as any).is_flash_sale === true,
-      sold_count: p.sold_count ?? 0,
-      original_price: p.original_price ?? null,
-      ...defaults,
-    }
-  }) as Product[]
+  return (products || [])
+    .filter((product) => (product as Product)?.code !== 'SYS_FLASH_SALE_CONFIG')
+    .map((product) => {
+      const p = (product || {}) as Product
+      return {
+        ...p,
+        is_live: (p as any).is_live !== false,
+        is_flash_sale: (p as any).is_flash_sale === true,
+        sold_count: p.sold_count ?? 0,
+        original_price: p.original_price ?? null,
+        ...defaults,
+      }
+    }) as Product[]
 }
 
 function applySingleProductDefaults(product: unknown, defaults: Partial<Pick<Product, 'original_price' | 'sold_count' | 'is_live'>>) {
@@ -128,3 +130,34 @@ export function useProduct(id: string) {
     enabled: !!id
   })
 }
+
+export interface FlashSaleConfig {
+  active: boolean
+  pinnedIds: string[]
+}
+
+export function useFlashSaleConfig() {
+  return useQuery({
+    queryKey: ['flash_sale_config'],
+    queryFn: async (): Promise<FlashSaleConfig> => {
+      const { data } = await supabase
+        .from('products')
+        .select('description')
+        .eq('code', 'SYS_FLASH_SALE_CONFIG')
+        .maybeSingle()
+
+      if (data && data.description) {
+        try {
+          const parsed = JSON.parse(data.description)
+          return {
+            active: parsed.active !== false,
+            pinnedIds: Array.isArray(parsed.pinnedIds) ? parsed.pinnedIds : [],
+          }
+        } catch (e) {}
+      }
+
+      return { active: true, pinnedIds: [] }
+    },
+  })
+}
+
