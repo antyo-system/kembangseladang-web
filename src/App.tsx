@@ -12,6 +12,8 @@ import { About } from './pages/About'
 import { Contact } from './pages/Contact'
 import { supabaseConfigError } from './lib/supabase'
 
+import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
+
 export const App: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false)
 
@@ -42,6 +44,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
+      {/* PWA Auto-Update Banner */}
+      <PWAUpdatePrompt />
+
       {/* Header Layout */}
       <Header onCartOpen={handleCartOpen} />
 
