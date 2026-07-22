@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { Zap, Clock, ShoppingBag } from 'lucide-react'
+import { Zap, ChevronRight } from 'lucide-react'
 import { useProducts } from '../../hooks/useProducts'
-import { useCartStore, type Product } from '../../store/useCartStore'
+import { type Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
 import { getProductOriginalPrice, getProductDiscountPercentage } from '../../utils/productPricing'
 import { getFlashSaleSession, rotateFlashSaleProducts, calculateFlashSaleStock } from '../../utils/flashSale'
 
 export const FlashSaleSection: React.FC = () => {
   const { data: products, isLoading } = useProducts()
-  const addItem = useCartStore((state) => state.addItem)
-
   const [now, setNow] = useState(new Date())
 
   useEffect(() => {
@@ -33,125 +31,102 @@ export const FlashSaleSection: React.FC = () => {
   if (isLoading || activeProducts.length === 0) return null
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-      <div className="bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 rounded-[2rem] p-5 sm:p-7 text-white shadow-xl space-y-5 border border-red-500/30 relative overflow-hidden">
-        {/* Background glow & subtle pattern */}
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
-
-        {/* Section Header */}
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/20 pb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-yellow-400 text-red-900 flex items-center justify-center font-black shadow-lg animate-pulse">
-              <Zap className="w-6 h-6 fill-current" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="font-display text-xl sm:text-2xl font-black uppercase tracking-wider text-white drop-shadow-sm">
-                  FLASH SALE
-                </h2>
-                <span className="text-[10px] font-black px-2.5 py-0.5 bg-yellow-400 text-red-950 rounded-full uppercase tracking-wider shadow-xs">
-                  LIVE
-                </span>
-              </div>
-              <p className="text-xs text-rose-100 mt-0.5">
-                Diskon terbesar berputar otomatis setiap 3 jam. Stok sangat terbatas!
-              </p>
-            </div>
+    <div className="bg-white border border-charcoal-100 p-4 sm:p-5 space-y-4 rounded-none font-sans">
+      {/* Shopee-style Minimalist Header */}
+      <div className="flex items-center justify-between border-b border-charcoal-100 pb-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+          <div className="flex items-center gap-1 text-[#ee4d2d] font-black italic text-lg sm:text-xl tracking-tight">
+            <Zap className="w-5 h-5 fill-current text-[#ee4d2d]" />
+            <span>FLASH SALE</span>
           </div>
 
-          {/* Real-time Countdown Timer */}
-          <div className="flex items-center gap-2.5 bg-black/30 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 self-start sm:self-auto shadow-inner">
-            <Clock className="w-4 h-4 text-yellow-300 animate-spin" style={{ animationDuration: '6s' }} />
-            <span className="text-xs font-semibold text-rose-100 hidden sm:inline">Berakhir Dalam:</span>
-            <div className="flex items-center gap-1 font-mono font-extrabold text-sm sm:text-base text-yellow-300">
-              <span className="bg-charcoal-900 text-yellow-300 px-2 py-0.5 rounded-lg border border-white/10">
-                {String(session.hours).padStart(2, '0')}
-              </span>
-              <span className="font-bold">:</span>
-              <span className="bg-charcoal-900 text-yellow-300 px-2 py-0.5 rounded-lg border border-white/10">
-                {String(session.minutes).padStart(2, '0')}
-              </span>
-              <span className="font-bold">:</span>
-              <span className="bg-charcoal-900 text-yellow-300 px-2 py-0.5 rounded-lg border border-white/10">
-                {String(session.seconds).padStart(2, '0')}
-              </span>
-            </div>
+          {/* Black Timer Blocks */}
+          <div className="flex items-center gap-1 font-mono font-bold text-xs">
+            <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
+              {String(session.hours).padStart(2, '0')}
+            </span>
+            <span className="text-charcoal-900 font-black">:</span>
+            <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
+              {String(session.minutes).padStart(2, '0')}
+            </span>
+            <span className="text-charcoal-900 font-black">:</span>
+            <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
+              {String(session.seconds).padStart(2, '0')}
+            </span>
           </div>
         </div>
 
-        {/* Shopee-Style Grid / Carousel */}
-        <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-          {activeProducts.map((product: Product) => {
-            const stockInfo = calculateFlashSaleStock(product.id, session.sessionKey, 5, product.sold_count)
-            const originalPrice = getProductOriginalPrice(product)
-            const discountPercentage = getProductDiscountPercentage(product) || 25
+        <Link
+          to="/products"
+          className="text-[#ee4d2d] hover:text-red-700 font-semibold text-xs flex items-center gap-0.5 transition-colors"
+        >
+          <span>Lihat Semua</span>
+          <ChevronRight className="w-4 h-4" />
+        </Link>
+      </div>
 
-            return (
-              <div
-                key={product.id}
-                className="group bg-white rounded-2xl p-2.5 text-charcoal-900 flex flex-col justify-between shadow-lg relative transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl border border-white/40"
-              >
-                {/* Shopee-Style Yellow Flag Badge */}
-                <div className="absolute right-0 top-0 bg-[#ffd124] text-[#ee4d2d] px-2 py-1 text-[11px] font-extrabold rounded-bl-lg rounded-tr-2xl z-10 shadow-sm leading-none">
+      {/* Shopee-style Grid of Products */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        {activeProducts.map((product: Product) => {
+          const stockInfo = calculateFlashSaleStock(product.id, session.sessionKey, 5, product.sold_count)
+          const originalPrice = getProductOriginalPrice(product)
+          const discountPercentage = getProductDiscountPercentage(product) || 25
+
+          return (
+            <Link
+              key={product.id}
+              to={`/products/${product.id}`}
+              className="group bg-white border border-transparent hover:border-primary-200 transition-all duration-200 flex flex-col justify-between"
+            >
+              <div className="relative aspect-square w-full bg-cream-50 overflow-hidden rounded-none mb-2">
+                <img
+                  src={product.image || 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=600'}
+                  alt={product.name}
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+                
+                {/* Shopee-style Yellow Discount Flag */}
+                <div className="absolute right-0 top-0 bg-[#ffd124] text-[#ee4d2d] px-1.5 py-0.5 text-[10px] font-extrabold rounded-none z-10 leading-none shadow-xs">
                   -{discountPercentage}%
                 </div>
+              </div>
 
-                <Link to={`/products/${product.id}`} className="block relative aspect-square w-full rounded-xl overflow-hidden bg-cream-50 mb-2">
-                  <img
-                    src={product.image || 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=600'}
-                    alt={product.name}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </Link>
+              <div className="space-y-1.5 p-1 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="line-clamp-1 text-xs font-semibold text-charcoal-900 group-hover:text-primary-600 transition-colors">
+                    {product.name}
+                  </h3>
 
-                <div className="space-y-1.5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <Link to={`/products/${product.id}`}>
-                      <h3 className="line-clamp-1 text-xs font-bold text-charcoal-900 group-hover:text-primary-600 transition-colors">
-                        {product.name}
-                      </h3>
-                    </Link>
-
-                    <div className="flex flex-wrap items-baseline gap-1 mt-1">
-                      <span className="text-sm font-black text-primary-600 whitespace-nowrap">
-                        {formatRupiah(product.base_price)}
+                  <div className="flex flex-wrap items-baseline gap-1 mt-1">
+                    <span className="text-sm font-bold text-[#ee4d2d] whitespace-nowrap">
+                      {formatRupiah(product.base_price)}
+                    </span>
+                    {originalPrice && (
+                      <span className="text-[10px] text-charcoal-400 line-through whitespace-nowrap">
+                        {formatRupiah(originalPrice)}
                       </span>
-                      {originalPrice && (
-                        <span className="text-[10px] text-charcoal-400 line-through whitespace-nowrap">
-                          {formatRupiah(originalPrice)}
-                        </span>
-                      )}
-                    </div>
+                    )}
                   </div>
+                </div>
 
-                  {/* Shopee-Style Scarcity Progress Bar */}
-                  <div className="pt-1">
-                    <div className="w-full h-4 bg-red-100 rounded-full overflow-hidden relative flex items-center justify-center shadow-inner">
-                      <div
-                        className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full transition-all duration-500"
-                        style={{ width: `${stockInfo.soldPercent}%` }}
-                      />
-                      <span className="relative z-10 text-[9px] font-black text-white uppercase tracking-wider drop-shadow-md flex items-center gap-1">
-                        {stockInfo.statusText}
-                      </span>
-                    </div>
+                {/* Shopee-Style Scarcity Progress Bar */}
+                <div className="pt-1">
+                  <div className="w-full h-3.5 bg-[#ffdda8] rounded-full overflow-hidden relative flex items-center justify-center">
+                    <div
+                      className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-[#ff7426] to-[#ee4d2d] rounded-full"
+                      style={{ width: `${stockInfo.soldPercent}%` }}
+                    />
+                    <span className="relative z-10 text-[9px] font-extrabold text-white uppercase tracking-wider drop-shadow-xs">
+                      {stockInfo.statusText}
+                    </span>
                   </div>
-
-                  {/* Quick Cart Button */}
-                  <button
-                    onClick={() => addItem(product)}
-                    className="w-full mt-1 py-1.5 px-2 bg-charcoal-900 hover:bg-primary-600 text-white rounded-xl text-[11px] font-bold transition-colors flex items-center justify-center gap-1 shadow-sm active:scale-95 cursor-pointer"
-                  >
-                    <ShoppingBag className="w-3.5 h-3.5" />
-                    <span>+ Keranjang</span>
-                  </button>
                 </div>
               </div>
-            )
-          })}
-        </div>
+            </Link>
+          )
+        })}
       </div>
-    </section>
+    </div>
   )
 }

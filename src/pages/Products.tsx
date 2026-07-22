@@ -214,7 +214,6 @@ export const Products: React.FC = () => {
 
   return (
     <div className="pt-8 sm:pt-10 pb-20 space-y-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
-      <FlashSaleSection />
       <PromoBanner />
 
       <section className="space-y-4" aria-labelledby="category-slider-title">
@@ -320,6 +319,9 @@ export const Products: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Shopee-style Clean Flash Sale Banner placed below Search & Filter Bar */}
+      <FlashSaleSection />
 
       <div
         className={`grid grid-cols-1 items-start gap-6 ${
