@@ -22,7 +22,6 @@ const supabaseAnonKey = envVars.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPAB
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// Fallback article slugs if DB is temporarily empty
 const FALLBACK_ARTICLE_SLUGS = [
   '5-cara-merawat-bunga-mawar-wisuda-agar-awet-segar',
   'rekomendasi-warna-bunga-mawar-makna-dan-arti',
@@ -32,7 +31,7 @@ const FALLBACK_ARTICLE_SLUGS = [
 ]
 
 async function generateSitemap() {
-  console.log('🗺️ Generating dynamic sitemap.xml for kembangseladang.com...')
+  console.log('🗺️ Generating dynamic sitemaps (XML & TXT) for kembangseladang.com...')
 
   const today = new Date().toISOString().split('T')[0]
 
@@ -53,18 +52,8 @@ async function generateSitemap() {
     if (!error && articles && articles.length > 0) {
       articles.forEach(art => {
         const lastmod = art.updated_at ? new Date(art.updated_at).toISOString().split('T')[0] : today
-        urls.push({
-          loc: `${SITE_URL}/blog/${art.slug}`,
-          priority: '0.8',
-          changefreq: 'weekly',
-          lastmod
-        })
-        urls.push({
-          loc: `${SITE_URL}/articles/${art.slug}`,
-          priority: '0.8',
-          changefreq: 'weekly',
-          lastmod
-        })
+        urls.push({ loc: `${SITE_URL}/blog/${art.slug}`, priority: '0.8', changefreq: 'weekly', lastmod })
+        urls.push({ loc: `${SITE_URL}/articles/${art.slug}`, priority: '0.8', changefreq: 'weekly', lastmod })
       })
     } else {
       FALLBACK_ARTICLE_SLUGS.forEach(slug => {
@@ -86,19 +75,14 @@ async function generateSitemap() {
     if (!error && products && products.length > 0) {
       products.forEach(p => {
         const lastmod = p.updated_at ? new Date(p.updated_at).toISOString().split('T')[0] : today
-        urls.push({
-          loc: `${SITE_URL}/products/${p.id}`,
-          priority: '0.7',
-          changefreq: 'weekly',
-          lastmod
-        })
+        urls.push({ loc: `${SITE_URL}/products/${p.id}`, priority: '0.7', changefreq: 'weekly', lastmod })
       })
     }
   } catch (e) {
     console.warn('Could not fetch products for sitemap:', e.message)
   }
 
-  // Generate XML string
+  // Generate XML
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url>
@@ -109,14 +93,18 @@ ${urls.map(u => `  <url>
   </url>`).join('\n')}
 </urlset>`
 
+  // Generate Plain TXT Sitemap (1 URL per line, Google GSC native)
+  const txt = urls.map(u => u.loc).join('\n')
+
   const publicDir = path.join(process.cwd(), 'public')
   if (!fs.existsSync(publicDir)) {
     fs.mkdirSync(publicDir, { recursive: true })
   }
 
-  const sitemapPath = path.join(publicDir, 'sitemap.xml')
-  fs.writeFileSync(sitemapPath, xml)
-  console.log(`✅ Sitemap successfully written to ${sitemapPath} (${urls.length} URLs included)`)
+  fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), xml)
+  fs.writeFileSync(path.join(publicDir, 'sitemap_index.xml'), xml)
+  fs.writeFileSync(path.join(publicDir, 'sitemap.txt'), txt)
+  console.log(`✅ Sitemaps generated: sitemap.xml, sitemap_index.xml, sitemap.txt (${urls.length} URLs included)`)
 }
 
 generateSitemap().catch(console.error)
