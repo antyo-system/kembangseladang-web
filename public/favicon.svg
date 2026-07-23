@@ -1,22 +1,86 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#BE185D"/>
-      <stop offset="50%" stop-color="#E11D48"/>
-      <stop offset="100%" stop-color="#9D174D"/>
-    </linearGradient>
-    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FDE047"/>
-      <stop offset="100%" stop-color="#F59E0B"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
-  <g transform="translate(256 256) scale(0.85)">
-    <path d="M0 -160 C 80 -160, 160 -80, 160 0 C 160 80, 80 160, 0 160 C -80 160, -160 80, -160 0 C -160 -80, -80 -160, 0 -160 Z" fill="none" stroke="#FFFFFF" stroke-width="16" opacity="0.3"/>
-    <path d="M0 -140 C 70 -100, 140 -30, 100 40 C 60 110, -60 110, -100 40 C -140 -30, -70 -100, 0 -140 Z" fill="#FFF1F2" opacity="0.95"/>
-    <path d="M0 -110 C 50 -80, 110 -20, 80 30 C 50 80, -50 80, -80 30 C -110 -20, -50 -80, 0 -110 Z" fill="#FFE4E6"/>
-    <path d="M0 -80 C 40 -50, 80 -10, 60 20 C 40 50, -40 50, -60 20 C -80 -10, -40 -50, 0 -80 Z" fill="#FECDD3"/>
-    <path d="M0 -50 C 25 -30, 50 0, 35 15 C 20 30, -20 30, -35 15 C -50 0, -25 -30, 0 -50 Z" fill="url(#gold)"/>
-    <circle cx="0" cy="0" r="18" fill="#FFFFFF"/>
+  <!-- Kembang Seladang Flower Vase Logo SVG -->
+  <g transform="translate(0, 10)">
+    <!-- Flowers Group -->
+    <g id="flowers">
+      <!-- Stems -->
+      <path d="M 236 210 L 236 260 M 256 200 L 256 260 M 276 210 L 276 260 M 220 220 L 246 260 M 292 220 L 266 260" 
+            stroke="#1E1B4B" stroke-width="12" stroke-linecap="round" />
+      
+      <!-- Flower 1: Top Center Red/Rose -->
+      <g transform="translate(256, 125)">
+        <circle cx="0" cy="0" r="42" fill="#E11D48" stroke="#1E1B4B" stroke-width="8"/>
+        <path d="M -22 -10 C -10 -30, 20 -25, 26 0 C 30 22, 0 30, -18 16 C -28 6, -15 -14, 2 -14 C 14 -14, 14 2, 2 2" 
+              fill="none" stroke="#1E1B4B" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Flower 2: Top Left Soft Pink -->
+      <g transform="translate(195, 145)">
+        <circle cx="0" cy="0" r="36" fill="#FDA4AF" stroke="#1E1B4B" stroke-width="8"/>
+        <path d="M -18 -8 C -8 -24, 16 -20, 20 0 C 24 18, 0 24, -14 12 C -22 4, -12 -10, 2 -10 C 10 -10, 10 2, 2 2" 
+              fill="none" stroke="#1E1B4B" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Flower 3: Top Right Soft Pink -->
+      <g transform="translate(317, 145)">
+        <circle cx="0" cy="0" r="36" fill="#FDA4AF" stroke="#1E1B4B" stroke-width="8"/>
+        <path d="M -18 -8 C -8 -24, 16 -20, 20 0 C 24 18, 0 24, -14 12 C -22 4, -12 -10, 2 -10 C 10 -10, 10 2, 2 2" 
+              fill="none" stroke="#1E1B4B" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Flower 4: Mid Left Coral -->
+      <g transform="translate(155, 195)">
+        <circle cx="0" cy="0" r="38" fill="#F43F5E" stroke="#1E1B4B" stroke-width="8"/>
+        <path d="M -20 -9 C -9 -27, 18 -22, 23 0 C 27 20, 0 27, -16 14 C -25 5, -13 -12, 2 -12 C 12 -12, 12 2, 2 2" 
+              fill="none" stroke="#1E1B4B" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Flower 5: Mid Center Deep Rose -->
+      <g transform="translate(230, 200)">
+        <circle cx="0" cy="0" r="44" fill="#E11D48" stroke="#1E1B4B" stroke-width="8"/>
+        <path d="M -23 -11 C -11 -32, 21 -26, 27 0 C 31 23, 0 31, -19 17 C -29 6, -16 -15, 2 -15 C 15 -15, 15 2, 2 2" 
+              fill="none" stroke="#1E1B4B" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Flower 6: Mid Right Bright Coral -->
+      <g transform="translate(305, 205)">
+        <circle cx="0" cy="0" r="42" fill="#F43F5E" stroke="#1E1B4B" stroke-width="8"/>
+        <path d="M -22 -10 C -10 -30, 20 -25, 26 0 C 30 22, 0 30, -18 16 C -28 6, -15 -14, 2 -14 C 14 -14, 14 2, 2 2" 
+              fill="none" stroke="#1E1B4B" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Flower 7: Bottom Small Rose -->
+      <g transform="translate(205, 240)">
+        <circle cx="0" cy="0" r="28" fill="#F43F5E" stroke="#1E1B4B" stroke-width="7"/>
+        <path d="M -14 -6 C -6 -18, 12 -15, 15 0 C 18 13, 0 18, -10 9 C -17 3, -9 -8, 2 -8" 
+              fill="none" stroke="#1E1B4B" stroke-width="5" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- Vase Group -->
+    <g id="vase">
+      <!-- Main Vase Silhouette -->
+      <path d="M 190 250 
+               C 180 250, 170 260, 180 280 
+               C 150 330, 150 400, 185 435 
+               C 210 455, 302 455, 327 435 
+               C 362 400, 362 330, 332 280 
+               C 342 260, 332 250, 322 250 
+               Z" 
+            fill="#1E295B" stroke="#1E1B4B" stroke-width="12" stroke-linejoin="round" />
+
+      <!-- Yellow / Gold Horizontal Stripes -->
+      <path d="M 180 285 C 158 320, 155 350, 160 370 L 352 370 C 357 350, 354 320, 332 285 Z" fill="#F59E0B" />
+      <path d="M 160 370 C 168 400, 185 425, 210 442 L 302 442 C 327 425, 344 400, 352 370 Z" fill="#F59E0B" />
+
+      <!-- Re-apply Navy Stripe Cutouts -->
+      <path d="M 168 322 C 162 340, 161 350, 161 355 L 351 355 C 351 350, 350 340, 344 322 Z" fill="#1E295B" />
+      <path d="M 164 400 C 180 422, 205 438, 225 444 L 287 444 C 307 438, 332 422, 348 400 Z" fill="#1E295B" />
+
+      <!-- Vase White Highlights -->
+      <ellipse cx="188" cy="335" rx="8" ry="16" fill="#FFFFFF" opacity="0.8" />
+      <ellipse cx="180" cy="390" rx="6" ry="12" fill="#FFFFFF" opacity="0.8" />
+      <ellipse cx="180" cy="425" rx="5" ry="8" fill="#FFFFFF" opacity="0.8" />
+    </g>
   </g>
 </svg>
