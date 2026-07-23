@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ShoppingBag, Plus, Minus, Send, Check } from 'lucide-react'
 import { useProduct } from '../hooks/useProducts'
@@ -10,6 +10,7 @@ import { formatSoldCount, getProductSoldCount } from '../utils/productSales'
 import { calculateFlowerFreshness } from '../utils/flowerFreshness'
 import { Button } from '../components/ui/Button'
 import { trackWAClick } from '../utils/analytics'
+import { updateSEOMetadata } from '../utils/seo'
 
 export const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -21,6 +22,43 @@ export const ProductDetail: React.FC = () => {
 
   const handleIncrement = () => setQuantity((prev) => prev + 1)
   const handleDecrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
+
+  useEffect(() => {
+    if (!product) return
+    const canonical = `https://kembangseladang.com/products/${product.id}`
+    const title = `${product.name} — Buket Bunga Kembang Seladang`
+    const description = product.description || `Pesan ${product.name} buket bunga segar premium di Kembang Seladang. Pengiriman cepat ke Tangerang Selatan & sekitarnya.`
+
+    updateSEOMetadata({
+      title,
+      description,
+      canonicalUrl: canonical,
+      ogImage: product.image || 'https://kembangseladang.com/logo.png',
+      ogType: 'product',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        'name': product.name,
+        'image': product.image ? [product.image] : ['https://kembangseladang.com/logo.png'],
+        'description': description,
+        'brand': {
+          '@type': 'Brand',
+          'name': 'Kembang Seladang'
+        },
+        'offers': {
+          '@type': 'Offer',
+          'url': canonical,
+          'priceCurrency': 'IDR',
+          'price': product.base_price,
+          'availability': 'https://schema.org/InStock',
+          'seller': {
+            '@type': 'Organization',
+            'name': 'Kembang Seladang'
+          }
+        }
+      }
+    })
+  }, [product])
 
   const handleAddToCart = () => {
     if (!product) return

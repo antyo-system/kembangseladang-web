@@ -10,10 +10,12 @@ import { Articles } from './pages/Articles'
 import { ArticleDetail } from './pages/ArticleDetail'
 import { About } from './pages/About'
 import { Contact } from './pages/Contact'
+import { NotFound } from './pages/NotFound'
 import { supabaseConfigError } from './lib/supabase'
 
 import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
 import { trackPageView } from './utils/analytics'
+import { updateSEOMetadata, getFloristLocalBusinessSchema } from './utils/seo'
 
 export const App: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -21,6 +23,12 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     trackPageView(location.pathname)
+    // Inject Florist LocalBusiness Schema on root homepage
+    if (location.pathname === '/' || location.pathname === '/products') {
+      updateSEOMetadata({
+        jsonLd: getFloristLocalBusinessSchema()
+      })
+    }
   }, [location.pathname])
 
   const handleCartOpen = () => setIsCartOpen(true)
@@ -70,6 +78,7 @@ export const App: React.FC = () => {
           <Route path="/artikel/:slug" element={<ArticleDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 
