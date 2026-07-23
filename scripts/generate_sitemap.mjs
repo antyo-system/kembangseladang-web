@@ -27,7 +27,13 @@ const FALLBACK_ARTICLE_SLUGS = [
   'rekomendasi-warna-bunga-mawar-makna-dan-arti',
   'panduan-memilih-buket-bunga-ulang-tahun-terbaik',
   'tips-memilih-bunga-hantaran-dan-karangan-bunga-pernikahan',
-  'bunga-meja-vs-hand-bouquet-pilihan-rangkaian-segar'
+  'bunga-meja-vs-hand-bouquet-pilihan-rangkaian-segar',
+  'toko-bunga-terdekat-tangerang-selatan-rempoa',
+  'toko-bunga-bintaro-serpong-terdekat-pengiriman-cepat',
+  'rekomendasi-papan-bunga-dan-standing-flower-tangerang-selatan',
+  'tips-memilih-buket-bunga-valentine-dan-anniversary-romantis',
+  'rangkaian-bunga-meja-vas-kaca-dekorasi-ruang-tamu-kantor',
+  'buket-bunga-wisuda-terbaik-tangerang-selatan-jakarta-selatan'
 ]
 
 async function generateSitemap() {

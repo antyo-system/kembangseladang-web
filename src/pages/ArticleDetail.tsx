@@ -46,12 +46,11 @@ const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
             </h3>
           )
         }
-
         // Blockquote
         if (trimmed.startsWith('> ')) {
           return (
             <blockquote key={index} className="p-4 bg-primary-50/60 rounded-2xl border-l-4 border-primary-500 italic text-charcoal-800 text-xs sm:text-sm my-3">
-              {parseBoldText(trimmed.substring(2))}
+              {parseFormattedText(trimmed.substring(2))}
             </blockquote>
           )
         }
@@ -60,9 +59,9 @@ const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
         if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
           const text = trimmed.substring(2)
           return (
-            <ul key={index} className="list-disc list-inside pl-2 space-y-1">
+            <ul key={index} className="list-disc list-inside pl-2 space-y-1 my-1">
               <li className="text-charcoal-700">
-                {parseBoldText(text)}
+                {parseFormattedText(text)}
               </li>
             </ul>
           )
@@ -71,7 +70,7 @@ const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
         // Standard paragraph
         return (
           <p key={index} className="text-justify text-balance">
-            {parseBoldText(trimmed)}
+            {parseFormattedText(trimmed)}
           </p>
         )
       })}
@@ -79,13 +78,47 @@ const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
   )
 }
 
-// Inline parser for **bold** text
-function parseBoldText(text: string) {
-  const parts = text.split(/\*\*(.*?)\*\*/g)
+// Inline parser for **bold** text and [markdown links](url)
+function parseFormattedText(text: string) {
+  const regex = /(\[.*?\]\(.*?\)|\*\*.*?\*\*)/g
+  const parts = text.split(regex)
+
   return parts.map((part, i) => {
-    if (i % 2 === 1) {
-      return <strong key={i} className="font-bold text-charcoal-900">{part}</strong>
+    if (!part) return null
+
+    if (part.startsWith('[') && part.includes('](') && part.endsWith(')')) {
+      const match = part.match(/^\[(.*?)\]\((.*?)\)$/)
+      if (match) {
+        const linkText = match[1]
+        const linkUrl = match[2]
+        const isWa = linkUrl.includes('wa.me') || linkUrl.includes('whatsapp')
+
+        return (
+          <a
+            key={i}
+            href={linkUrl}
+            target={linkUrl.startsWith('http') ? '_blank' : '_self'}
+            rel="noreferrer"
+            className={
+              isWa
+                ? 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs no-underline transition-all active:scale-95 shadow-sm my-1 mx-0.5'
+                : 'text-primary-600 font-bold underline hover:text-primary-700'
+            }
+          >
+            {linkText}
+          </a>
+        )
+      }
     }
+
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={i} className="font-bold text-charcoal-900">
+          {part.slice(2, -2)}
+        </strong>
+      )
+    }
+
     return part
   })
 }

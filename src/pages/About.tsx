@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Sparkles, Calendar, Heart, ShieldCheck } from 'lucide-react'
+import { updateSEOMetadata, getFloristLocalBusinessSchema } from '../utils/seo'
 
 export const About: React.FC = () => {
+  useEffect(() => {
+    updateSEOMetadata({
+      title: 'Tentang Kembang Seladang — Florist & Toko Bunga Terdekat Tangerang Selatan',
+      description: 'Mengenal Kembang Seladang, toko bunga terdekat di Rempoa Ciputat Tangerang Selatan. Penyedia buket mawar segar, bunga meja, dan papan ucapan berkualitas.',
+      jsonLd: getFloristLocalBusinessSchema()
+    })
+  }, [])
   return (
     <div className="pt-10 sm:pt-12 pb-20 space-y-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       

@@ -8,8 +8,8 @@ export interface SEOOptions {
   jsonLd?: Record<string, any>
 }
 
-const DEFAULT_TITLE = 'Kembang Seladang — Toko Bunga Segar & Buket Mawar Premium Tangerang Selatan'
-const DEFAULT_DESC = 'Kembang Seladang — Toko bunga segar & rangkaian premium di Tangerang Selatan. Pesan buket mawar wisuda, standing flower, bunga meja, dan papan bunga dengan pengiriman cepat.'
+const DEFAULT_TITLE = 'Kembang Seladang — Toko Bunga Terdekat & Florist Tangerang Selatan 24 Jam'
+const DEFAULT_DESC = 'Kembang Seladang — Toko bunga terdekat di Rempoa, Ciputat, Bintaro, & Tangerang Selatan. Pesan buket mawar segar, standing flower, dan papan bunga 24 jam dengan pengiriman cepat.'
 const SITE_DOMAIN = 'https://kembangseladang.com'
 const DEFAULT_OG_IMAGE = `${SITE_DOMAIN}/logo.png`
 
@@ -120,25 +120,45 @@ export function getFloristLocalBusinessSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Florist',
-    'name': 'Kembang Seladang',
+    'name': 'Kembang Seladang - Toko Bunga & Florist Tangerang Selatan',
+    'alternateName': 'Kembang Seladang Florist',
     'image': `${SITE_DOMAIN}/logo.png`,
     '@id': `${SITE_DOMAIN}/#store`,
     'url': SITE_DOMAIN,
-    'telephone': '+6281234567890',
+    'telephone': '+6287772636627',
     'priceRange': 'Rp 50.000 - Rp 2.500.000',
+    'hasMap': 'https://share.google/YxQVId3hVxgn9mInO',
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': 'Jl. Kembang Seladang, Serpong',
-      'addressLocality': 'Tangerang Selatan',
+      'streetAddress': 'Jl. Kepodang No.68, Rempoa',
+      'addressLocality': 'Kota Tangerang Selatan',
       'addressRegion': 'Banten',
-      'postalCode': '15310',
+      'postalCode': '15412',
       'addressCountry': 'ID'
     },
     'geo': {
       '@type': 'GeoCoordinates',
-      'latitude': -6.3016,
-      'longitude': 106.6631
+      'latitude': -6.2891,
+      'longitude': 106.7608
     },
+    'areaServed': [
+      'Rempoa',
+      'Ciputat Timur',
+      'Ciputat',
+      'Bintaro',
+      'Serpong',
+      'BSD City',
+      'Tangerang Selatan',
+      'Jakarta Selatan'
+    ],
+    'keywords': [
+      'toko bunga terdekat',
+      'toko bunga tangerang selatan',
+      'florist rempoa',
+      'buket bunga terdekat',
+      'papan bunga tangerang selatan',
+      'toko bunga ciputat'
+    ],
     'openingHoursSpecification': {
       '@type': 'OpeningHoursSpecification',
       'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -146,7 +166,8 @@ export function getFloristLocalBusinessSchema() {
       'closes': '21:00'
     },
     'sameAs': [
-      'https://kembangseladang.com'
+      'https://kembangseladang.com',
+      'https://share.google/YxQVId3hVxgn9mInO'
     ]
   }
 }
