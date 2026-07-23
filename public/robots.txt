@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Exclude search / internal routes if any
+Disallow: /api/
+Disallow: /admin/
+
+# Canonical Sitemap XML for Googlebot & Bingbot
+Sitemap: https://kembangseladang.com/sitemap.xml
