@@ -8,7 +8,7 @@ export const Contact: React.FC = () => {
   useEffect(() => {
     updateSEOMetadata({
       title: 'Kontak & Alamat Toko Bunga Terdekat Rempoa Ciputat | Kembang Seladang',
-      description: 'Hubungi toko bunga terdekat Kembang Seladang di Rempoa Ciputat Tangerang Selatan. Layanan buket mawar, standing flower, dan papan bunga 24 jam via WhatsApp 0877-7263-6627.',
+      description: 'Hubungi toko bunga terdekat Kembang Seladang di Rempoa Ciputat Tangerang Selatan. Layanan buket mawar, standing flower, dan papan bunga via WhatsApp 0877-7263-6627.',
       jsonLd: getFloristLocalBusinessSchema()
     })
   }, [])

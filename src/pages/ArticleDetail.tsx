@@ -9,22 +9,27 @@ import { Button } from '../components/ui/Button'
 
 import { trackWAClick } from '../utils/analytics'
 
-// Simple markdown renderer to avoid external dependencies
+// Full-featured, clean markdown renderer
 const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
   const lines = content.split('\n')
   
   return (
-    <div className="space-y-4 text-charcoal-700 leading-relaxed text-sm sm:text-base">
+    <div className="space-y-3 text-charcoal-700 leading-relaxed text-sm sm:text-base text-left">
       {lines.map((line, index) => {
         const trimmed = line.trim()
         
         if (!trimmed) return <div key={index} className="h-2" />
 
+        // Horizontal Rule
+        if (trimmed === '---' || trimmed === '***' || trimmed === '___') {
+          return <hr key={index} className="my-6 border-t border-primary-100/80" />
+        }
+
         // H1
         if (trimmed.startsWith('# ')) {
           return (
-            <h1 key={index} className="font-display text-2xl sm:text-3xl font-extrabold text-charcoal-900 pt-6 pb-2 border-b border-primary-100">
-              {trimmed.substring(2)}
+            <h1 key={index} className="font-display text-2xl sm:text-3xl font-extrabold text-charcoal-900 pt-6 pb-2 border-b border-primary-100 text-left">
+              {parseFormattedText(trimmed.substring(2))}
             </h1>
           )
         }
@@ -32,8 +37,8 @@ const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
         // H2
         if (trimmed.startsWith('## ')) {
           return (
-            <h2 key={index} className="font-display text-xl sm:text-2xl font-bold text-charcoal-900 pt-5 pb-2">
-              {trimmed.substring(3)}
+            <h2 key={index} className="font-display text-xl sm:text-2xl font-bold text-charcoal-900 pt-5 pb-2 text-left">
+              {parseFormattedText(trimmed.substring(3))}
             </h2>
           )
         }
@@ -41,35 +46,48 @@ const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
         // H3
         if (trimmed.startsWith('### ')) {
           return (
-            <h3 key={index} className="font-display text-lg font-bold text-charcoal-900 pt-4 pb-1">
-              {trimmed.substring(4)}
+            <h3 key={index} className="font-display text-lg font-bold text-charcoal-900 pt-4 pb-1 text-left">
+              {parseFormattedText(trimmed.substring(4))}
             </h3>
           )
         }
+
         // Blockquote
         if (trimmed.startsWith('> ')) {
           return (
-            <blockquote key={index} className="p-4 bg-primary-50/60 rounded-2xl border-l-4 border-primary-500 italic text-charcoal-800 text-xs sm:text-sm my-3">
+            <blockquote key={index} className="p-4 bg-primary-50/60 rounded-2xl border-l-4 border-primary-500 italic text-charcoal-800 text-xs sm:text-sm my-3 text-left">
               {parseFormattedText(trimmed.substring(2))}
             </blockquote>
           )
         }
 
-        // List item
-        if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-          const text = trimmed.substring(2)
+        // Numbered list item e.g. "1. ", "2. "
+        const numberedMatch = trimmed.match(/^(\d+)\.\s+(.*)$/)
+        if (numberedMatch) {
+          const num = numberedMatch[1]
+          const text = numberedMatch[2]
           return (
-            <ul key={index} className="list-disc list-inside pl-2 space-y-1 my-1">
-              <li className="text-charcoal-700">
-                {parseFormattedText(text)}
-              </li>
-            </ul>
+            <div key={index} className="flex gap-2.5 items-start my-2 text-charcoal-700 text-left">
+              <span className="font-bold text-primary-600 min-w-[20px] text-right shrink-0">{num}.</span>
+              <div className="flex-1 leading-relaxed">{parseFormattedText(text)}</div>
+            </div>
           )
         }
 
-        // Standard paragraph
+        // Bullet list item "- " or "* "
+        if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+          const text = trimmed.substring(2)
+          return (
+            <div key={index} className="flex gap-2.5 items-start my-1.5 text-charcoal-700 text-left pl-2">
+              <span className="text-primary-500 font-bold shrink-0 mt-2 h-1.5 w-1.5 rounded-full bg-primary-500" />
+              <div className="flex-1 leading-relaxed">{parseFormattedText(text)}</div>
+            </div>
+          )
+        }
+
+        // Standard paragraph (Clean left alignment, NO text-justify)
         return (
-          <p key={index} className="text-justify text-balance">
+          <p key={index} className="text-left text-charcoal-700 leading-relaxed my-1">
             {parseFormattedText(trimmed)}
           </p>
         )
@@ -78,14 +96,15 @@ const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
   )
 }
 
-// Inline parser for **bold** text and [markdown links](url)
-function parseFormattedText(text: string) {
-  const regex = /(\[.*?\]\(.*?\)|\*\*.*?\*\*)/g
+// Inline parser for [markdown links](url), **bold**, and *italic*
+function parseFormattedText(text: string): React.ReactNode[] {
+  const regex = /(\[.*?\]\(.*?\)|\*\*.*?\*\*|\*[^*]+?\*)/g
   const parts = text.split(regex)
 
   return parts.map((part, i) => {
     if (!part) return null
 
+    // Markdown Link: [text](url)
     if (part.startsWith('[') && part.includes('](') && part.endsWith(')')) {
       const match = part.match(/^\[(.*?)\]\((.*?)\)$/)
       if (match) {
@@ -101,21 +120,31 @@ function parseFormattedText(text: string) {
             rel="noreferrer"
             className={
               isWa
-                ? 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs no-underline transition-all active:scale-95 shadow-sm my-1 mx-0.5'
+                ? 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs no-underline transition-all active:scale-95 shadow-sm my-1 mx-1 align-middle'
                 : 'text-primary-600 font-bold underline hover:text-primary-700'
             }
           >
-            {linkText}
+            {parseFormattedText(linkText)}
           </a>
         )
       }
     }
 
-    if (part.startsWith('**') && part.endsWith('**')) {
+    // Bold: **text**
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
       return (
         <strong key={i} className="font-bold text-charcoal-900">
-          {part.slice(2, -2)}
+          {parseFormattedText(part.slice(2, -2))}
         </strong>
+      )
+    }
+
+    // Italic: *text*
+    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
+      return (
+        <em key={i} className="italic text-charcoal-800">
+          {parseFormattedText(part.slice(1, -1))}
+        </em>
       )
     }
 

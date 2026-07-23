@@ -8,8 +8,8 @@ export interface SEOOptions {
   jsonLd?: Record<string, any>
 }
 
-const DEFAULT_TITLE = 'Kembang Seladang — Toko Bunga Terdekat & Florist Tangerang Selatan 24 Jam'
-const DEFAULT_DESC = 'Kembang Seladang — Toko bunga terdekat di Rempoa, Ciputat, Bintaro, & Tangerang Selatan. Pesan buket mawar segar, standing flower, dan papan bunga 24 jam dengan pengiriman cepat.'
+const DEFAULT_TITLE = 'Kembang Seladang — Toko Bunga Terdekat & Florist Tangerang Selatan'
+const DEFAULT_DESC = 'Kembang Seladang — Toko bunga terdekat di Rempoa, Ciputat, Bintaro, & Tangerang Selatan. Pesan buket mawar segar, standing flower, dan papan bunga dengan pengiriman cepat.'
 const SITE_DOMAIN = 'https://kembangseladang.com'
 const DEFAULT_OG_IMAGE = `${SITE_DOMAIN}/logo.png`
 

@@ -305,9 +305,9 @@ Baik Hand Bouquet maupun Bunga Meja, **Kembang Seladang** menjamin kesegaran kun
   {
     id: 'seo-art-6',
     slug: 'toko-bunga-terdekat-tangerang-selatan-rempoa',
-    title: 'Toko Bunga Terdekat di Tangerang Selatan & Rempoa: Pesan Buket & Rangkaian Segar 24 Jam',
+    title: 'Toko Bunga Terdekat di Tangerang Selatan & Rempoa: Pesan Buket & Rangkaian Segar',
     meta_title: 'Toko Bunga Terdekat Rempoa & Tangerang Selatan | Kembang Seladang',
-    meta_description: 'Cari toko bunga terdekat di Rempoa, Ciputat, Bintaro, & Tangerang Selatan? Kembang Seladang melayani pesanan buket mawar segar, papan bunga, dan standing flower 24 jam dengan pengiriman cepat.',
+    meta_description: 'Cari toko bunga terdekat di Rempoa, Ciputat, Bintaro, & Tangerang Selatan? Kembang Seladang melayani pesanan buket mawar segar, papan bunga, dan standing flower dengan pengiriman cepat.',
     focus_keyword: 'toko bunga terdekat',
     excerpt: 'Mencari toko bunga terdekat dengan pilihan mawar segar, buket wisuda, dan karangan papan bunga? Simak keunggulan layanan florist Kembang Seladang Rempoa Tangerang Selatan.',
     cover_image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&q=80&w=1200',
@@ -320,7 +320,7 @@ Baik Hand Bouquet maupun Bunga Meja, **Kembang Seladang** menjamin kesegaran kun
     published_at: new Date('2026-07-23T10:00:00Z').toISOString(),
     views_count: 210,
     created_at: new Date('2026-07-23T10:00:00Z').toISOString(),
-    content: `# Toko Bunga Terdekat di Tangerang Selatan & Rempoa: Pesan Buket & Rangkaian Segar 24 Jam
+    content: `# Toko Bunga Terdekat di Tangerang Selatan & Rempoa: Pesan Buket & Rangkaian Segar
 
 Saat membutuhkan hadiah kejutan ulang tahun, ucapan selamat wisuda, atau ucapan duka cita mendadak, menemukan **toko bunga terdekat** yang responsif, menyediakan bunga potong segar kualitas terbaik, dan melayani pengiriman cepat adalah kunci utama.
 
@@ -336,7 +336,7 @@ Setiap kuntum mawar, lily, tulip, dan hortensia yang kami rangkai dipilah secara
 ### 2. Layanan Pengiriman Cepat 1–2 Jam Sampai
 Butuh buket bunga dadakan untuk acara hari ini? Tim kurir internal kami siap mengantarkan buket bunga tangan (*hand bouquet*) maupun *standing flower* langsung ke lokasi penerima dalam hitungan jam dengan garansi kesegaran bunga tetap terjaga.
 
-### 3. Pemesanan Praktis Online & Konsultasi WhatsApp 24 Jam
+### 3. Pemesanan Praktis Online & Konsultasi WhatsApp Respon Cepat
 Anda tidak perlu repot keluar rumah atau terjebak macet. Cukup pilih katalog di **kembangseladang.com** atau konsultasikan kebutuhan desain buket custom Anda langsung dengan tim florist profesional kami melalui WhatsApp **0877-7263-6627**.
 
 ---
@@ -353,7 +353,7 @@ Anda tidak perlu repot keluar rumah atau terjebak macet. Cukup pilih katalog di 
 
 - **Nama Toko:** Kembang Seladang Florist
 - **Alamat:** Jl. Kepodang No.68, Rempoa, Kec. Ciputat Tim., Kota Tangerang Selatan, Banten 15412
-- **Jam Operasional:** 07:00 – 21:00 WIB (Pemesanan WhatsApp 24 Jam)
+- **Jam Operasional:** 07:00 – 21:00 WIB (Buka Setiap Hari)
 - **WhatsApp:** [0877-7263-6627 (Priska)](https://wa.me/6287772636627)
 - **Google Maps:** [Kembang Seladang di Google Maps](https://share.google/YxQVId3hVxgn9mInO)
 
