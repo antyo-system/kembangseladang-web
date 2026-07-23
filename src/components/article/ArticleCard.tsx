@@ -63,9 +63,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
           <Link
             to={`/articles/${article.slug}`}
             className="inline-flex items-center text-sm font-semibold text-primary-600 hover:text-primary-700 group-hover:translate-x-1 transition-all duration-300"
+            aria-label={`Baca panduan ${article.title}`}
           >
-            <span>Baca Selengkapnya</span>
-            <ArrowRight className="w-4 h-4 ml-1.5" />
+            <span className="line-clamp-1">Baca panduan {article.title}</span>
+            <ArrowRight className="w-4 h-4 ml-1.5 shrink-0" />
           </Link>
         </div>
       </div>
