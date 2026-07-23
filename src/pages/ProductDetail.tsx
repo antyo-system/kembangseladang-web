@@ -9,6 +9,7 @@ import { getProductDiscountPercentage, getProductOriginalPrice } from '../utils/
 import { formatSoldCount, getProductSoldCount } from '../utils/productSales'
 import { calculateFlowerFreshness } from '../utils/flowerFreshness'
 import { Button } from '../components/ui/Button'
+import { trackWAClick } from '../utils/analytics'
 
 export const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -30,6 +31,7 @@ export const ProductDetail: React.FC = () => {
 
   const handleBuyNowDirect = () => {
     if (!product) return
+    trackWAClick({ productId: product.id, productName: product.name })
     const cartItem = { product, quantity }
     const message = buildCartMessage([cartItem])
     const url = buildWhatsAppUrl(message)

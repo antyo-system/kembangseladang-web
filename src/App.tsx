@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { WhatsAppFAB } from './components/layout/WhatsAppFAB'
@@ -13,9 +13,15 @@ import { Contact } from './pages/Contact'
 import { supabaseConfigError } from './lib/supabase'
 
 import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
+import { trackPageView } from './utils/analytics'
 
 export const App: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => {
+    trackPageView(location.pathname)
+  }, [location.pathname])
 
   const handleCartOpen = () => setIsCartOpen(true)
   const handleCartClose = () => setIsCartOpen(false)

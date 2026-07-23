@@ -7,6 +7,8 @@ import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { Button } from '../components/ui/Button'
 
+import { trackWAClick } from '../utils/analytics'
+
 // Simple markdown renderer to avoid external dependencies
 const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
   const lines = content.split('\n')
@@ -298,6 +300,7 @@ export const ArticleDetail: React.FC = () => {
                     href={`https://wa.me/6281260000000?text=Halo%20Kembang%20Seladang,%20saya%20tertarik%20pesan%20bunga%20${encodeURIComponent(p.name)}`}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => trackWAClick({ productId: p.id, productName: p.name })}
                     className="w-full py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-[11px] font-bold text-center block transition-colors"
                   >
                     Pesan via WA
