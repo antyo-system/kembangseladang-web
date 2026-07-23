@@ -4,6 +4,7 @@ export interface SEOOptions {
   canonicalUrl?: string
   ogImage?: string
   ogType?: 'website' | 'article' | 'product'
+  noindex?: boolean
   jsonLd?: Record<string, any>
 }
 
@@ -13,7 +14,7 @@ const SITE_DOMAIN = 'https://kembangseladang.com'
 const DEFAULT_OG_IMAGE = `${SITE_DOMAIN}/logo.png`
 
 /**
- * Dynamically updates document SEO head tags (title, meta description, OG tags, canonical link, JSON-LD)
+ * Dynamically updates document SEO head tags (title, meta description, OG tags, canonical link, JSON-LD, robots)
  */
 export function updateSEOMetadata(options: SEOOptions) {
   if (typeof document === 'undefined') return
@@ -84,7 +85,20 @@ export function updateSEOMetadata(options: SEOOptions) {
   }
   canonicalTag.setAttribute('href', canonical)
 
-  // 8. JSON-LD Structured Data
+  // 8. Robots Meta Tag (Prevents Soft 404 indexing in Single Page App)
+  let robotsTag = document.querySelector('meta[name="robots"]')
+  if (options.noindex) {
+    if (!robotsTag) {
+      robotsTag = document.createElement('meta')
+      robotsTag.setAttribute('name', 'robots')
+      document.head.appendChild(robotsTag)
+    }
+    robotsTag.setAttribute('content', 'noindex, follow')
+  } else if (robotsTag) {
+    robotsTag.remove()
+  }
+
+  // 9. JSON-LD Structured Data
   let jsonLdScript = document.getElementById('dynamic-jsonld-schema') as HTMLScriptElement | null
   if (options.jsonLd) {
     if (!jsonLdScript) {

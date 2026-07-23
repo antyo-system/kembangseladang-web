@@ -9,7 +9,8 @@ export const NotFound: React.FC = () => {
     updateSEOMetadata({
       title: 'Halaman Tidak Ditemukan (404) | Kembang Seladang',
       description: 'Halaman yang Anda cari tidak dapat ditemukan atau telah dipindahkan. Kembali ke katalog buket bunga Kembang Seladang.',
-      canonicalUrl: 'https://kembangseladang.com/404'
+      canonicalUrl: 'https://kembangseladang.com/404',
+      noindex: true
     })
   }, [])
 
