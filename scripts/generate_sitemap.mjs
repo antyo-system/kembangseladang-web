@@ -191,6 +191,8 @@ ${merchantItems.map(item => `    <item>
       <g:brand>${item.brand}</g:brand>
       <g:google_product_category>${item.google_product_category}</g:google_product_category>
       <g:identifier_exists>no</g:identifier_exists>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_SLA>same_day</g:pickup_SLA>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
