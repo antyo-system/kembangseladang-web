@@ -67,6 +67,11 @@ export const Footer: React.FC = () => {
                   Kontak Kami
                 </Link>
               </li>
+              <li>
+                <Link to="/return-policy" className="text-charcoal-400 hover:text-primary-400 transition-colors">
+                  Kebijakan Retur & Garansi
+                </Link>
+              </li>
             </ul>
           </div>
 

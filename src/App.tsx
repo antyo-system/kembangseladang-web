@@ -10,6 +10,7 @@ import { Articles } from './pages/Articles'
 import { ArticleDetail } from './pages/ArticleDetail'
 import { About } from './pages/About'
 import { Contact } from './pages/Contact'
+import { ReturnPolicy } from './pages/ReturnPolicy'
 import { NotFound } from './pages/NotFound'
 import { supabaseConfigError } from './lib/supabase'
 
@@ -78,6 +79,9 @@ export const App: React.FC = () => {
           <Route path="/artikel/:slug" element={<ArticleDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/kebijakan-pengembalian" element={<ReturnPolicy />} />
+          <Route path="/returns" element={<ReturnPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

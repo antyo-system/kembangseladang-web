@@ -46,6 +46,10 @@ async function generateSitemap() {
     { loc: `${SITE_URL}/products`, priority: '0.9', changefreq: 'daily', lastmod: today },
     { loc: `${SITE_URL}/articles`, priority: '0.9', changefreq: 'daily', lastmod: today },
     { loc: `${SITE_URL}/blog`, priority: '0.9', changefreq: 'daily', lastmod: today },
+    { loc: `${SITE_URL}/about`, priority: '0.8', changefreq: 'monthly', lastmod: today },
+    { loc: `${SITE_URL}/contact`, priority: '0.8', changefreq: 'monthly', lastmod: today },
+    { loc: `${SITE_URL}/return-policy`, priority: '0.8', changefreq: 'monthly', lastmod: today },
+    { loc: `${SITE_URL}/kebijakan-pengembalian`, priority: '0.8', changefreq: 'monthly', lastmod: today },
   ]
 
   // 1. Fetch live articles from Supabase
