@@ -207,10 +207,12 @@ export const ProductDetail: React.FC = () => {
               <p className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400">Warna Bunga</p>
               <p className="text-sm font-semibold text-charcoal-800">{product.color || 'Custom/Sesuai Request'}</p>
             </div>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400">Tangkai</p>
-              <p className="text-sm font-semibold text-charcoal-800">{product.stem_length ? `Mawar ${product.stem_length}` : 'Bebas'}</p>
-            </div>
+            {product.stem_length && product.stem_length.toLowerCase() !== 'bebas' && (
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400">Panjang Tangkai</p>
+                <p className="text-sm font-semibold text-charcoal-800">{product.stem_length}</p>
+              </div>
+            )}
             <div>
               <p className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400 font-body">Satuan Jual</p>
               <p className="text-sm font-semibold text-charcoal-800">{product.unit || 'Buket'}</p>
