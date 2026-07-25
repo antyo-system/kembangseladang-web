@@ -16,7 +16,17 @@ export const Home: React.FC = () => {
   const latestArticles = articles?.slice(0, 3) || []
 
   return (
-    <div className="pt-6 sm:pt-8 space-y-12 pb-20">
+    <div className="pt-4 sm:pt-6 space-y-10 pb-20">
+      {/* Primary H1 Hero Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left space-y-2">
+        <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-charcoal-900 tracking-tight leading-snug">
+          Toko Bunga Terdekat &amp; Florist Tangerang Selatan — Kembang Seladang
+        </h1>
+        <p className="text-xs sm:text-sm text-charcoal-600 max-w-3xl leading-relaxed">
+          Menghadirkan buket mawar segar, standing flower ucapan, dan papan bunga mawar premium dengan pengiriman cepat ke Rempoa, Bintaro, Ciputat, &amp; Tangerang Selatan.
+        </p>
+      </section>
+
       {/* Flash Sale Banner Section */}
       <FlashSaleSection />
       
