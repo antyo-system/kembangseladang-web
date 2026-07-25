@@ -44,6 +44,17 @@ export const Footer: React.FC = () => {
                   <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 11-2.89-2.89c.28 0 .54.04.79.1V9.41a6.33 6.33 0 00-.79-.05A6.34 6.34 0 1015.82 15.7V8.76a8.27 8.27 0 004.88 1.57V6.88a4.87 4.87 0 01-1.11-.19z" />
                 </svg>
               </a>
+              <a
+                href="https://www.youtube.com/@kembangseladang"
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 bg-charcoal-800 hover:bg-primary-600 rounded-full text-charcoal-300 hover:text-white transition-all duration-300 hover:-translate-y-1"
+                aria-label="YouTube Kembang Seladang"
+              >
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+              </a>
             </div>
           </div>
 
