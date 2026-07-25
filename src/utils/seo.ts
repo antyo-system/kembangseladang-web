@@ -170,6 +170,7 @@ export function getFloristLocalBusinessSchema() {
       'https://www.instagram.com/kembangseladang/',
       'https://www.tiktok.com/@kembangseladang',
       'https://www.youtube.com/@kembangseladang',
+      'https://id.pinterest.com/kembangseladang/',
       'https://share.google/YxQVId3hVxgn9mInO'
     ]
   }
