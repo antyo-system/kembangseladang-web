@@ -18,12 +18,15 @@ export const Home: React.FC = () => {
   return (
     <div className="pt-4 sm:pt-6 space-y-10 pb-20">
       {/* Primary H1 Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left space-y-2">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left space-y-3">
         <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-charcoal-900 tracking-tight leading-snug">
           Toko Bunga Terdekat &amp; Florist Tangerang Selatan — Kembang Seladang
         </h1>
-        <p className="text-xs sm:text-sm text-charcoal-600 max-w-3xl leading-relaxed">
-          Menghadirkan buket mawar segar, standing flower ucapan, dan papan bunga mawar premium dengan pengiriman cepat ke Rempoa, Bintaro, Ciputat, &amp; Tangerang Selatan.
+        <p className="text-xs sm:text-sm text-charcoal-600 max-w-4xl leading-relaxed">
+          Kembang Seladang adalah <strong>toko bunga terdekat</strong> dan <strong>florist Tangerang Selatan</strong> terpercaya yang berlokasi di Rempoa. Kami melayani pemesanan buket mawar segar, standing flower ucapan selamat &amp; duka cita, serta papan bunga mawar premium dengan pengiriman cepat Same-Day ke wilayah Bintaro, Ciputat, Pamulang, BSD, dan seluruh Tangerang Selatan.
+        </p>
+        <p className="text-xs sm:text-sm text-charcoal-600 max-w-4xl leading-relaxed">
+          Setiap Rangkaian Bunga di Toko Bunga Kembang Seladang dirangkai secara profesional menggunakan bunga mawar segar pilihan dari petani lokal dan impor terbaik. Kami memberikan garansi kesegaran bunga 24 jam untuk memastikan kepuasan setiap pelanggan.
         </p>
       </section>
 
