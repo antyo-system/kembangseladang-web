@@ -181,7 +181,9 @@ export const Products: React.FC = () => {
   const [maxPrice, setMaxPrice] = useState<number>(2500000)
   const [sortBy, setSortBy] = useState('terbaru')
   const [categoryTab, setCategoryTab] = useState<'bentuk' | 'momen'>('bentuk')
-  const [isFilterVisible, setIsFilterVisible] = useState(false)
+  const [isFilterVisible, setIsFilterVisible] = useState(
+    () => typeof window === 'undefined' || window.innerWidth >= 1024
+  )
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     harga: true,
     warna: false,
@@ -474,7 +476,7 @@ export const Products: React.FC = () => {
       <FlashSaleSection />
 
       {/* Main Content Layout */}
-      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+      <div className={`grid grid-cols-1 items-start gap-6 ${isFilterVisible ? 'lg:grid-cols-[260px_minmax(0,1fr)]' : ''}`}>
         
         {/* Filter Drawer / Sidebar */}
         {isFilterVisible && (
