@@ -78,6 +78,16 @@ export function getProductFlowerMeaning(product: Partial<Product> | null | undef
     return FLOWER_MEANING_DATABASE.merah
   }
 
+  // If admin provided a custom meaning in CMS, use it!
+  if (product.flower_meaning_custom && product.flower_meaning_custom.trim().length > 0) {
+    return {
+      tagline: `Makna Spesial Rangkaian ${product.name || 'Bunga'}`,
+      description: product.flower_meaning_custom.trim(),
+      emotion: product.moment_tag ? `✨ ${product.moment_tag}` : '🌸 Makna Spesial',
+      colorBadge: 'bg-primary-100 text-primary-900 border-primary-200'
+    }
+  }
+
   const searchable = [
     product.color,
     product.name,

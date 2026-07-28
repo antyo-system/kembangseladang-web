@@ -20,6 +20,8 @@ export interface Product {
   image?: string // From database, might be null/empty
   gallery_urls?: string[]
   video_url?: string
+  moment_tag?: string
+  flower_meaning_custom?: string
   is_live?: boolean
   created_at?: string
 }
