@@ -9,62 +9,62 @@ export interface FlowerMeaningInfo {
 
 export const FLOWER_MEANING_DATABASE: Record<string, FlowerMeaningInfo> = {
   merah: {
-    tagline: 'Cinta Membara & Romansa Sejati',
-    description: 'Mawar merah adalah simbol keabadian cinta, hasrat yang mendalam, dan keberanian. Sangat sempurna untuk perayaan anniversary pernikahan, Valentine, atau kejutan romantis pasangan.',
+    tagline: 'Cinta Membara, Ketulusan & Romansa Sejati',
+    description: 'Bunga berwarna merah adalah simbol keabadian cinta, ketulusan rasa, dan keberanian. Sangat sempurna untuk perayaan anniversary pernikahan, ucapan romantis, atau memberikan kesan mendalam bagi pasangan.',
     emotion: '🔥 Romantis & Passionate',
     colorBadge: 'bg-rose-100 text-rose-800 border-rose-200'
   },
   pinksweet: {
     tagline: 'Kelembutan, Kasih Sayang & Apresiasi Tulus',
-    description: 'Warna pink manis melambangkan kelembutan hati, kebahagiaan, dan rasa terima kasih yang mendalam. Pilihan favorit untuk hadiah ulang tahun sahabat, ucapan terima kasih untuk Ibu, atau hadiah wisuda.',
+    description: 'Bunga berwarna pink manis melambangkan kelembutan hati, kebahagiaan, dan rasa terima kasih yang mendalam. Pilihan favorit untuk hadiah ulang tahun sahabat, ucapan terima kasih untuk Ibu, atau kado kelulusan wisuda.',
     emotion: '🌸 Manis & Penuh Apresiasi',
     colorBadge: 'bg-pink-100 text-pink-800 border-pink-200'
   },
   pink: {
-    tagline: 'Kelembutan & Kasih Sayang',
-    description: 'Melambangkan kelembutan hati dan rasa kagum. Sangat pas untuk kado ulang tahun sahabat atau ungkapan kasih sayang.',
+    tagline: 'Kelembutan Hati & Ungkapan Kagum',
+    description: 'Bunga berwarna pink memancarkan kelembutan hati dan rasa kagum yang hangat. Sangat pas untuk kado ucapan selamat, ulang tahun sahabat, atau kado kasih sayang.',
     emotion: '🌸 Kelembutan Hati',
     colorBadge: 'bg-pink-100 text-pink-800 border-pink-200'
   },
   peach: {
     tagline: 'Ketulusan Hati & Kehangatan Persahabatan',
-    description: 'Mawar warna peach memancarkan nuansa hangat, bersahaja, dan jujur. Menjadi simbol ketulusan hubungan dan apresiasi tinggi untuk rekan kerja atau sahabat dekat.',
+    description: 'Bunga berwarna peach/salem memancarkan nuansa hangat, bersahaja, dan jujur. Menjadi simbol ketulusan hubungan dan apresiasi tinggi untuk rekan kerja atau sahabat dekat.',
     emotion: '🍑 Hangat & Tulus',
     colorBadge: 'bg-orange-100 text-orange-800 border-orange-200'
   },
   putih: {
     tagline: 'Kesucian, Kedamaian & Harapan Baru',
-    description: 'Bunga mawar putih menyampaikan pesan kemurnian niat, ketenangan, dan awal perjalanan baru yang suci. Cocok untuk buket pengantin (wedding bouquet), peresmian, maupun ucapan duka cita.',
+    description: 'Bunga berwarna putih menyampaikan pesan kemurnian niat, ketenangan, dan awal perjalanan baru yang suci. Cocok untuk buket pengantin (wedding bouquet), peresmian ucapan selamat, maupun ungkapan duka cita mendalam.',
     emotion: '🕊️ Suci & Suasana Hening',
     colorBadge: 'bg-slate-100 text-slate-800 border-slate-200'
   },
   candy: {
     tagline: 'Keceriaan, Energi Positif & Perayaan Manis',
-    description: 'Perpaduan warna cerah yang memancarkan energi positif dan antusiasme. Sangat pas untuk kejutan keberhasilan karir, kado wisuda, dan pesta ulang tahun meriah.',
+    description: 'Perpaduan warna bunga cerah yang memancarkan energi positif dan antusiasme. Sangat pas untuk kejutan keberhasilan karir, kado wisuda, dan pesta perayaan meriah.',
     emotion: '🍬 Ceria & Penuh Energi',
     colorBadge: 'bg-amber-100 text-amber-800 border-amber-200'
   },
   kuning: {
     tagline: 'Persahabatan Sejati & Optimisme',
-    description: 'Warna kuning cerah membawa kehangatan seperti sinar matahari. Melambangkan persahabatan yang erat, harapan baru, serta memberikan semangat positif.',
+    description: 'Bunga berwarna kuning cerah membawa kehangatan seperti sinar matahari. Melambangkan persahabatan yang erat, harapan baru, serta memberikan semangat positif.',
     emotion: '☀️ Optimis & Ceria',
     colorBadge: 'bg-yellow-100 text-yellow-800 border-yellow-200'
   },
   ungu: {
     tagline: 'Pesona Anggun, Kemewahan & Kebanggaan',
-    description: 'Mawar ungu memancarkan pesona misterius yang elegan, kebanggaan pencapaian, dan rasa kagum pada pandangan pertama.',
+    description: 'Bunga berwarna ungu memancarkan pesona misterius yang elegan, kebanggaan pencapaian, dan rasa kagum pada pandangan pertama.',
     emotion: '💜 Anggun & Mewah',
     colorBadge: 'bg-purple-100 text-purple-800 border-purple-200'
   },
   sunflower: {
     tagline: 'Semangat Pantang Menyerah & Harapan Masa Depan Cerah',
-    description: 'Bunga matahari selalu menghadap ke arah cahaya, melambangkan kehangatan, kebahagiaan sejati, dan harapan sukses di masa depan.',
+    description: 'Bunga matahari melambangkan kehangatan, kebahagiaan sejati, dan harapan sukses di masa depan.',
     emotion: '🌻 Semangat Masa Depan',
     colorBadge: 'bg-amber-100 text-amber-900 border-amber-200'
   },
   lily: {
     tagline: 'Keanggunan, Kemewahan & Kemurnian Hati',
-    description: 'Bunga lily memancarkan aroma harum yang menenangkan serta bentuk kuntum besar yang sangat anggun untuk hiasan meja dan buket wisuda.',
+    description: 'Bunga lili memancarkan aroma harum yang menenangkan serta bentuk kuntum besar yang sangat anggun untuk hiasan meja dan buket wisuda.',
     emotion: '👑 Anggun & Harum',
     colorBadge: 'bg-emerald-100 text-emerald-800 border-emerald-200'
   }
