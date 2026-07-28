@@ -448,11 +448,12 @@ export const ProductDetail: React.FC = () => {
           </div>
 
         </div>
+      </div>
 
-        {/* Customer Reviews Section (Full-width 100% container below main product grid) */}
-        <div className="pt-12 border-t border-cream-200/80">
-          <ProductReviews productId={product.id} productName={product.name} />
-        </div>
+      {/* Customer Reviews Section (Full-width 100% container below main product grid) */}
+      <div className="pt-12 border-t border-cream-200/80">
+        <ProductReviews productId={product.id} productName={product.name} />
+      </div>
 
     </div>
   )
