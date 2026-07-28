@@ -97,11 +97,11 @@ const MOMENT_FILTERS = [
 ]
 
 const MEANING_FILTERS = [
-  { value: 'romantis', label: '🔥 Cinta & Romansa (Merah)', terms: ['merah', 'red'] },
-  { value: 'apresiasi', label: '🌸 Kelembutan & Apresiasi (Pink)', terms: ['pinksweet', 'pink'] },
-  { value: 'ketulusan', label: '🍑 Ketulusan & Kehangatan (Peach)', terms: ['peach', 'salem'] },
-  { value: 'semangat', label: '☀️ Keceriaan & Semangat (Kuning)', terms: ['kuning', 'yellow', 'sunflower'] },
-  { value: 'kesucian', label: '🕊️ Kesucian & Kedamaian (Putih)', terms: ['putih', 'white'] }
+  { value: 'romantis', label: '🔥 Cinta & Romansa', terms: ['merah', 'red', 'romantis', 'cinta'] },
+  { value: 'apresiasi', label: '🌸 Kelembutan & Apresiasi', terms: ['pinksweet', 'pink', 'apresiasi', 'kelembutan'] },
+  { value: 'ketulusan', label: '🍑 Ketulusan & Kehangatan', terms: ['peach', 'salem', 'ketulusan', 'kehangatan'] },
+  { value: 'semangat', label: '☀️ Keceriaan & Semangat', terms: ['kuning', 'yellow', 'sunflower', 'semangat', 'keceriaan'] },
+  { value: 'kesucian', label: '🕊️ Kesucian & Kedamaian', terms: ['putih', 'white', 'kesucian', 'kedamaian'] }
 ]
 
 const FILTER_COLORS = [
