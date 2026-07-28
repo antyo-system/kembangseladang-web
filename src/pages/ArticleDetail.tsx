@@ -216,7 +216,7 @@ export const ArticleDetail: React.FC = () => {
       'description': article.meta_description || article.excerpt,
       'image': article.cover_image ? [article.cover_image] : [],
       'datePublished': article.published_at || article.created_at,
-      'dateModified': article.updated_at || article.published_at || article.created_at,
+      'dateModified': article.published_at || article.created_at,
       'author': {
         '@type': 'Organization',
         'name': article.author_name || article.author || 'Kembang Seladang'
