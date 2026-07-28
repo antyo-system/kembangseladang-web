@@ -22,50 +22,9 @@ interface ProductReviewsProps {
   productName: string
 }
 
-// Pre-seeded high quality reviews with official seller responses
+// Initial reviews default to empty array so only real customer reviews or Google Maps reviews are shown
 const INITIAL_MOCK_REVIEWS: Record<string, CustomerReview[]> = {
-  default: [
-    {
-      id: 'rev-1',
-      productId: 'default',
-      author: 'Siti Rahmawati',
-      location: 'Bintaro Sektor 7',
-      rating: 5,
-      title: 'Bunga Segar Banget & Wangi Alami!',
-      comment: 'Pesan pagi jam 9 untuk kejutan wisuda sepupu di UIN Ciputat, jam 10.15 sudah sampai di lokasi. Bunganya harum dan warna mawar pinknya cantik banget persis di foto. Packaging rapi dan dapat free kartu ucapan.',
-      date: '2 hari yang lalu',
-      verified: true,
-      likes: 12,
-      reply: 'Terima kasih banyak Kak Siti atas ulasannya! Kebahagiaan momen wisuda sepupunya adalah kebanggaan tim Florist Kembang Seladang. Ditunggu pesanan berikutnya ya Kak! 🌸✨',
-      replyDate: '1 hari yang lalu'
-    },
-    {
-      id: 'rev-2',
-      productId: 'default',
-      author: 'Dimas Prasetyo',
-      location: 'Rempoa, Tangerang Selatan',
-      rating: 5,
-      title: 'Respon Admin Cepat & Pengiriman Kilat',
-      comment: 'Beli buat hadiah anniversary istri. Penjual sangat kooperatif, bisa minta kartu ucapan custom sesuai keinginan. Istri suka banget, bunganya awet mekar sampai 5 hari di rumah.',
-      date: '5 hari yang lalu',
-      verified: true,
-      likes: 8,
-      reply: 'Selamat perayaan Anniversary untuk Mas Dimas & Istri! Terima kasih telah mempercayakan momen spesial ini kepada Kembang Seladang. Semoga langgeng selalu! ❤️',
-      replyDate: '4 hari yang lalu'
-    },
-    {
-      id: 'rev-3',
-      productId: 'default',
-      author: 'Anisa Amanda',
-      location: 'BSD City',
-      rating: 5,
-      title: 'Kertas Wrapping Korean Style Rapi Banget',
-      comment: 'Rangkaian bunganya estetik banget, wrappingnya kelihatan mewah padahal harganya bersahabat. Recommended florist di Tangsel!',
-      date: '1 minggu yang lalu',
-      verified: true,
-      likes: 15
-    }
-  ]
+  default: []
 }
 
 export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName }) => {
@@ -264,7 +223,24 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
 
       {/* Reviews List */}
       <div className="space-y-4">
-        {filteredReviews.map(rev => (
+        {filteredReviews.length === 0 ? (
+          <div className="bg-cream-50/60 border border-dashed border-cream-200 p-8 rounded-2xl text-center space-y-3">
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto shadow-2xs text-amber-500">
+              <Star className="w-6 h-6 fill-amber-400" />
+            </div>
+            <h4 className="font-bold text-charcoal-800 text-sm">Belum Ada Ulasan di Halaman Ini</h4>
+            <p className="text-xs text-charcoal-500 max-w-md mx-auto leading-relaxed">
+              Jadilah yang pertama memberikan ulasan pengalaman memesan buket {productName} atau beri ulasan langsung di Google Maps Kembang Seladang!
+            </p>
+            <div className="pt-2 flex justify-center gap-3">
+              <Button onClick={() => setIsModalOpen(true)} size="sm" className="rounded-xl text-xs font-bold">
+                <Plus className="w-3.5 h-3.5 mr-1" />
+                Tulis Ulasan Pertama
+              </Button>
+            </div>
+          </div>
+        ) : (
+          filteredReviews.map(rev => (
           <div
             key={rev.id}
             className="p-5 rounded-2xl bg-white border border-primary-100/40 hover:border-primary-200 transition-all space-y-3 shadow-2xs"
@@ -328,7 +304,8 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
               </button>
             </div>
           </div>
-        ))}
+        ))
+      )}
       </div>
 
       {/* Modal Tulis Ulasan */}
