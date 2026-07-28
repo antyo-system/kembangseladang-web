@@ -13,6 +13,7 @@ export interface CustomerReview {
   date: string
   verified: boolean
   likes: number
+  orderRef?: string
   reply?: string
   replyDate?: string
 }
@@ -37,6 +38,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
   const [formRating, setFormRating] = useState(5)
   const [formAuthor, setFormAuthor] = useState('')
   const [formLocation, setFormLocation] = useState('')
+  const [formOrderRef, setFormOrderRef] = useState('')
   const [formTitle, setFormTitle] = useState('')
   const [formComment, setFormComment] = useState('')
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -61,6 +63,8 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
     e.preventDefault()
     if (!formAuthor.trim() || !formComment.trim()) return
 
+    const isVerifiedOrder = formOrderRef.trim().length > 0
+
     const newRev: CustomerReview = {
       id: `rev-user-${Date.now()}`,
       productId,
@@ -70,7 +74,8 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
       title: formTitle.trim() || 'Pengalaman Sangat Memuaskan',
       comment: formComment.trim(),
       date: 'Baru saja',
-      verified: true,
+      verified: isVerifiedOrder,
+      orderRef: formOrderRef.trim() || undefined,
       likes: 0
     }
 
@@ -85,6 +90,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
       // Reset form
       setFormAuthor('')
       setFormLocation('')
+      setFormOrderRef('')
       setFormTitle('')
       setFormComment('')
       setFormRating(5)
@@ -249,10 +255,14 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
               <div>
                 <div className="flex items-center space-x-2">
                   <span className="font-bold text-sm text-charcoal-900">{rev.author}</span>
-                  {rev.verified && (
+                  {rev.verified ? (
                     <span className="inline-flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
                       <CheckCircle className="w-3 h-3 mr-1 text-emerald-600" />
-                      Pembeli Terverifikasi
+                      Pembeli Terverifikasi {rev.orderRef ? `(#${rev.orderRef})` : '(WA)'}
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center text-[10px] font-semibold text-charcoal-500 bg-cream-100 px-2 py-0.5 rounded-full border border-cream-200/60">
+                      💬 Pengunjung Web
                     </span>
                   )}
                 </div>
@@ -311,7 +321,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
       {/* Modal Tulis Ulasan */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-900/60 backdrop-blur-xs animate-fadeIn">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-5 border border-primary-100">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-5 border border-primary-100 max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setIsModalOpen(false)}
               className="absolute top-5 right-5 p-2 text-charcoal-400 hover:text-charcoal-700 rounded-full hover:bg-cream-100 transition-colors"
@@ -387,6 +397,23 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
                       className="w-full px-3.5 py-2 text-xs rounded-xl border border-cream-200 focus:outline-hidden focus:border-primary-500 bg-cream-50/50"
                     />
                   </div>
+                </div>
+
+                {/* Order Ref / WA Phone Number Verification Field */}
+                <div>
+                  <label className="block text-xs font-bold text-charcoal-700 mb-1">
+                    Kode Nota / No. HP WhatsApp (Opsional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Contoh: INV-87726 atau 0812345678"
+                    value={formOrderRef}
+                    onChange={e => setFormOrderRef(e.target.value)}
+                    className="w-full px-3.5 py-2 text-xs rounded-xl border border-cream-200 focus:outline-hidden focus:border-primary-500 bg-cream-50/50"
+                  />
+                  <p className="text-[10px] text-emerald-700 font-medium mt-1 flex items-center gap-1">
+                    💡 Isi dengan no. WA / nota pemesanan untuk mendapat badge <strong>✓ Pembeli Terverifikasi</strong>.
+                  </p>
                 </div>
 
                 {/* Review Title */}
