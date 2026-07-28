@@ -100,11 +100,18 @@ export const ProductDetail: React.FC = () => {
               'value': 0,
               'currency': 'IDR'
             },
-            'shippingDestination': {
-              '@type': 'DefinedRegion',
-              'addressCountry': 'ID',
-              'addressRegion': 'Banten'
-            },
+            'shippingDestination': [
+              {
+                '@type': 'DefinedRegion',
+                'addressCountry': 'ID',
+                'addressRegion': 'Banten'
+              },
+              {
+                '@type': 'DefinedRegion',
+                'addressCountry': 'ID',
+                'addressRegion': 'DKI Jakarta'
+              }
+            ],
             'deliveryTime': {
               '@type': 'ShippingDeliveryTime',
               'handlingTime': {
@@ -124,7 +131,10 @@ export const ProductDetail: React.FC = () => {
           'hasMerchantReturnPolicy': {
             '@type': 'MerchantReturnPolicy',
             'applicableCountry': 'ID',
-            'returnPolicyCategory': 'https://schema.org/MerchantReturnNotPermitted'
+            'returnPolicyCategory': 'https://schema.org/MerchantReturnNotPermitted',
+            'merchantReturnDays': 0,
+            'returnMethod': 'https://schema.org/ReturnInStore',
+            'returnFees': 'https://schema.org/FreeReturn'
           }
         }
       }
