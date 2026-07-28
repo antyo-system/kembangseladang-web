@@ -13,6 +13,8 @@ export interface CustomerReview {
   date: string
   verified: boolean
   likes: number
+  reply?: string
+  replyDate?: string
 }
 
 interface ProductReviewsProps {
@@ -20,7 +22,7 @@ interface ProductReviewsProps {
   productName: string
 }
 
-// Pre-seeded high quality reviews to ensure instant social proof for every product
+// Pre-seeded high quality reviews with official seller responses
 const INITIAL_MOCK_REVIEWS: Record<string, CustomerReview[]> = {
   default: [
     {
@@ -33,7 +35,9 @@ const INITIAL_MOCK_REVIEWS: Record<string, CustomerReview[]> = {
       comment: 'Pesan pagi jam 9 untuk kejutan wisuda sepupu di UIN Ciputat, jam 10.15 sudah sampai di lokasi. Bunganya harum dan warna mawar pinknya cantik banget persis di foto. Packaging rapi dan dapat free kartu ucapan.',
       date: '2 hari yang lalu',
       verified: true,
-      likes: 12
+      likes: 12,
+      reply: 'Terima kasih banyak Kak Siti atas ulasannya! Kebahagiaan momen wisuda sepupunya adalah kebanggaan tim Florist Kembang Seladang. Ditunggu pesanan berikutnya ya Kak! 🌸✨',
+      replyDate: '1 hari yang lalu'
     },
     {
       id: 'rev-2',
@@ -45,7 +49,9 @@ const INITIAL_MOCK_REVIEWS: Record<string, CustomerReview[]> = {
       comment: 'Beli buat hadiah anniversary istri. Penjual sangat kooperatif, bisa minta kartu ucapan custom sesuai keinginan. Istri suka banget, bunganya awet mekar sampai 5 hari di rumah.',
       date: '5 hari yang lalu',
       verified: true,
-      likes: 8
+      likes: 8,
+      reply: 'Selamat perayaan Anniversary untuk Mas Dimas & Istri! Terima kasih telah mempercayakan momen spesial ini kepada Kembang Seladang. Semoga langgeng selalu! ❤️',
+      replyDate: '4 hari yang lalu'
     },
     {
       id: 'rev-3',
@@ -235,6 +241,27 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
         </button>
       </div>
 
+      {/* Google Maps Direct Review Banner */}
+      <div className="bg-gradient-to-r from-primary-50 via-cream-50 to-primary-50 p-5 rounded-2xl border border-primary-200/70 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xs">
+        <div className="space-y-1 text-center sm:text-left">
+          <div className="inline-flex items-center space-x-1.5 text-xs font-bold text-primary-800 bg-white px-2.5 py-1 rounded-full border border-primary-200 shadow-2xs">
+            <span>📍 Google Maps Reviews (Terverifikasi &amp; Bebas Manipulasi)</span>
+          </div>
+          <p className="text-xs text-charcoal-600">
+            Ingin memberikan ulasan resmi yang 100% langsung terhubung dengan Google Maps Kembang Seladang?
+          </p>
+        </div>
+        <a
+          href="https://share.google/YxQVId3hVxgn9mInO"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2.5 rounded-xl bg-white hover:bg-primary-50 border border-primary-300 text-primary-900 font-extrabold text-xs shadow-2xs transition-all flex items-center shrink-0"
+        >
+          <Star className="w-4 h-4 text-amber-500 fill-amber-400 mr-1.5" />
+          Tulis Ulasan di Google Maps
+        </a>
+      </div>
+
       {/* Reviews List */}
       <div className="space-y-4">
         {filteredReviews.map(rev => (
@@ -272,6 +299,19 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
               <h4 className="font-bold text-sm text-charcoal-800">{rev.title}</h4>
               <p className="text-xs text-charcoal-600 leading-relaxed mt-1">{rev.comment}</p>
             </div>
+
+            {/* Official Seller Reply */}
+            {rev.reply && (
+              <div className="mt-3 p-3.5 bg-primary-50/70 border-l-3 border-primary-500 rounded-r-xl space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-extrabold text-primary-900 flex items-center gap-1">
+                    💬 Balasan Penjual (Kembang Seladang Florist)
+                  </span>
+                  {rev.replyDate && <span className="text-[10px] text-primary-600 font-medium">{rev.replyDate}</span>}
+                </div>
+                <p className="text-xs text-primary-800 leading-relaxed font-normal">{rev.reply}</p>
+              </div>
+            )}
 
             {/* Like Button */}
             <div className="pt-2 flex items-center justify-between border-t border-cream-50">
