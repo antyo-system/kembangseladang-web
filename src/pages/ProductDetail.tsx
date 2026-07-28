@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, ShoppingBag, Plus, Minus, Send, Check } from 'lucide-react'
+import { ArrowLeft, ShoppingBag, Plus, Minus, Send, Check, Sparkles } from 'lucide-react'
+import { getProductFlowerMeaning } from '../utils/flowerMeaning'
 import { useProduct } from '../hooks/useProducts'
 import { useCartStore } from '../store/useCartStore'
 import { formatRupiah } from '../utils/formatCurrency'
@@ -321,6 +322,30 @@ export const ProductDetail: React.FC = () => {
               })()}
             </div>
           </div>
+
+          {/* Makna & Simbolisme Bunga Card */}
+          {(() => {
+            const meaning = getProductFlowerMeaning(product)
+            return (
+              <div className="bg-cream-50/80 border border-primary-100 p-5 rounded-2xl space-y-2 relative overflow-hidden">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2 text-primary-700 font-bold text-xs uppercase tracking-wider">
+                    <Sparkles className="w-4 h-4 text-primary-600 fill-primary-600" />
+                    <span>Makna & Simbolisme Bunga</span>
+                  </div>
+                  <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full border ${meaning.colorBadge}`}>
+                    {meaning.emotion}
+                  </span>
+                </div>
+                <h3 className="font-display text-sm font-bold text-charcoal-900">
+                  {meaning.tagline}
+                </h3>
+                <p className="text-xs text-charcoal-600 leading-relaxed">
+                  {meaning.description}
+                </p>
+              </div>
+            )
+          })()}
 
           {/* Pre-Order Banner if Day 5+ */}
           {calculateFlowerFreshness(product.created_at).status === 'EXPIRED' && (

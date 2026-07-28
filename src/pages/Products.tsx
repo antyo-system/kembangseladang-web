@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react'
-import { PanelLeftClose, PanelLeftOpen, Search, SlidersHorizontal } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { PanelLeftClose, PanelLeftOpen, Search, SlidersHorizontal, Sparkles, Heart } from 'lucide-react'
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/product/ProductCard'
 import { PromoBanner } from '../components/promo/PromoBanner'
@@ -50,6 +51,57 @@ const CATEGORY_SLIDES = [
     image: '/images/categories/standing-flower.jpg',
     terms: ['standing', 'standing flower', 'papan bunga', 'grand opening', 'duka cita', 'congratulations'],
   },
+]
+
+const MOMENT_SLIDES = [
+  {
+    value: 'buket-bunga-wisuda',
+    label: '🎓 Wisuda & Kelulusan',
+    description: 'Buket mawar & ucapan UIN, STAN, UNPAM, UI.',
+    image: '/images/categories/buket-bunga.jpg',
+    targetPath: '/katalog/buket-bunga-wisuda',
+    terms: ['wisuda', 'kelulusan', 'uin', 'stan', 'unpam']
+  },
+  {
+    value: 'buket-mawar-merah',
+    label: '❤️ Anniversary & Romantis',
+    description: 'Ungkapan cinta sejati mawar merah Korean style.',
+    image: '/images/categories/bunga-potong-segar.jpg',
+    targetPath: '/katalog/buket-mawar-merah',
+    terms: ['merah', 'red', 'valentine', 'anniversary', 'romantis']
+  },
+  {
+    value: 'papan-bunga-tangerang-selatan',
+    label: '🕊️ Duka Cita & Wedding',
+    description: 'Karangan papan bunga ucapan & standing flower megah.',
+    image: '/images/categories/standing-flower.jpg',
+    targetPath: '/katalog/papan-bunga-tangerang-selatan',
+    terms: ['papan', 'standing', 'duka', 'wedding', 'opening']
+  },
+  {
+    value: 'bunga-meja-vas-kaca',
+    label: '🏡 Bunga Vas Ruangan',
+    description: 'Dekorasi vas kaca meja tamu & meja kerja kantor.',
+    image: '/images/categories/rangkaian-meja.jpg',
+    targetPath: '/katalog/bunga-meja-vas-kaca',
+    terms: ['meja', 'vas', 'vase', 'table', 'rangkaian']
+  }
+]
+
+const MOMENT_FILTERS = [
+  { value: 'wisuda', label: '🎓 Wisuda & Kelulusan', terms: ['wisuda', 'kelulusan', 'uin', 'stan', 'unpam'] },
+  { value: 'anniversary', label: '❤️ Anniversary & Romantis', terms: ['merah', 'red', 'valentine', 'anniversary', 'romantis'] },
+  { value: 'dukacita', label: '🕊️ Duka Cita & Simpati', terms: ['duka', 'sympathy', 'belasungkawa'] },
+  { value: 'wedding', label: '💍 Pernikahan & Hantaran', terms: ['wedding', 'pernikahan', 'hantaran', 'seserahan'] },
+  { value: 'opening', label: '🎉 Grand Opening & Peresmian', terms: ['opening', 'peresmian', 'standing', 'papan'] }
+]
+
+const MEANING_FILTERS = [
+  { value: 'romantis', label: '🔥 Cinta & Romansa (Merah)', terms: ['merah', 'red'] },
+  { value: 'apresiasi', label: '🌸 Kelembutan & Apresiasi (Pink)', terms: ['pinksweet', 'pink'] },
+  { value: 'ketulusan', label: '🍑 Ketulusan & Kehangatan (Peach)', terms: ['peach', 'salem'] },
+  { value: 'semangat', label: '☀️ Keceriaan & Semangat (Kuning)', terms: ['kuning', 'yellow', 'sunflower'] },
+  { value: 'kesucian', label: '🕊️ Kesucian & Kedamaian (Putih)', terms: ['putih', 'white'] }
 ]
 
 const FILTER_COLORS = [
@@ -122,10 +174,13 @@ export const Products: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('Semua')
+  const [selectedMoment, setSelectedMoment] = useState<string | null>(null)
+  const [selectedMeaning, setSelectedMeaning] = useState<string | null>(null)
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
   const [selectedFlowerTypes, setSelectedFlowerTypes] = useState<string[]>([])
   const [maxPrice, setMaxPrice] = useState<number>(2500000)
   const [sortBy, setSortBy] = useState('terbaru')
+  const [categoryTab, setCategoryTab] = useState<'bentuk' | 'momen'>('bentuk')
   const [isFilterVisible, setIsFilterVisible] = useState(
     () => typeof window === 'undefined' || window.innerWidth >= 1024
   )
@@ -139,6 +194,8 @@ export const Products: React.FC = () => {
   const handleClearFilters = () => {
     setSearchQuery('')
     setSelectedCategory('Semua')
+    setSelectedMoment(null)
+    setSelectedMeaning(null)
     setSelectedColor(null)
     setSelectedFlowerTypes([])
     setMaxPrice(2500000)
@@ -168,6 +225,16 @@ export const Products: React.FC = () => {
           Boolean(activeCategory?.terms.some((term) => searchableProduct.includes(term))) ||
           searchableProduct.includes(selectedCategory.toLowerCase())
 
+        const activeMoment = MOMENT_FILTERS.find((m) => m.value === selectedMoment)
+        const matchesMoment =
+          !selectedMoment ||
+          Boolean(activeMoment?.terms.some((term) => searchableProduct.includes(term)))
+
+        const activeMeaning = MEANING_FILTERS.find((m) => m.value === selectedMeaning)
+        const matchesMeaning =
+          !selectedMeaning ||
+          Boolean(activeMeaning?.terms.some((term) => searchableProduct.includes(term)))
+
         const activeColor = FILTER_COLORS.find((color) => color.value === selectedColor)
 
         const matchesColor =
@@ -191,6 +258,8 @@ export const Products: React.FC = () => {
         return (
           matchesSearch &&
           matchesCategory &&
+          matchesMoment &&
+          matchesMeaning &&
           matchesColor &&
           matchesFlowerType &&
           matchesPrice &&
@@ -202,7 +271,7 @@ export const Products: React.FC = () => {
         if (sortBy === 'termahal') return b.base_price - a.base_price
         return new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime()
       })
-  }, [products, searchQuery, selectedCategory, selectedColor, selectedFlowerTypes, maxPrice, sortBy])
+  }, [products, searchQuery, selectedCategory, selectedMoment, selectedMeaning, selectedColor, selectedFlowerTypes, maxPrice, sortBy])
 
   const selectedCategoryLabel =
     selectedCategory === 'Semua'
@@ -218,56 +287,112 @@ export const Products: React.FC = () => {
       <PromoBanner />
 
       <section className="space-y-4" aria-labelledby="category-slider-title">
-        <div className="space-y-1">
-          <h1 id="category-slider-title" className="font-display text-xl font-bold text-charcoal-900 sm:text-2xl">
-            Pilih Kategori Bunga
-          </h1>
-          <p className="text-xs font-medium text-charcoal-500 sm:text-sm">
-            Temukan produk berdasarkan kebutuhan acara Anda.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-charcoal-100 pb-3">
+          <div className="space-y-1">
+            <h1 id="category-slider-title" className="font-display text-xl font-bold text-charcoal-900 sm:text-2xl">
+              Pilih Kategori Bunga
+            </h1>
+            <p className="text-xs font-medium text-charcoal-500 sm:text-sm">
+              Temukan produk berdasarkan tipe rangkaian atau momen acara Anda.
+            </p>
+          </div>
+
+          {/* Clean Tab Switcher */}
+          <div className="flex items-center space-x-1 border border-charcoal-200 bg-cream-50 p-1 self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={() => setCategoryTab('bentuk')}
+              className={`px-3 py-1.5 text-xs font-bold transition-all ${
+                categoryTab === 'bentuk'
+                  ? 'bg-charcoal-900 text-white shadow-xs'
+                  : 'text-charcoal-600 hover:text-charcoal-900'
+              }`}
+            >
+              Berdasarkan Bentuk
+            </button>
+            <button
+              type="button"
+              onClick={() => setCategoryTab('momen')}
+              className={`flex items-center space-x-1 px-3 py-1.5 text-xs font-bold transition-all ${
+                categoryTab === 'momen'
+                  ? 'bg-charcoal-900 text-white shadow-xs'
+                  : 'text-charcoal-600 hover:text-charcoal-900'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-primary-400" />
+              <span>Berdasarkan Momen</span>
+            </button>
+          </div>
         </div>
 
         <div className="overflow-x-auto border border-charcoal-100 bg-white no-scrollbar">
           <div className="flex snap-x snap-mandatory gap-0 lg:grid lg:grid-cols-4">
-            {CATEGORY_SLIDES.map((slide) => {
-              const isSelected = selectedCategory === slide.value
+            {categoryTab === 'bentuk'
+              ? CATEGORY_SLIDES.map((slide) => {
+                  const isSelected = selectedCategory === slide.value
 
-              return (
-                <button
-                  key={slide.value}
-                  type="button"
-                  onClick={() => setSelectedCategory(slide.value)}
-                  aria-pressed={isSelected}
-                  className={`group relative min-w-[220px] snap-start overflow-hidden border-r border-charcoal-100 bg-white text-left aspect-square transition-colors duration-200 last:border-r-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal-900 sm:min-w-[240px] lg:min-w-0 ${
-                    isSelected
-                      ? 'bg-charcoal-50 outline outline-2 outline-charcoal-900 outline-offset-[-2px]'
-                      : 'hover:bg-cream-50'
-                  }`}
-                >
-                  <img
-                    src={slide.image}
-                    alt={slide.label}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 space-y-2 border-t border-charcoal-100 bg-white/95 p-3">
-                    <div className="flex items-center justify-between gap-3">
-                      <h2 className="text-sm font-bold leading-tight text-charcoal-900">
-                        {slide.label}
-                      </h2>
-                      <span
-                        className={`h-2.5 w-2.5 shrink-0 border ${
-                          isSelected ? 'border-charcoal-900 bg-charcoal-900' : 'border-charcoal-300 bg-white'
-                        }`}
-                        aria-hidden="true"
+                  return (
+                    <button
+                      key={slide.value}
+                      type="button"
+                      onClick={() => setSelectedCategory(slide.value)}
+                      aria-pressed={isSelected}
+                      className={`group relative min-w-[220px] snap-start overflow-hidden border-r border-charcoal-100 bg-white text-left aspect-square transition-colors duration-200 last:border-r-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal-900 sm:min-w-[240px] lg:min-w-0 ${
+                        isSelected
+                          ? 'bg-charcoal-50 outline outline-2 outline-charcoal-900 outline-offset-[-2px]'
+                          : 'hover:bg-cream-50'
+                      }`}
+                    >
+                      <img
+                        src={slide.image}
+                        alt={slide.label}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                       />
+                      <div className="absolute inset-x-0 bottom-0 space-y-2 border-t border-charcoal-100 bg-white/95 p-3">
+                        <div className="flex items-center justify-between gap-3">
+                          <h2 className="text-sm font-bold leading-tight text-charcoal-900">
+                            {slide.label}
+                          </h2>
+                          <span
+                            className={`h-2.5 w-2.5 shrink-0 border ${
+                              isSelected ? 'border-charcoal-900 bg-charcoal-900' : 'border-charcoal-300 bg-white'
+                            }`}
+                            aria-hidden="true"
+                          />
+                        </div>
+                        <p className="line-clamp-2 text-xs leading-relaxed text-charcoal-500">
+                          {slide.description}
+                        </p>
+                      </div>
+                    </button>
+                  )
+                })
+              : MOMENT_SLIDES.map((slide) => (
+                  <Link
+                    key={slide.value}
+                    to={slide.targetPath}
+                    className="group relative min-w-[220px] snap-start overflow-hidden border-r border-charcoal-100 bg-white text-left aspect-square transition-colors duration-200 last:border-r-0 hover:bg-cream-50 sm:min-w-[240px] lg:min-w-0"
+                  >
+                    <img
+                      src={slide.image}
+                      alt={slide.label}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 space-y-2 border-t border-charcoal-100 bg-white/95 p-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <h2 className="text-sm font-bold leading-tight text-charcoal-900">
+                          {slide.label}
+                        </h2>
+                        <span className="text-xs font-bold text-primary-600 group-hover:translate-x-1 transition-transform">
+                          →
+                        </span>
+                      </div>
+                      <p className="line-clamp-2 text-xs leading-relaxed text-charcoal-500">
+                        {slide.description}
+                      </p>
                     </div>
-                    <p className="line-clamp-2 text-xs leading-relaxed text-charcoal-500">
-                      {slide.description}
-                    </p>
-                  </div>
-                </button>
-              )
-            })}
+                  </Link>
+                ))}
           </div>
         </div>
       </section>
@@ -421,6 +546,59 @@ export const Products: React.FC = () => {
                     />
                     <span>{type.label}</span>
                   </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="h-px bg-charcoal-100" />
+
+            {/* Momen / Acara Filter */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-bold text-charcoal-850 uppercase flex items-center justify-between">
+                <span>Momen / Acara</span>
+              </h3>
+              <div className="space-y-1">
+                {MOMENT_FILTERS.map((moment) => (
+                  <button
+                    key={moment.value}
+                    type="button"
+                    onClick={() => setSelectedMoment(selectedMoment === moment.value ? null : moment.value)}
+                    className={`flex h-9 w-full items-center justify-between border px-2 text-left text-xs font-semibold transition-colors ${
+                      selectedMoment === moment.value
+                        ? 'border-charcoal-900 bg-charcoal-900 text-white'
+                        : 'border-charcoal-100 text-charcoal-700 hover:border-charcoal-300'
+                    }`}
+                  >
+                    <span>{moment.label}</span>
+                    {selectedMoment === moment.value && <span className="text-[10px]">✓</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="h-px bg-charcoal-100" />
+
+            {/* Makna / Pesan Bunga Filter */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-bold text-charcoal-850 uppercase flex items-center gap-1.5">
+                <Heart className="w-3.5 h-3.5 text-primary-500 fill-primary-500" />
+                <span>Makna & Pesan Bunga</span>
+              </h3>
+              <div className="space-y-1">
+                {MEANING_FILTERS.map((meaning) => (
+                  <button
+                    key={meaning.value}
+                    type="button"
+                    onClick={() => setSelectedMeaning(selectedMeaning === meaning.value ? null : meaning.value)}
+                    className={`flex h-9 w-full items-center justify-between border px-2 text-left text-[11px] font-semibold transition-colors ${
+                      selectedMeaning === meaning.value
+                        ? 'border-primary-600 bg-primary-600 text-white'
+                        : 'border-charcoal-100 text-charcoal-700 hover:border-primary-300'
+                    }`}
+                  >
+                    <span>{meaning.label}</span>
+                    {selectedMeaning === meaning.value && <span className="text-[10px]">✓</span>}
+                  </button>
                 ))}
               </div>
             </div>
