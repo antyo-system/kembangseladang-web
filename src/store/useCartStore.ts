@@ -18,6 +18,8 @@ export interface Product {
   stock_qty?: number | null
   is_arranged?: boolean
   image?: string // From database, might be null/empty
+  gallery_urls?: string[]
+  video_url?: string
   is_live?: boolean
   created_at?: string
 }

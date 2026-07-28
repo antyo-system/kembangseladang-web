@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, ShoppingBag, Plus, Minus, Send, Check, Sparkles } from 'lucide-react'
+import { ArrowLeft, ShoppingBag, Plus, Minus, Send, Check, Sparkles, Play } from 'lucide-react'
 import { getProductFlowerMeaning } from '../utils/flowerMeaning'
 import { useProduct } from '../hooks/useProducts'
 import { useCartStore } from '../store/useCartStore'
@@ -220,29 +220,48 @@ export const ProductDetail: React.FC = () => {
       {/* Main product details container */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         
-        {/* Product Image Panel */}
-        <div className="relative bg-white p-4 rounded-[2rem] border border-primary-100/40 shadow-sm overflow-hidden aspect-square select-none">
-          {product.image ? (
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover rounded-[1.5rem]"
-            />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center text-charcoal-400 text-7xl bg-cream-50 rounded-[1.5rem]">
-              🌸
-            </div>
-          )}
-          
-          {discountPercentage > 0 ? (
-            <span className="absolute top-8 left-8 bg-primary-100 text-charcoal-900 text-[10px] font-bold tracking-wide uppercase px-3 py-1.5 rounded-lg shadow-sm">
-              Sale
-            </span>
-          ) : product.is_arranged && (
-            <span className="absolute top-8 left-8 bg-primary-600 text-white text-[10px] font-bold tracking-wide uppercase px-3 py-1.5 rounded-lg shadow-sm">
-              Rangkaian Premium
-            </span>
-          )}
+        {/* Product Image & Video Gallery Panel */}
+        <div className="space-y-4">
+          <div className="relative bg-white p-4 rounded-[2rem] border border-primary-100/40 shadow-sm overflow-hidden aspect-square select-none">
+            {product.video_url ? (
+              <video
+                src={product.video_url}
+                controls
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover rounded-[1.5rem]"
+              />
+            ) : product.image ? (
+              <img
+                src={product.image}
+                alt={`${product.name} Segar — Kembang Seladang Florist Rempoa Tangerang Selatan`}
+                className="w-full h-full object-cover rounded-[1.5rem]"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center text-charcoal-400 text-7xl bg-cream-50 rounded-[1.5rem]">
+                🌸
+              </div>
+            )}
+            
+            {discountPercentage > 0 ? (
+              <span className="absolute top-8 left-8 bg-primary-100 text-charcoal-900 text-[10px] font-bold tracking-wide uppercase px-3 py-1.5 rounded-lg shadow-sm">
+                Sale
+              </span>
+            ) : product.is_arranged && (
+              <span className="absolute top-8 left-8 bg-primary-600 text-white text-[10px] font-bold tracking-wide uppercase px-3 py-1.5 rounded-lg shadow-sm">
+                Rangkaian Premium
+              </span>
+            )}
+
+            {product.video_url && (
+              <div className="absolute bottom-8 left-8 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1.5 rounded-full flex items-center space-x-1.5">
+                <Play className="w-3 h-3 fill-white text-white" />
+                <span>Video Review 360° (15s)</span>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Product Meta & Actions */}

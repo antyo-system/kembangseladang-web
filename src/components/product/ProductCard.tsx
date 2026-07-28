@@ -42,7 +42,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       >
         <img
           src={productImage}
-          alt={product.name}
+          alt={`${product.name} Segar — Kembang Seladang Florist Rempoa Tangerang Selatan`}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           loading="lazy"
         />
