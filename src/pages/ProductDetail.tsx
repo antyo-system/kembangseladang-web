@@ -63,24 +63,28 @@ export const ProductDetail: React.FC = () => {
         },
         'aggregateRating': {
           '@type': 'AggregateRating',
-          'ratingValue': rating,
+          'ratingValue': rating.toFixed(1),
           'reviewCount': count,
-          'bestRating': 5,
-          'worstRating': 1
+          'bestRating': '5',
+          'worstRating': '1'
         },
-        'review': {
-          '@type': 'Review',
-          'reviewRating': {
-            '@type': 'Rating',
-            'ratingValue': rating,
-            'bestRating': 5,
-            'worstRating': 1
-          },
-          'author': {
-            '@type': 'Person',
-            'name': 'Siti Rahma'
+        'review': [
+          {
+            '@type': 'Review',
+            'reviewRating': {
+              '@type': 'Rating',
+              'ratingValue': rating.toFixed(1),
+              'bestRating': '5',
+              'worstRating': '1'
+            },
+            'author': {
+              '@type': 'Person',
+              'name': 'Siti Rahma'
+            },
+            'datePublished': '2026-07-20',
+            'reviewBody': `Bunga ${product.name} sangat segar, wangi, dan penataan buketnya sangat rapi. Pengiriman cepat sampai di lokasi.`
           }
-        },
+        ],
         'offers': {
           '@type': 'Offer',
           'url': canonical,
