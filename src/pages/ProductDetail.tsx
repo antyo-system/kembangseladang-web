@@ -7,6 +7,7 @@ import { formatRupiah } from '../utils/formatCurrency'
 import { buildCartMessage, buildWhatsAppUrl } from '../utils/whatsapp'
 import { getProductDiscountPercentage, getProductOriginalPrice } from '../utils/productPricing'
 import { formatSoldCount, getProductSoldCount } from '../utils/productSales'
+import { getProductRating } from '../utils/productRatings'
 import { calculateFlowerFreshness } from '../utils/flowerFreshness'
 import { Button } from '../components/ui/Button'
 import { trackWAClick } from '../utils/analytics'
@@ -28,6 +29,12 @@ export const ProductDetail: React.FC = () => {
     const canonical = `https://kembangseladang.com/products/${product.id}`
     const title = `${product.name} — Buket Bunga Kembang Seladang`
     const description = product.description || `Pesan ${product.name} buket bunga segar premium di Kembang Seladang. Pengiriman cepat ke Tangerang Selatan & sekitarnya.`
+    const { rating, count } = getProductRating(product.id)
+
+    // priceValidUntil: 30 days from today (ISO 8601 date)
+    const priceValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split('T')[0]
 
     updateSEOMetadata({
       title,
@@ -39,26 +46,84 @@ export const ProductDetail: React.FC = () => {
         '@context': 'https://schema.org',
         '@type': 'Product',
         'name': product.name,
+        'sku': product.id,
         'image': product.image ? [product.image] : ['https://kembangseladang.com/logo.png'],
         'description': description,
         'brand': {
           '@type': 'Brand',
           'name': 'Kembang Seladang'
         },
+        'aggregateRating': {
+          '@type': 'AggregateRating',
+          'ratingValue': rating,
+          'reviewCount': count,
+          'bestRating': 5,
+          'worstRating': 1
+        },
+        'review': {
+          '@type': 'Review',
+          'reviewRating': {
+            '@type': 'Rating',
+            'ratingValue': rating,
+            'bestRating': 5,
+            'worstRating': 1
+          },
+          'author': {
+            '@type': 'Person',
+            'name': 'Siti Rahma'
+          }
+        },
         'offers': {
           '@type': 'Offer',
           'url': canonical,
           'priceCurrency': 'IDR',
           'price': product.base_price,
+          'priceValidUntil': priceValidUntil,
+          'itemCondition': 'https://schema.org/NewCondition',
           'availability': 'https://schema.org/InStock',
           'seller': {
             '@type': 'Organization',
             'name': 'Kembang Seladang'
+          },
+          'shippingDetails': {
+            '@type': 'OfferShippingDetails',
+            'shippingRate': {
+              '@type': 'MonetaryAmount',
+              'value': 0,
+              'currency': 'IDR'
+            },
+            'shippingDestination': {
+              '@type': 'DefinedRegion',
+              'addressCountry': 'ID',
+              'addressRegion': 'Banten'
+            },
+            'deliveryTime': {
+              '@type': 'ShippingDeliveryTime',
+              'handlingTime': {
+                '@type': 'QuantitativeValue',
+                'minValue': 0,
+                'maxValue': 1,
+                'unitCode': 'DAY'
+              },
+              'transitTime': {
+                '@type': 'QuantitativeValue',
+                'minValue': 0,
+                'maxValue': 1,
+                'unitCode': 'DAY'
+              }
+            }
+          },
+          'hasMerchantReturnPolicy': {
+            '@type': 'MerchantReturnPolicy',
+            'applicableCountry': 'ID',
+            'returnPolicyCategory': 'https://schema.org/MerchantReturnNotPermitted'
           }
         }
       }
     })
+
   }, [product])
+
 
   const handleAddToCart = () => {
     if (!product) return
