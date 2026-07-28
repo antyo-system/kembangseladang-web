@@ -158,6 +158,7 @@ interface ShareBarProps {
   title: string
 }
 
+const ShareBar: React.FC<ShareBarProps> = ({ url, title }) => {
   const [copied, setCopied] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
 
