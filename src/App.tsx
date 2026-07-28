@@ -16,7 +16,7 @@ import { supabaseConfigError } from './lib/supabase'
 
 import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
 import { trackPageView } from './utils/analytics'
-import { updateSEOMetadata, getFloristLocalBusinessSchema } from './utils/seo'
+import { updateSEOMetadata, getFloristLocalBusinessSchema, getHomepageFAQSchema, getCombinedGraphSchema } from './utils/seo'
 
 // Slug-aware redirects — carry :slug to canonical /articles/:slug
 const RedirectBlogSlug: React.FC = () => {
@@ -35,10 +35,13 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     trackPageView(location.pathname)
-    // Inject Florist LocalBusiness Schema on root homepage
+    // Inject Florist LocalBusiness + FAQ Schema on root homepage and products catalog
     if (location.pathname === '/' || location.pathname === '/products') {
       updateSEOMetadata({
-        jsonLd: getFloristLocalBusinessSchema()
+        jsonLd: getCombinedGraphSchema(
+          getFloristLocalBusinessSchema(),
+          getHomepageFAQSchema()
+        )
       })
     }
   }, [location.pathname])

@@ -175,3 +175,109 @@ export function getFloristLocalBusinessSchema() {
     ]
   }
 }
+
+/**
+ * Returns Schema.org FAQPage JSON-LD schema for homepage
+ */
+export function getHomepageFAQSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': [
+      {
+        '@type': 'Question',
+        'name': 'Apakah Kembang Seladang menyediakan pengiriman bunga sameday / 1 jam sampai di Bintaro & Tangsel?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'Ya! Kembang Seladang menyediakan layanan pengiriman kilat sameday dan 1 jam sampai untuk wilayah Rempoa, Ciputat, Bintaro Jaya (Sektor 1-9), Serpong BSD, hingga Jakarta Selatan dengan garansi kesegaran bunga tetap terjaga.'
+        }
+      },
+      {
+        '@type': 'Question',
+        'name': 'Berapa lama bunga mawar segar potong bisa bertahan mekar di rumah?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'Bunga mawar segar Kembang Seladang dipotong langsung dari petani setiap hari dan dapat bertahan mekar indah hingga 7–14 hari jika dirawat dalam vas berisi air dingin dan dipotong miring ujung batangnya secara berkala.'
+        }
+      },
+      {
+        '@type': 'Question',
+        'name': 'Apakah bisa pesan buket bunga custom sesuai budget?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'Tentu saja! Anda bisa memesan buket bunga mawar custom, pilihan warna kertas wrapping Korean style, jumlah tangkai, maupun kombinasi jenis bunga sesuai budget dan momen spesial Anda via WhatsApp 0877-7263-6627.'
+        }
+      },
+      {
+        '@type': 'Question',
+        'name': 'Di mana lokasi toko fisik Kembang Seladang Florist?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'Toko fisik Kembang Seladang berlokasi strategis di Jl. Kepodang No.68, Rempoa, Ciputat Timur, Kota Tangerang Selatan (Dekat Bintaro & Jakarta Selatan). Buka setiap hari pukul 07.00 - 21.00 WIB.'
+        }
+      },
+      {
+        '@type': 'Question',
+        'name': 'Apakah setiap pemesanan buket bunga sudah termasuk kartu ucapan (greeting card)?',
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': 'Ya, setiap pemesanan buket bunga, bunga meja, maupun standing flower di Kembang Seladang sudah termasuk kartu ucapan custom (printed greeting card) secara gratis.'
+        }
+      }
+    ]
+  }
+}
+
+/**
+ * Returns Schema.org FAQPage JSON-LD schema for product detail pages
+ */
+export function getProductFAQSchema(productName: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': [
+      {
+        '@type': 'Question',
+        'name': `Apakah ${productName} bisa dikirim di hari yang sama (sameday delivery)?`,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': `Ya, ${productName} siap dikirim secara instan/sameday ke area Rempoa, Ciputat, Bintaro, Serpong BSD, dan Jakarta Selatan.`
+        }
+      },
+      {
+        '@type': 'Question',
+        'name': `Apakah warna kelopak dan kertas wrapping pada ${productName} bisa disesuaikan?`,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': `Tentu! Warna mawar dan pembungkus (wrapping) ${productName} bisa di-custom sesuai keinginan Anda saat memesan via WhatsApp.`
+        }
+      },
+      {
+        '@type': 'Question',
+        'name': `Bagaimana cara merawat ${productName} agar awet dan tidak cepat layu?`,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': `Buka kertas pembungkus, potong miring 45 derajat ujung bawah batang sekitar 1-2 cm, dan letakkan dalam vas berisi air bersih sejuk. Ganti air setiap 2 hari.`
+        }
+      }
+    ]
+  }
+}
+
+/**
+ * Combines multiple Schema.org JSON-LD objects into a single @graph structure
+ */
+export function getCombinedGraphSchema(...schemas: Record<string, any>[]) {
+  const cleanSchemas = schemas
+    .filter(Boolean)
+    .map(s => {
+      const { '@context': _, ...rest } = s
+      return rest
+    })
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': cleanSchemas
+  }
+}
+

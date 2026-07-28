@@ -11,7 +11,7 @@ import { getProductRating } from '../utils/productRatings'
 import { calculateFlowerFreshness } from '../utils/flowerFreshness'
 import { Button } from '../components/ui/Button'
 import { trackWAClick } from '../utils/analytics'
-import { updateSEOMetadata } from '../utils/seo'
+import { updateSEOMetadata, getProductFAQSchema, getCombinedGraphSchema } from '../utils/seo'
 import { getProductSlug } from '../utils/slug'
 
 export const ProductDetail: React.FC = () => {
@@ -44,104 +44,107 @@ export const ProductDetail: React.FC = () => {
       .toISOString()
       .split('T')[0]
 
+    const productSchema = {
+      '@type': 'Product',
+      'name': product.name,
+      'sku': product.id,
+      'image': product.image ? [product.image] : ['https://kembangseladang.com/logo.png'],
+      'description': description,
+      'brand': {
+        '@type': 'Brand',
+        'name': 'Kembang Seladang'
+      },
+      'aggregateRating': {
+        '@type': 'AggregateRating',
+        'ratingValue': rating.toFixed(1),
+        'reviewCount': count,
+        'bestRating': '5',
+        'worstRating': '1'
+      },
+      'review': [
+        {
+          '@type': 'Review',
+          'reviewRating': {
+            '@type': 'Rating',
+            'ratingValue': rating.toFixed(1),
+            'bestRating': '5',
+            'worstRating': '1'
+          },
+          'author': {
+            '@type': 'Person',
+            'name': 'Siti Rahma'
+          },
+          'datePublished': '2026-07-20',
+          'reviewBody': `Bunga ${product.name} sangat segar, wangi, dan penataan buketnya sangat rapi. Pengiriman cepat sampai di lokasi.`
+        }
+      ],
+      'offers': {
+        '@type': 'Offer',
+        'url': canonical,
+        'priceCurrency': 'IDR',
+        'price': product.base_price,
+        'priceValidUntil': priceValidUntil,
+        'itemCondition': 'https://schema.org/NewCondition',
+        'availability': 'https://schema.org/InStock',
+        'seller': {
+          '@type': 'Organization',
+          'name': 'Kembang Seladang'
+        },
+        'shippingDetails': {
+          '@type': 'OfferShippingDetails',
+          'shippingRate': {
+            '@type': 'MonetaryAmount',
+            'value': 0,
+            'currency': 'IDR'
+          },
+          'shippingDestination': [
+            {
+              '@type': 'DefinedRegion',
+              'addressCountry': 'ID',
+              'addressRegion': 'Banten'
+            },
+            {
+              '@type': 'DefinedRegion',
+              'addressCountry': 'ID',
+              'addressRegion': 'DKI Jakarta'
+            }
+          ],
+          'deliveryTime': {
+            '@type': 'ShippingDeliveryTime',
+            'handlingTime': {
+              '@type': 'QuantitativeValue',
+              'minValue': 0,
+              'maxValue': 1,
+              'unitCode': 'DAY'
+            },
+            'transitTime': {
+              '@type': 'QuantitativeValue',
+              'minValue': 0,
+              'maxValue': 1,
+              'unitCode': 'DAY'
+            }
+          }
+        },
+        'hasMerchantReturnPolicy': {
+          '@type': 'MerchantReturnPolicy',
+          'applicableCountry': 'ID',
+          'returnPolicyCategory': 'https://schema.org/MerchantReturnNotPermitted',
+          'merchantReturnDays': 0,
+          'returnMethod': 'https://schema.org/ReturnInStore',
+          'returnFees': 'https://schema.org/FreeReturn'
+        }
+      }
+    }
+
+    const productFaqSchema = getProductFAQSchema(product.name)
+
     updateSEOMetadata({
       title,
       description,
       canonicalUrl: canonical,
       ogImage: product.image || 'https://kembangseladang.com/logo.png',
       ogType: 'product',
-      jsonLd: {
-        '@context': 'https://schema.org',
-        '@type': 'Product',
-        'name': product.name,
-        'sku': product.id,
-        'image': product.image ? [product.image] : ['https://kembangseladang.com/logo.png'],
-        'description': description,
-        'brand': {
-          '@type': 'Brand',
-          'name': 'Kembang Seladang'
-        },
-        'aggregateRating': {
-          '@type': 'AggregateRating',
-          'ratingValue': rating.toFixed(1),
-          'reviewCount': count,
-          'bestRating': '5',
-          'worstRating': '1'
-        },
-        'review': [
-          {
-            '@type': 'Review',
-            'reviewRating': {
-              '@type': 'Rating',
-              'ratingValue': rating.toFixed(1),
-              'bestRating': '5',
-              'worstRating': '1'
-            },
-            'author': {
-              '@type': 'Person',
-              'name': 'Siti Rahma'
-            },
-            'datePublished': '2026-07-20',
-            'reviewBody': `Bunga ${product.name} sangat segar, wangi, dan penataan buketnya sangat rapi. Pengiriman cepat sampai di lokasi.`
-          }
-        ],
-        'offers': {
-          '@type': 'Offer',
-          'url': canonical,
-          'priceCurrency': 'IDR',
-          'price': product.base_price,
-          'priceValidUntil': priceValidUntil,
-          'itemCondition': 'https://schema.org/NewCondition',
-          'availability': 'https://schema.org/InStock',
-          'seller': {
-            '@type': 'Organization',
-            'name': 'Kembang Seladang'
-          },
-          'shippingDetails': {
-            '@type': 'OfferShippingDetails',
-            'shippingRate': {
-              '@type': 'MonetaryAmount',
-              'value': 0,
-              'currency': 'IDR'
-            },
-            'shippingDestination': [
-              {
-                '@type': 'DefinedRegion',
-                'addressCountry': 'ID',
-                'addressRegion': 'Banten'
-              },
-              {
-                '@type': 'DefinedRegion',
-                'addressCountry': 'ID',
-                'addressRegion': 'DKI Jakarta'
-              }
-            ],
-            'deliveryTime': {
-              '@type': 'ShippingDeliveryTime',
-              'handlingTime': {
-                '@type': 'QuantitativeValue',
-                'minValue': 0,
-                'maxValue': 1,
-                'unitCode': 'DAY'
-              },
-              'transitTime': {
-                '@type': 'QuantitativeValue',
-                'minValue': 0,
-                'maxValue': 1,
-                'unitCode': 'DAY'
-              }
-            }
-          },
-          'hasMerchantReturnPolicy': {
-            '@type': 'MerchantReturnPolicy',
-            'applicableCountry': 'ID',
-            'returnPolicyCategory': 'https://schema.org/MerchantReturnNotPermitted',
-            'merchantReturnDays': 0,
-            'returnMethod': 'https://schema.org/ReturnInStore',
-            'returnFees': 'https://schema.org/FreeReturn'
-          }
-        }
-      }
+      jsonLd: getCombinedGraphSchema(productSchema, productFaqSchema)
     })
 
   }, [product])

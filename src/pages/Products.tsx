@@ -4,6 +4,7 @@ import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/product/ProductCard'
 import { PromoBanner } from '../components/promo/PromoBanner'
 import { FlashSaleSection } from '../components/home/FlashSaleSection'
+import { FAQSection } from '../components/home/FAQSection'
 
 const CATEGORY_SLIDES = [
   {
@@ -460,6 +461,9 @@ export const Products: React.FC = () => {
           )}
         </section>
       </div>
+
+      {/* Visual FAQ Accordion with Schema.org integration */}
+      <FAQSection />
     </div>
   )
 }
