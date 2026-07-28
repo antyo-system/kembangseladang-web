@@ -14,6 +14,7 @@ import { Button } from '../components/ui/Button'
 import { trackWAClick } from '../utils/analytics'
 import { updateSEOMetadata, getProductFAQSchema, getCombinedGraphSchema, getBreadcrumbSchema } from '../utils/seo'
 import { getProductSlug } from '../utils/slug'
+import { ProductReviews } from '../components/product/ProductReviews'
 
 export const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -444,9 +445,13 @@ export const ProductDetail: React.FC = () => {
                   </span>
                 </Button>
             </div>
-
           </div>
 
+        </div>
+
+        {/* Customer Reviews Section */}
+        <div className="pt-8 border-t border-cream-200/60">
+          <ProductReviews productId={product.id} productName={product.name} />
         </div>
 
       </div>
