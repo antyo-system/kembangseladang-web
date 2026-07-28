@@ -10,6 +10,31 @@
       ],
       "destination": "https://kembangseladang.com/$1",
       "permanent": true
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/articles/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/artikel/:slug",
+      "destination": "/articles/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/artikel",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/kebijakan-pengembalian",
+      "destination": "/return-policy",
+      "permanent": true
     }
   ],
   "rewrites": [

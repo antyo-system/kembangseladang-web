@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom'
 import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { WhatsAppFAB } from './components/layout/WhatsAppFAB'
@@ -17,6 +17,17 @@ import { supabaseConfigError } from './lib/supabase'
 import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
 import { trackPageView } from './utils/analytics'
 import { updateSEOMetadata, getFloristLocalBusinessSchema } from './utils/seo'
+
+// Slug-aware redirects — carry :slug to canonical /articles/:slug
+const RedirectBlogSlug: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>()
+  return <Navigate to={`/articles/${slug}`} replace />
+}
+const RedirectArtikelSlug: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>()
+  return <Navigate to={`/articles/${slug}`} replace />
+}
+
 
 export const App: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -73,10 +84,11 @@ export const App: React.FC = () => {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:slug" element={<ArticleDetail />} />
-          <Route path="/blog" element={<Articles />} />
-          <Route path="/blog/:slug" element={<ArticleDetail />} />
-          <Route path="/artikel" element={<Articles />} />
-          <Route path="/artikel/:slug" element={<ArticleDetail />} />
+          {/* /blog and /artikel redirect to canonical /articles path */}
+          <Route path="/blog" element={<Navigate to="/articles" replace />} />
+          <Route path="/blog/:slug" element={<RedirectBlogSlug />} />
+          <Route path="/artikel" element={<Navigate to="/articles" replace />} />
+          <Route path="/artikel/:slug" element={<RedirectArtikelSlug />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />

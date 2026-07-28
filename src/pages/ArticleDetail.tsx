@@ -162,6 +162,9 @@ export const ArticleDetail: React.FC = () => {
   useEffect(() => {
     if (!article) return
 
+    // Canonical URL always points to /articles/:slug regardless of arrival path
+    const canonicalUrl = `https://kembangseladang.com/articles/${slug}`
+
     // 1. Dynamic Page Title
     const originalTitle = document.title
     document.title = article.meta_title || `${article.title} | Kembang Seladang`
@@ -175,7 +178,16 @@ export const ArticleDetail: React.FC = () => {
     }
     metaDesc.setAttribute('content', article.meta_description || article.excerpt || '')
 
-    // 3. OpenGraph Social Tags
+    // 3. Canonical Link Tag
+    let canonicalTag = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
+    if (!canonicalTag) {
+      canonicalTag = document.createElement('link')
+      canonicalTag.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonicalTag)
+    }
+    canonicalTag.setAttribute('href', canonicalUrl)
+
+    // 4. OpenGraph Social Tags
     const setMetaTag = (property: string, content: string) => {
       let el = document.querySelector(`meta[property="${property}"]`)
       if (!el) {
@@ -190,16 +202,21 @@ export const ArticleDetail: React.FC = () => {
     setMetaTag('og:description', article.meta_description || article.excerpt || '')
     if (article.cover_image) setMetaTag('og:image', article.cover_image)
     setMetaTag('og:type', 'article')
-    setMetaTag('og:url', window.location.href)
+    setMetaTag('og:url', canonicalUrl)
 
-    // 4. JSON-LD Schema Markup Injection
+    // 5. JSON-LD Schema Markup Injection
     const schemaData = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
+      'mainEntityOfPage': {
+        '@type': 'WebPage',
+        '@id': canonicalUrl
+      },
       'headline': article.title,
       'description': article.meta_description || article.excerpt,
       'image': article.cover_image ? [article.cover_image] : [],
       'datePublished': article.published_at || article.created_at,
+      'dateModified': article.updated_at || article.published_at || article.created_at,
       'author': {
         '@type': 'Organization',
         'name': article.author_name || article.author || 'Kembang Seladang'
@@ -225,9 +242,10 @@ export const ArticleDetail: React.FC = () => {
 
     return () => {
       document.title = originalTitle
+      if (canonicalTag) canonicalTag.remove()
       if (scriptTag) scriptTag.remove()
     }
-  }, [article])
+  }, [article, slug])
 
   if (isLoading) {
     return (
