@@ -108,6 +108,35 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
+          {/* Category Landing Links for SEO */}
+          <div className="space-y-4">
+            <h3 className="font-display text-lg font-semibold text-white tracking-wide">
+              Momen Pilihan
+            </h3>
+            <ul className="space-y-2.5 text-sm">
+              <li>
+                <Link to="/katalog/buket-bunga-wisuda" className="text-charcoal-400 hover:text-primary-400 transition-colors">
+                  Buket Bunga Wisuda
+                </Link>
+              </li>
+              <li>
+                <Link to="/katalog/buket-mawar-merah" className="text-charcoal-400 hover:text-primary-400 transition-colors">
+                  Buket Mawar Merah
+                </Link>
+              </li>
+              <li>
+                <Link to="/katalog/papan-bunga-tangerang-selatan" className="text-charcoal-400 hover:text-primary-400 transition-colors">
+                  Papan Bunga Tangsel
+                </Link>
+              </li>
+              <li>
+                <Link to="/katalog/bunga-meja-vas-kaca" className="text-charcoal-400 hover:text-primary-400 transition-colors">
+                  Bunga Meja Vas Kaca
+                </Link>
+              </li>
+            </ul>
+          </div>
+
           {/* Operational Hours */}
           <div className="space-y-4">
             <h3 className="font-display text-lg font-semibold text-white tracking-wide">

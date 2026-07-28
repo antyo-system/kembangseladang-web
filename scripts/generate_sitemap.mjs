@@ -77,6 +77,10 @@ async function generateSitemapAndMerchantFeed() {
   const urls = [
     { loc: `${SITE_URL}/`, priority: '1.0', changefreq: 'daily', lastmod: today },
     { loc: `${SITE_URL}/products`, priority: '0.9', changefreq: 'daily', lastmod: today },
+    { loc: `${SITE_URL}/katalog/buket-bunga-wisuda`, priority: '0.9', changefreq: 'daily', lastmod: today },
+    { loc: `${SITE_URL}/katalog/buket-mawar-merah`, priority: '0.9', changefreq: 'daily', lastmod: today },
+    { loc: `${SITE_URL}/katalog/papan-bunga-tangerang-selatan`, priority: '0.9', changefreq: 'daily', lastmod: today },
+    { loc: `${SITE_URL}/katalog/bunga-meja-vas-kaca`, priority: '0.9', changefreq: 'daily', lastmod: today },
     { loc: `${SITE_URL}/articles`, priority: '0.9', changefreq: 'daily', lastmod: today },
     { loc: `${SITE_URL}/blog`, priority: '0.9', changefreq: 'daily', lastmod: today },
     { loc: `${SITE_URL}/about`, priority: '0.8', changefreq: 'monthly', lastmod: today },

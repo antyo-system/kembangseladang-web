@@ -18,6 +18,8 @@ import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
 import { trackPageView } from './utils/analytics'
 import { updateSEOMetadata, getFloristLocalBusinessSchema, getHomepageFAQSchema, getCombinedGraphSchema } from './utils/seo'
 
+import { CategoryLanding } from './pages/CategoryLanding'
+
 // Slug-aware redirects — carry :slug to canonical /articles/:slug
 const RedirectBlogSlug: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -92,6 +94,8 @@ export const App: React.FC = () => {
           <Route path="/blog/:slug" element={<RedirectBlogSlug />} />
           <Route path="/artikel" element={<Navigate to="/articles" replace />} />
           <Route path="/artikel/:slug" element={<RedirectArtikelSlug />} />
+          <Route path="/katalog" element={<Navigate to="/products" replace />} />
+          <Route path="/katalog/:slug" element={<CategoryLanding />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
