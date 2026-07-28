@@ -12,7 +12,7 @@ import { getProductRating } from '../utils/productRatings'
 import { calculateFlowerFreshness } from '../utils/flowerFreshness'
 import { Button } from '../components/ui/Button'
 import { trackWAClick } from '../utils/analytics'
-import { updateSEOMetadata, getProductFAQSchema, getCombinedGraphSchema } from '../utils/seo'
+import { updateSEOMetadata, getProductFAQSchema, getCombinedGraphSchema, getBreadcrumbSchema } from '../utils/seo'
 import { getProductSlug } from '../utils/slug'
 
 export const ProductDetail: React.FC = () => {
@@ -138,6 +138,11 @@ export const ProductDetail: React.FC = () => {
     }
 
     const productFaqSchema = getProductFAQSchema(product.name)
+    const breadcrumbSchema = getBreadcrumbSchema([
+      { name: 'Beranda', url: '/' },
+      { name: 'Katalog Bunga', url: '/products' },
+      { name: product.name, url: `/products/${getProductSlug(product)}` }
+    ])
 
     updateSEOMetadata({
       title,
@@ -145,7 +150,7 @@ export const ProductDetail: React.FC = () => {
       canonicalUrl: canonical,
       ogImage: product.image || 'https://kembangseladang.com/logo.png',
       ogType: 'product',
-      jsonLd: getCombinedGraphSchema(productSchema, productFaqSchema)
+      jsonLd: getCombinedGraphSchema(productSchema, productFaqSchema, breadcrumbSchema)
     })
 
   }, [product])

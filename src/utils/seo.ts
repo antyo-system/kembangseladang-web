@@ -265,6 +265,22 @@ export function getProductFAQSchema(productName: string) {
 }
 
 /**
+ * Returns Schema.org BreadcrumbList JSON-LD schema
+ */
+export function getBreadcrumbSchema(items: { name: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': items.map((item, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'name': item.name,
+      'item': item.url.startsWith('http') ? item.url : `${SITE_DOMAIN}${item.url}`
+    }))
+  }
+}
+
+/**
  * Combines multiple Schema.org JSON-LD objects into a single @graph structure
  */
 export function getCombinedGraphSchema(...schemas: Record<string, any>[]) {

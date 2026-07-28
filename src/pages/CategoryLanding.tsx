@@ -3,7 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import { ArrowLeft, Sparkles, MapPin, Truck, ShieldCheck, HeartHandshake } from 'lucide-react'
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/product/ProductCard'
-import { updateSEOMetadata, getCombinedGraphSchema, getFloristLocalBusinessSchema } from '../utils/seo'
+import { updateSEOMetadata, getCombinedGraphSchema, getFloristLocalBusinessSchema, getBreadcrumbSchema } from '../utils/seo'
 import { FAQSection } from '../components/home/FAQSection'
 
 export interface CategoryLandingConfig {
@@ -141,6 +141,12 @@ export const CategoryLanding: React.FC = () => {
       }))
     }
 
+    const breadcrumbSchema = getBreadcrumbSchema([
+      { name: 'Beranda', url: '/' },
+      { name: 'Katalog Bunga', url: '/products' },
+      { name: config.h1, url: `/katalog/${config.slug}` }
+    ])
+
     updateSEOMetadata({
       title: config.metaTitle,
       description: config.metaDescription,
@@ -148,7 +154,8 @@ export const CategoryLanding: React.FC = () => {
       ogType: 'website',
       jsonLd: getCombinedGraphSchema(
         getFloristLocalBusinessSchema(),
-        faqSchema
+        faqSchema,
+        breadcrumbSchema
       )
     })
   }, [config])
