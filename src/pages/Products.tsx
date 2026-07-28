@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { PanelLeftClose, PanelLeftOpen, Search, SlidersHorizontal, Sparkles, Heart } from 'lucide-react'
+import { Search, SlidersHorizontal, Sparkles, Heart, ChevronDown, ChevronUp, X } from 'lucide-react'
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/product/ProductCard'
 import { PromoBanner } from '../components/promo/PromoBanner'
@@ -181,9 +181,29 @@ export const Products: React.FC = () => {
   const [maxPrice, setMaxPrice] = useState<number>(2500000)
   const [sortBy, setSortBy] = useState('terbaru')
   const [categoryTab, setCategoryTab] = useState<'bentuk' | 'momen'>('bentuk')
-  const [isFilterVisible, setIsFilterVisible] = useState(
-    () => typeof window === 'undefined' || window.innerWidth >= 1024
-  )
+  const [isFilterVisible, setIsFilterVisible] = useState(false)
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    harga: true,
+    warna: false,
+    jenis: false,
+    momen: true,
+    makna: true
+  })
+
+  const toggleSection = (section: string) => {
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }))
+  }
+
+  const activeFilterCount = useMemo(() => {
+    let count = 0
+    if (selectedCategory !== 'Semua') count++
+    if (selectedColor) count++
+    if (selectedMoment) count++
+    if (selectedMeaning) count++
+    if (selectedFlowerTypes.length > 0) count += selectedFlowerTypes.length
+    if (maxPrice < 2500000) count++
+    return count
+  }, [selectedCategory, selectedColor, selectedMoment, selectedMeaning, selectedFlowerTypes, maxPrice])
 
   const handleFlowerTypeToggle = (type: string) => {
     setSelectedFlowerTypes((prev) =>
@@ -415,24 +435,28 @@ export const Products: React.FC = () => {
             onClick={() => setIsFilterVisible((visible) => !visible)}
             aria-controls="product-filters"
             aria-expanded={isFilterVisible}
-            className="inline-flex h-10 items-center justify-center gap-2 border border-charcoal-900 px-3 text-[10px] font-bold uppercase tracking-wider text-charcoal-900 transition-colors hover:bg-charcoal-900 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal-900"
+            className={`inline-flex h-10 items-center justify-center gap-2 border px-3 text-[10px] font-bold uppercase tracking-wider transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal-900 ${
+              activeFilterCount > 0
+                ? 'border-primary-600 bg-primary-600 text-white'
+                : 'border-charcoal-900 text-charcoal-900 hover:bg-charcoal-900 hover:text-white'
+            }`}
           >
-            {isFilterVisible ? (
-              <PanelLeftClose className="h-4 w-4" strokeWidth={2} />
-            ) : (
-              <PanelLeftOpen className="h-4 w-4" strokeWidth={2} />
-            )}
-            <span>{isFilterVisible ? 'Sembunyikan Filter' : 'Tampilkan Filter'}</span>
+            <SlidersHorizontal className="h-3.5 w-3.5" />
+            <span>Filter {activeFilterCount > 0 ? `(${activeFilterCount})` : ''}</span>
           </button>
-          <button
-            type="button"
-            onClick={handleClearFilters}
-            className="inline-flex h-10 items-center justify-center border border-charcoal-200 px-3 text-[10px] font-bold uppercase tracking-wider text-charcoal-600 transition-colors hover:border-charcoal-900 hover:text-charcoal-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal-900"
-          >
-            Reset Filter
-          </button>
+
+          {activeFilterCount > 0 && (
+            <button
+              type="button"
+              onClick={handleClearFilters}
+              className="inline-flex h-10 items-center justify-center border border-charcoal-200 px-3 text-[10px] font-bold uppercase tracking-wider text-charcoal-600 transition-colors hover:border-charcoal-900 hover:text-charcoal-900"
+            >
+              Reset
+            </button>
+          )}
+
           <div className="flex h-10 items-center space-x-2 border border-charcoal-100 bg-charcoal-50 px-3">
-            <SlidersHorizontal className="w-3.5 h-3.5 text-charcoal-500" />
+            <span className="text-[10px] font-bold uppercase text-charcoal-500">Urutkan:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -449,163 +473,293 @@ export const Products: React.FC = () => {
       {/* Shopee-style Clean Flash Sale Banner placed below Search & Filter Bar */}
       <FlashSaleSection />
 
-      <div
-        className={`grid grid-cols-1 items-start gap-6 ${
-          isFilterVisible ? 'lg:grid-cols-[260px_minmax(0,1fr)]' : ''
-        }`}
-      >
+      {/* Main Content Layout */}
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+        
+        {/* Filter Drawer / Sidebar */}
         {isFilterVisible && (
-          <aside
-            id="product-filters"
-            className="space-y-6 border border-charcoal-100 bg-white p-5 lg:sticky lg:top-28"
-          >
-            <div className="flex items-center justify-between border-b border-charcoal-100 pb-3">
-              <h2 className="text-sm font-bold tracking-widest uppercase text-charcoal-900">
-                Filter
-              </h2>
-              <button
-                type="button"
-                onClick={() => setIsFilterVisible(false)}
-                className="inline-flex h-9 w-9 items-center justify-center border border-charcoal-200 text-charcoal-600 transition-colors hover:border-charcoal-900 hover:text-charcoal-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal-900"
-                aria-label="Sembunyikan filter"
-                title="Sembunyikan filter"
-              >
-                <PanelLeftClose className="h-4 w-4" strokeWidth={2} />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold text-charcoal-850 uppercase">
-                Harga
-              </h3>
-              <div className="space-y-3">
-                <input
-                  type="range"
-                  min="250000"
-                  max="2500000"
-                  step="50000"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="h-1 w-full cursor-pointer rounded-none bg-charcoal-100 accent-charcoal-900"
-                />
-                <div className="flex justify-between items-center text-[10px] font-bold text-charcoal-500">
-                  <span>Rp 250k</span>
-                  <span className="text-charcoal-900">
-                    Rp {(maxPrice / 1000).toLocaleString('id-ID')}k+
-                  </span>
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end lg:relative lg:bg-transparent lg:z-auto lg:block">
+            <aside
+              id="product-filters"
+              className="w-full max-w-xs sm:max-w-sm h-full max-h-screen flex flex-col bg-white overflow-y-auto lg:w-auto lg:max-w-none lg:h-auto lg:max-h-none lg:sticky lg:top-28 lg:border lg:border-charcoal-100 p-5 shadow-2xl lg:shadow-none space-y-4"
+            >
+              {/* Filter Header */}
+              <div className="flex items-center justify-between border-b border-charcoal-100 pb-3">
+                <div className="flex items-center space-x-2">
+                  <h2 className="text-sm font-bold tracking-widest uppercase text-charcoal-900">
+                    Filter Katalog
+                  </h2>
+                  {activeFilterCount > 0 && (
+                    <span className="text-[10px] font-bold bg-primary-100 text-primary-800 px-2 py-0.5 rounded-full">
+                      {activeFilterCount} aktif
+                    </span>
+                  )}
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setIsFilterVisible(false)}
+                  className="inline-flex h-8 w-8 items-center justify-center border border-charcoal-200 text-charcoal-600 transition-colors hover:border-charcoal-900 hover:text-charcoal-900"
+                  aria-label="Tutup filter"
+                >
+                  <X className="h-4 w-4" />
+                </button>
               </div>
-            </div>
 
-            <div className="h-px bg-charcoal-100" />
+              {/* Collapsible Section 1: Harga */}
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('harga')}
+                  className="w-full flex items-center justify-between text-xs font-bold text-charcoal-850 uppercase hover:text-primary-600"
+                >
+                  <span>Harga (Maksimal)</span>
+                  {openSections.harga ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
 
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold text-charcoal-850 uppercase">
-                Warna
-              </h3>
-              <div className="space-y-1">
-                {FILTER_COLORS.map((color) => (
-                  <button
-                    key={color.value}
-                    type="button"
-                    onClick={() => setSelectedColor(selectedColor === color.value ? null : color.value)}
-                    className={`flex h-9 w-full items-center space-x-2 border px-2 text-left text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal-900 ${
-                      selectedColor === color.value
-                        ? 'border-charcoal-900 bg-charcoal-900 text-white'
-                        : 'border-charcoal-100 text-charcoal-700 hover:border-charcoal-300 hover:text-charcoal-900'
-                    }`}
-                  >
-                    <span
-                      className="h-3.5 w-3.5 shrink-0 rounded-full border border-charcoal-100"
-                      style={{ background: color.swatch }}
-                      aria-hidden="true"
-                    />
-                    <span>{color.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="h-px bg-charcoal-100" />
-
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold text-charcoal-850 uppercase">
-                Jenis Bunga
-              </h3>
-              <div className="space-y-2">
-                {FLOWER_TYPES.map((type) => (
-                  <label
-                    key={type.value}
-                    className="flex h-9 cursor-pointer items-center space-x-3 border border-charcoal-100 px-2 text-[10px] font-bold uppercase tracking-wider text-charcoal-600 transition-colors hover:border-charcoal-300 hover:text-charcoal-900"
-                  >
+                {openSections.harga && (
+                  <div className="space-y-3 pt-1">
                     <input
-                      type="checkbox"
-                      checked={selectedFlowerTypes.includes(type.value)}
-                      onChange={() => handleFlowerTypeToggle(type.value)}
-                      className="h-4 w-4 cursor-pointer rounded-none border-charcoal-300 text-charcoal-900 accent-charcoal-900 focus:ring-charcoal-950"
+                      type="range"
+                      min="250000"
+                      max="2500000"
+                      step="50000"
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(Number(e.target.value))}
+                      className="h-1 w-full cursor-pointer rounded-none bg-charcoal-100 accent-charcoal-900"
                     />
-                    <span>{type.label}</span>
-                  </label>
-                ))}
+                    <div className="flex justify-between items-center text-[10px] font-bold text-charcoal-500">
+                      <span>Rp 250k</span>
+                      <span className="text-charcoal-900">
+                        Rp {(maxPrice / 1000).toLocaleString('id-ID')}k+
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
 
-            <div className="h-px bg-charcoal-100" />
+              <div className="h-px bg-charcoal-100" />
 
-            {/* Momen / Acara Filter */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold text-charcoal-850 uppercase flex items-center justify-between">
-                <span>Momen / Acara</span>
-              </h3>
-              <div className="space-y-1">
-                {MOMENT_FILTERS.map((moment) => (
-                  <button
-                    key={moment.value}
-                    type="button"
-                    onClick={() => setSelectedMoment(selectedMoment === moment.value ? null : moment.value)}
-                    className={`flex h-9 w-full items-center justify-between border px-2 text-left text-xs font-semibold transition-colors ${
-                      selectedMoment === moment.value
-                        ? 'border-charcoal-900 bg-charcoal-900 text-white'
-                        : 'border-charcoal-100 text-charcoal-700 hover:border-charcoal-300'
-                    }`}
-                  >
-                    <span>{moment.label}</span>
-                    {selectedMoment === moment.value && <span className="text-[10px]">✓</span>}
-                  </button>
-                ))}
+              {/* Collapsible Section 2: Momen / Acara */}
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('momen')}
+                  className="w-full flex items-center justify-between text-xs font-bold text-charcoal-850 uppercase hover:text-primary-600"
+                >
+                  <span>Momen / Acara</span>
+                  {openSections.momen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+
+                {openSections.momen && (
+                  <div className="space-y-1 pt-1">
+                    {MOMENT_FILTERS.map((moment) => (
+                      <button
+                        key={moment.value}
+                        type="button"
+                        onClick={() => setSelectedMoment(selectedMoment === moment.value ? null : moment.value)}
+                        className={`flex h-9 w-full items-center justify-between border px-2.5 text-left text-xs font-semibold transition-colors ${
+                          selectedMoment === moment.value
+                            ? 'border-charcoal-900 bg-charcoal-900 text-white'
+                            : 'border-charcoal-100 text-charcoal-700 hover:border-charcoal-300'
+                        }`}
+                      >
+                        <span>{moment.label}</span>
+                        {selectedMoment === moment.value && <span className="text-[10px]">✓</span>}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
-            </div>
 
-            <div className="h-px bg-charcoal-100" />
+              <div className="h-px bg-charcoal-100" />
 
-            {/* Makna / Pesan Bunga Filter */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold text-charcoal-850 uppercase flex items-center gap-1.5">
-                <Heart className="w-3.5 h-3.5 text-primary-500 fill-primary-500" />
-                <span>Makna & Pesan Bunga</span>
-              </h3>
-              <div className="space-y-1">
-                {MEANING_FILTERS.map((meaning) => (
-                  <button
-                    key={meaning.value}
-                    type="button"
-                    onClick={() => setSelectedMeaning(selectedMeaning === meaning.value ? null : meaning.value)}
-                    className={`flex h-9 w-full items-center justify-between border px-2 text-left text-[11px] font-semibold transition-colors ${
-                      selectedMeaning === meaning.value
-                        ? 'border-primary-600 bg-primary-600 text-white'
-                        : 'border-charcoal-100 text-charcoal-700 hover:border-primary-300'
-                    }`}
-                  >
-                    <span>{meaning.label}</span>
-                    {selectedMeaning === meaning.value && <span className="text-[10px]">✓</span>}
-                  </button>
-                ))}
+              {/* Collapsible Section 3: Makna & Pesan Bunga */}
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('makna')}
+                  className="w-full flex items-center justify-between text-xs font-bold text-charcoal-850 uppercase hover:text-primary-600"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Heart className="w-3.5 h-3.5 text-primary-500 fill-primary-500" />
+                    <span>Makna & Pesan Bunga</span>
+                  </span>
+                  {openSections.makna ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+
+                {openSections.makna && (
+                  <div className="space-y-1 pt-1">
+                    {MEANING_FILTERS.map((meaning) => (
+                      <button
+                        key={meaning.value}
+                        type="button"
+                        onClick={() => setSelectedMeaning(selectedMeaning === meaning.value ? null : meaning.value)}
+                        className={`flex h-9 w-full items-center justify-between border px-2.5 text-left text-[11px] font-semibold transition-colors ${
+                          selectedMeaning === meaning.value
+                            ? 'border-primary-600 bg-primary-600 text-white'
+                            : 'border-charcoal-100 text-charcoal-700 hover:border-primary-300'
+                        }`}
+                      >
+                        <span>{meaning.label}</span>
+                        {selectedMeaning === meaning.value && <span className="text-[10px]">✓</span>}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
-            </div>
-          </aside>
+
+              <div className="h-px bg-charcoal-100" />
+
+              {/* Collapsible Section 4: Warna */}
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('warna')}
+                  className="w-full flex items-center justify-between text-xs font-bold text-charcoal-850 uppercase hover:text-primary-600"
+                >
+                  <span>Warna Bunga</span>
+                  {openSections.warna ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+
+                {openSections.warna && (
+                  <div className="space-y-1 pt-1">
+                    {FILTER_COLORS.map((color) => (
+                      <button
+                        key={color.value}
+                        type="button"
+                        onClick={() => setSelectedColor(selectedColor === color.value ? null : color.value)}
+                        className={`flex h-9 w-full items-center space-x-2 border px-2 text-left text-xs font-semibold transition-colors ${
+                          selectedColor === color.value
+                            ? 'border-charcoal-900 bg-charcoal-900 text-white'
+                            : 'border-charcoal-100 text-charcoal-700 hover:border-charcoal-300'
+                        }`}
+                      >
+                        <span
+                          className="h-3.5 w-3.5 shrink-0 rounded-full border border-charcoal-100"
+                          style={{ background: color.swatch }}
+                          aria-hidden="true"
+                        />
+                        <span>{color.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="h-px bg-charcoal-100" />
+
+              {/* Collapsible Section 5: Jenis Bunga */}
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => toggleSection('jenis')}
+                  className="w-full flex items-center justify-between text-xs font-bold text-charcoal-850 uppercase hover:text-primary-600"
+                >
+                  <span>Jenis Kuntum Bunga</span>
+                  {openSections.jenis ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+
+                {openSections.jenis && (
+                  <div className="space-y-2 pt-1">
+                    {FLOWER_TYPES.map((type) => (
+                      <label
+                        key={type.value}
+                        className="flex h-9 cursor-pointer items-center space-x-3 border border-charcoal-100 px-2 text-[10px] font-bold uppercase tracking-wider text-charcoal-600 transition-colors hover:border-charcoal-300 hover:text-charcoal-900"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedFlowerTypes.includes(type.value)}
+                          onChange={() => handleFlowerTypeToggle(type.value)}
+                          className="h-4 w-4 cursor-pointer rounded-none border-charcoal-300 text-charcoal-900 accent-charcoal-900 focus:ring-charcoal-950"
+                        />
+                        <span>{type.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Mobile Drawer Bottom Action Bar */}
+              <div className="sticky bottom-0 -mx-5 -mb-5 bg-white border-t border-charcoal-100 p-4 flex items-center gap-2 lg:hidden mt-auto">
+                <button
+                  type="button"
+                  onClick={handleClearFilters}
+                  className="flex-1 py-2.5 text-xs font-bold border border-charcoal-300 text-charcoal-700 hover:bg-cream-50"
+                >
+                  Reset
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsFilterVisible(false)}
+                  className="flex-[2] py-2.5 text-xs font-bold bg-charcoal-900 text-white shadow-md hover:bg-charcoal-800"
+                >
+                  Lihat {filteredProducts.length} Produk
+                </button>
+              </div>
+
+            </aside>
+          </div>
         )}
 
         <section className="min-w-0 space-y-6">
+          
+          {/* Active Filter Badges Bar */}
+          {activeFilterCount > 0 && (
+            <div className="flex flex-wrap items-center gap-2 bg-cream-50/90 border border-primary-100/70 p-3 rounded-xl">
+              <span className="text-[10px] font-bold text-charcoal-400 uppercase tracking-wider">Active:</span>
+              
+              {selectedCategory !== 'Semua' && (
+                <span className="inline-flex items-center space-x-1.5 text-xs font-semibold bg-white border border-charcoal-200 px-2.5 py-1 rounded-full text-charcoal-800 shadow-2xs">
+                  <span>Kategori: {selectedCategoryLabel}</span>
+                  <button type="button" onClick={() => setSelectedCategory('Semua')} className="hover:text-red-500 font-bold">×</button>
+                </span>
+              )}
+              
+              {selectedMoment && (
+                <span className="inline-flex items-center space-x-1.5 text-xs font-semibold bg-white border border-charcoal-200 px-2.5 py-1 rounded-full text-charcoal-800 shadow-2xs">
+                  <span>{MOMENT_FILTERS.find(m => m.value === selectedMoment)?.label}</span>
+                  <button type="button" onClick={() => setSelectedMoment(null)} className="hover:text-red-500 font-bold">×</button>
+                </span>
+              )}
+
+              {selectedMeaning && (
+                <span className="inline-flex items-center space-x-1.5 text-xs font-semibold bg-white border border-primary-300 px-2.5 py-1 rounded-full text-primary-900 shadow-2xs">
+                  <span>{MEANING_FILTERS.find(m => m.value === selectedMeaning)?.label}</span>
+                  <button type="button" onClick={() => setSelectedMeaning(null)} className="hover:text-red-500 font-bold">×</button>
+                </span>
+              )}
+
+              {selectedColor && (
+                <span className="inline-flex items-center space-x-1.5 text-xs font-semibold bg-white border border-charcoal-200 px-2.5 py-1 rounded-full text-charcoal-800 shadow-2xs">
+                  <span>Warna: {FILTER_COLORS.find(c => c.value === selectedColor)?.label}</span>
+                  <button type="button" onClick={() => setSelectedColor(null)} className="hover:text-red-500 font-bold">×</button>
+                </span>
+              )}
+
+              {selectedFlowerTypes.map(typeVal => (
+                <span key={typeVal} className="inline-flex items-center space-x-1.5 text-xs font-semibold bg-white border border-charcoal-200 px-2.5 py-1 rounded-full text-charcoal-800 shadow-2xs">
+                  <span>{FLOWER_TYPES.find(t => t.value === typeVal)?.label}</span>
+                  <button type="button" onClick={() => handleFlowerTypeToggle(typeVal)} className="hover:text-red-500 font-bold">×</button>
+                </span>
+              ))}
+
+              {maxPrice < 2500000 && (
+                <span className="inline-flex items-center space-x-1.5 text-xs font-semibold bg-white border border-charcoal-200 px-2.5 py-1 rounded-full text-charcoal-800 shadow-2xs">
+                  <span>Maks: Rp {(maxPrice / 1000).toLocaleString('id-ID')}k</span>
+                  <button type="button" onClick={() => setMaxPrice(2500000)} className="hover:text-red-500 font-bold">×</button>
+                </span>
+              )}
+
+              <button
+                type="button"
+                onClick={handleClearFilters}
+                className="text-xs text-primary-700 hover:underline font-bold ml-auto"
+              >
+                Reset Semua
+              </button>
+            </div>
+          )}
+
           <div className="flex justify-between items-center text-xs text-charcoal-500 font-medium">
             <span>Kategori: <strong className="text-charcoal-800 uppercase tracking-wider">{selectedCategoryLabel}</strong></span>
             <span>Menampilkan {filteredProducts.length} hasil</span>
