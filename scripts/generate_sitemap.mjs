@@ -152,17 +152,26 @@ async function generateSitemapAndMerchantFeed() {
           }
         }
 
-        const price = Math.round(Number(p.base_price) || 0)
-        const title = p.name || 'Buket Bunga Segar Kembang Seladang'
-        const description = p.description || `Beli ${title} segar berkualitas premium di Kembang Seladang. Pengiriman cepat untuk wilayah Rempoa, Ciputat, Bintaro, dan Tangerang Selatan.`
+        const basePrice = Math.round(Number(p.base_price) || 0)
+        const origPrice = p.original_price ? Math.round(Number(p.original_price)) : null
+        const hasSale = origPrice && origPrice > basePrice
+
+        const rawName = p.name || 'Buket Bunga Segar'
+        const flowerType = p.flower_type || 'Bunga Segar'
+        const enrichedTitle = rawName.toLowerCase().includes('kembang seladang')
+          ? rawName
+          : `${rawName} — ${flowerType} Segar Premium | Kembang Seladang Florist Tangsel`
+
+        const description = p.description || `Beli ${rawName} segar berkualitas premium di Kembang Seladang. Pengiriman cepat sameday untuk wilayah Rempoa, Ciputat, Bintaro, dan Tangerang Selatan.`
 
         merchantItems.push({
           id: p.id,
-          title: escapeXml(title),
+          title: escapeXml(enrichedTitle),
           description: escapeXml(description),
           link: `${SITE_URL}/products/${prodSlug}`,
           image_link: escapeXml(imageUrl),
-          price: `${price} IDR`,
+          price: hasSale ? `${origPrice} IDR` : `${basePrice} IDR`,
+          sale_price: hasSale ? `${basePrice} IDR` : null,
           availability: 'in_stock',
           condition: 'new',
           brand: 'Kembang Seladang',
@@ -207,9 +216,13 @@ ${merchantItems.map(item => `    <item>
       <g:image_link>${item.image_link}</g:image_link>
       <g:availability>${item.availability}</g:availability>
       <g:price>${item.price}</g:price>
+      ${item.sale_price ? `<g:sale_price>${item.sale_price}</g:sale_price>` : ''}
       <g:condition>${item.condition}</g:condition>
       <g:brand>${item.brand}</g:brand>
       <g:google_product_category>${item.google_product_category}</g:google_product_category>
+      <g:custom_label_0>Bunga Segar</g:custom_label_0>
+      <g:custom_label_1>Tangerang Selatan</g:custom_label_1>
+      <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
       <g:pickup_SLA>same_day</g:pickup_SLA>
