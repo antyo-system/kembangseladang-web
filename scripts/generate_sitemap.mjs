@@ -162,7 +162,7 @@ async function generateSitemapAndMerchantFeed() {
           ? rawName
           : `${rawName} — ${flowerType} Segar Premium | Kembang Seladang Florist Tangsel`
 
-        const description = p.description || `Beli ${rawName} segar berkualitas premium di Kembang Seladang. Pengiriman cepat sameday untuk wilayah Rempoa, Ciputat, Bintaro, dan Tangerang Selatan.`
+        const description = (p.description || `Beli ${rawName} segar berkualitas premium di Kembang Seladang. Pengiriman cepat sameday untuk wilayah Rempoa, Ciputat, Bintaro, dan Tangerang Selatan.`) + ` 100% Rangkaian Bunga Segar Asli Florist.`
 
         merchantItems.push({
           id: p.id,
@@ -175,7 +175,8 @@ async function generateSitemapAndMerchantFeed() {
           availability: 'in_stock',
           condition: 'new',
           brand: 'Kembang Seladang',
-          google_product_category: '632'
+          google_product_category: 'Home &amp; Garden &gt; Plants &gt; Flowers',
+          product_type: 'Florist &gt; Bunga Segar &gt; Buket Mawar'
         })
       })
     }
@@ -220,6 +221,7 @@ ${merchantItems.map(item => `    <item>
       <g:condition>${item.condition}</g:condition>
       <g:brand>${item.brand}</g:brand>
       <g:google_product_category>${item.google_product_category}</g:google_product_category>
+      <g:product_type>${item.product_type}</g:product_type>
       <g:custom_label_0>Bunga Segar</g:custom_label_0>
       <g:custom_label_1>Tangerang Selatan</g:custom_label_1>
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
