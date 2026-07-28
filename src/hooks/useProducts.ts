@@ -100,25 +100,21 @@ export function useProducts() {
   })
 }
 
+const IS_UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 export function useProduct(slugOrId: string) {
   return useQuery({
     queryKey: ['product', slugOrId],
     queryFn: async () => {
       if (!slugOrId) throw new Error('ID atau slug produk tidak valid')
 
-      // 1. Try querying by id, slug, or code directly
-      const queryColumns = [
-        { field: 'id', val: slugOrId },
-        { field: 'slug', val: slugOrId },
-        { field: 'code', val: slugOrId },
-      ]
-
-      for (const query of queryColumns) {
+      // 1. If slugOrId is a valid UUID, try querying by id directly
+      if (IS_UUID_REGEX.test(slugOrId)) {
         for (const candidate of PRODUCT_SELECT_CANDIDATES) {
           const { data, error } = await supabase
             .from('products')
             .select(candidate.columns)
-            .eq(query.field, query.val)
+            .eq('id', slugOrId)
             .maybeSingle()
 
           if (!error && data) {
@@ -127,13 +123,13 @@ export function useProduct(slugOrId: string) {
         }
       }
 
-      // 2. Fallback: Fetch all live products and match by slugify(name)
-      const { data: allProducts } = await supabase
+      // 2. Fetch all products and match by slugify(name) or code
+      const { data: allProducts, error } = await supabase
         .from('products')
         .select('*')
 
-      if (allProducts && allProducts.length > 0) {
-        const matched = allProducts.find((p) => matchesProductSlug(p as Product, slugOrId))
+      if (!error && allProducts && allProducts.length > 0) {
+        const matched = allProducts.find((p) => matchesProductSlug(p as Product, slugOrId) || p.code === slugOrId || p.id === slugOrId)
         if (matched) {
           return applySingleProductDefaults(matched, {})
         }

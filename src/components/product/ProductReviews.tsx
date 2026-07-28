@@ -49,7 +49,13 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
     const saved = localStorage.getItem(storageKey)
     if (saved) {
       try {
-        setReviews(JSON.parse(saved))
+        const parsed: CustomerReview[] = JSON.parse(saved)
+        // Filter out any phone numbers from location for privacy
+        const cleaned = parsed.map(r => ({
+          ...r,
+          location: r.location && /^\+?\d+$/.test(r.location.replace(/\s+/g, '')) ? 'Tangerang Selatan' : r.location
+        }))
+        setReviews(cleaned)
       } catch (e) {
         setReviews(INITIAL_MOCK_REVIEWS.default)
       }
@@ -64,12 +70,14 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
     if (!formAuthor.trim() || !formComment.trim()) return
 
     const isVerifiedOrder = formOrderRef.trim().length > 0
+    const rawLoc = formLocation.trim()
+    const cleanLoc = /^\+?\d+$/.test(rawLoc.replace(/\s+/g, '')) ? 'Tangerang Selatan' : (rawLoc || 'Tangerang Selatan')
 
     const newRev: CustomerReview = {
       id: `rev-user-${Date.now()}`,
       productId,
       author: formAuthor.trim(),
-      location: formLocation.trim() || 'Tangerang Selatan',
+      location: cleanLoc,
       rating: formRating,
       title: formTitle.trim() || 'Pengalaman Sangat Memuaskan',
       comment: formComment.trim(),
@@ -116,7 +124,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
   const filteredReviews = reviews.filter(r => (filterRating === 'all' ? true : r.rating === filterRating))
 
   return (
-    <div className="space-y-8 bg-white p-6 sm:p-8 rounded-3xl border border-primary-100 shadow-sm" id="ulasan-pelanggan">
+    <div className="space-y-6 sm:space-y-8 bg-white p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-primary-100 shadow-sm max-w-full overflow-hidden" id="ulasan-pelanggan">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-cream-100 pb-6">
         <div>
@@ -258,7 +266,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
                   {rev.verified ? (
                     <span className="inline-flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
                       <CheckCircle className="w-3 h-3 mr-1 text-emerald-600" />
-                      Pembeli Terverifikasi {rev.orderRef ? `(#${rev.orderRef})` : '(WA)'}
+                      Pembeli Terverifikasi
                     </span>
                   ) : (
                     <span className="inline-flex items-center text-[10px] font-semibold text-charcoal-500 bg-cream-100 px-2 py-0.5 rounded-full border border-cream-200/60">
@@ -266,7 +274,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
                     </span>
                   )}
                 </div>
-                {rev.location && (
+                {rev.location && !/^\+?\d+$/.test(rev.location.replace(/\s+/g, '')) && (
                   <p className="text-[11px] text-charcoal-400 font-medium">{rev.location}</p>
                 )}
               </div>

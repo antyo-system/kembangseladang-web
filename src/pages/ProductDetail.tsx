@@ -210,7 +210,7 @@ export const ProductDetail: React.FC = () => {
   const soldCount = getProductSoldCount(product)
 
   return (
-    <div className="pt-10 sm:pt-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="pt-6 sm:pt-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 w-full overflow-x-hidden">
       
       {/* Back Button / Navigation */}
       <div>
