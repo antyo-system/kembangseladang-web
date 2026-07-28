@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Star, ThumbsUp, CheckCircle, Plus, X, Sparkles } from 'lucide-react'
+import { Star, ThumbsUp, CheckCircle, Plus, X, Sparkles, Pencil, Trash2 } from 'lucide-react'
 import { Button } from '../ui/Button'
 
 export interface CustomerReview {
@@ -34,6 +34,11 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
   const [filterRating, setFilterRating] = useState<number | 'all'>('all')
   const [likedReviews, setLikedReviews] = useState<Record<string, boolean>>({})
 
+  // User Owned Reviews Tracking (Device specific)
+  const [myReviewIds, setMyReviewIds] = useState<string[]>([])
+  const [editingReviewId, setEditingReviewId] = useState<string | null>(null)
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
+
   // Form State
   const [formRating, setFormRating] = useState(5)
   const [formAuthor, setFormAuthor] = useState('')
@@ -43,7 +48,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
   const [formComment, setFormComment] = useState('')
   const [formSubmitted, setFormSubmitted] = useState(false)
 
-  // Load reviews from localStorage + defaults
+  // Load reviews & user owned review IDs from localStorage
   useEffect(() => {
     const storageKey = `reviews_${productId}`
     const saved = localStorage.getItem(storageKey)
@@ -62,9 +67,49 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
     } else {
       setReviews(INITIAL_MOCK_REVIEWS.default)
     }
+
+    const mySaved = localStorage.getItem(`my_reviews_${productId}`)
+    if (mySaved) {
+      try {
+        setMyReviewIds(JSON.parse(mySaved))
+      } catch (e) {}
+    }
   }, [productId])
 
-  // Save new review
+  const handleOpenCreateModal = () => {
+    setEditingReviewId(null)
+    setFormAuthor('')
+    setFormLocation('')
+    setFormOrderRef('')
+    setFormTitle('')
+    setFormComment('')
+    setFormRating(5)
+    setIsModalOpen(true)
+  }
+
+  const handleOpenEditModal = (rev: CustomerReview) => {
+    setEditingReviewId(rev.id)
+    setFormAuthor(rev.author)
+    setFormLocation(rev.location || '')
+    setFormOrderRef(rev.orderRef || '')
+    setFormTitle(rev.title)
+    setFormComment(rev.comment)
+    setFormRating(rev.rating)
+    setIsModalOpen(true)
+  }
+
+  const handleDeleteReview = (id: string) => {
+    const updated = reviews.filter(r => r.id !== id)
+    setReviews(updated)
+    localStorage.setItem(`reviews_${productId}`, JSON.stringify(updated))
+
+    const updatedMyIds = myReviewIds.filter(myId => myId !== id)
+    setMyReviewIds(updatedMyIds)
+    localStorage.setItem(`my_reviews_${productId}`, JSON.stringify(updatedMyIds))
+    setDeleteConfirmId(null)
+  }
+
+  // Save or Update review
   const handleSubmitReview = (e: React.FormEvent) => {
     e.preventDefault()
     if (!formAuthor.trim() || !formComment.trim()) return
@@ -73,28 +118,57 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
     const rawLoc = formLocation.trim()
     const cleanLoc = /^\+?\d+$/.test(rawLoc.replace(/\s+/g, '')) ? 'Tangerang Selatan' : (rawLoc || 'Tangerang Selatan')
 
-    const newRev: CustomerReview = {
-      id: `rev-user-${Date.now()}`,
-      productId,
-      author: formAuthor.trim(),
-      location: cleanLoc,
-      rating: formRating,
-      title: formTitle.trim() || 'Pengalaman Sangat Memuaskan',
-      comment: formComment.trim(),
-      date: 'Baru saja',
-      verified: isVerifiedOrder,
-      orderRef: formOrderRef.trim() || undefined,
-      likes: 0
-    }
+    if (editingReviewId) {
+      // Edit existing review
+      const updated = reviews.map(r => {
+        if (r.id === editingReviewId) {
+          return {
+            ...r,
+            author: formAuthor.trim(),
+            location: cleanLoc,
+            rating: formRating,
+            title: formTitle.trim() || 'Pengalaman Sangat Memuaskan',
+            comment: formComment.trim(),
+            verified: isVerifiedOrder,
+            orderRef: formOrderRef.trim() || undefined,
+            date: 'Baru saja diperbarui'
+          }
+        }
+        return r
+      })
+      setReviews(updated)
+      localStorage.setItem(`reviews_${productId}`, JSON.stringify(updated))
+    } else {
+      // Create new review
+      const newRevId = `rev-user-${Date.now()}`
+      const newRev: CustomerReview = {
+        id: newRevId,
+        productId,
+        author: formAuthor.trim(),
+        location: cleanLoc,
+        rating: formRating,
+        title: formTitle.trim() || 'Pengalaman Sangat Memuaskan',
+        comment: formComment.trim(),
+        date: 'Baru saja',
+        verified: isVerifiedOrder,
+        orderRef: formOrderRef.trim() || undefined,
+        likes: 0
+      }
 
-    const updated = [newRev, ...reviews]
-    setReviews(updated)
-    localStorage.setItem(`reviews_${productId}`, JSON.stringify(updated))
+      const updated = [newRev, ...reviews]
+      setReviews(updated)
+      localStorage.setItem(`reviews_${productId}`, JSON.stringify(updated))
+
+      const updatedMyIds = [newRevId, ...myReviewIds]
+      setMyReviewIds(updatedMyIds)
+      localStorage.setItem(`my_reviews_${productId}`, JSON.stringify(updatedMyIds))
+    }
 
     setFormSubmitted(true)
     setTimeout(() => {
       setFormSubmitted(false)
       setIsModalOpen(false)
+      setEditingReviewId(null)
       // Reset form
       setFormAuthor('')
       setFormLocation('')
@@ -247,83 +321,113 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
               Jadilah yang pertama memberikan ulasan pengalaman memesan buket {productName} atau beri ulasan langsung di Google Maps Kembang Seladang!
             </p>
             <div className="pt-2 flex justify-center gap-3">
-              <Button onClick={() => setIsModalOpen(true)} size="sm" className="rounded-xl text-xs font-bold">
+              <Button onClick={handleOpenCreateModal} size="sm" className="rounded-xl text-xs font-bold">
                 <Plus className="w-3.5 h-3.5 mr-1" />
                 Tulis Ulasan Pertama
               </Button>
             </div>
           </div>
         ) : (
-          filteredReviews.map(rev => (
-          <div
-            key={rev.id}
-            className="p-5 rounded-2xl bg-white border border-primary-100/40 hover:border-primary-200 transition-all space-y-3 shadow-2xs"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <div className="flex items-center space-x-2">
-                  <span className="font-bold text-sm text-charcoal-900">{rev.author}</span>
-                  {rev.verified ? (
-                    <span className="inline-flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
-                      <CheckCircle className="w-3 h-3 mr-1 text-emerald-600" />
-                      Pembeli Terverifikasi
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center text-[10px] font-semibold text-charcoal-500 bg-cream-100 px-2 py-0.5 rounded-full border border-cream-200/60">
-                      💬 Pengunjung Web
-                    </span>
-                  )}
-                </div>
-                {rev.location && !/^\+?\d+$/.test(rev.location.replace(/\s+/g, '')) && (
-                  <p className="text-[11px] text-charcoal-400 font-medium">{rev.location}</p>
-                )}
-              </div>
-              <span className="text-xs font-medium text-charcoal-400">{rev.date}</span>
-            </div>
-
-            {/* Stars */}
-            <div className="flex items-center space-x-1 text-amber-400">
-              {[...Array(rev.rating)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-amber-400 stroke-amber-400" />
-              ))}
-            </div>
-
-            {/* Title & Comment */}
-            <div>
-              <h4 className="font-bold text-sm text-charcoal-800">{rev.title}</h4>
-              <p className="text-xs text-charcoal-600 leading-relaxed mt-1">{rev.comment}</p>
-            </div>
-
-            {/* Official Seller Reply */}
-            {rev.reply && (
-              <div className="mt-3 p-3.5 bg-primary-50/70 border-l-3 border-primary-500 rounded-r-xl space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-extrabold text-primary-900 flex items-center gap-1">
-                    💬 Balasan Penjual (Kembang Seladang Florist)
-                  </span>
-                  {rev.replyDate && <span className="text-[10px] text-primary-600 font-medium">{rev.replyDate}</span>}
-                </div>
-                <p className="text-xs text-primary-800 leading-relaxed font-normal">{rev.reply}</p>
-              </div>
-            )}
-
-            {/* Like Button */}
-            <div className="pt-2 flex items-center justify-between border-t border-cream-50">
-              <button
-                onClick={() => handleToggleLike(rev.id)}
-                className={`inline-flex items-center space-x-1.5 text-xs font-semibold px-3 py-1 rounded-lg transition-colors cursor-pointer ${
-                  likedReviews[rev.id]
-                    ? 'bg-primary-50 text-primary-700'
-                    : 'text-charcoal-400 hover:bg-cream-100'
+          filteredReviews.map(rev => {
+            const isMyReview = myReviewIds.includes(rev.id)
+            return (
+              <div
+                key={rev.id}
+                className={`p-5 rounded-2xl bg-white border transition-all space-y-3 shadow-2xs ${
+                  isMyReview ? 'border-primary-300 ring-1 ring-primary-200' : 'border-primary-100/40 hover:border-primary-200'
                 }`}
               >
-                <ThumbsUp className="w-3.5 h-3.5" />
-                <span>Membantu ({rev.likes})</span>
-              </button>
-            </div>
-          </div>
-        ))
-      )}
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-bold text-sm text-charcoal-900">{rev.author}</span>
+                      {isMyReview && (
+                        <span className="inline-flex items-center text-[10px] font-bold text-primary-800 bg-primary-100/80 px-2.5 py-0.5 rounded-full border border-primary-200">
+                          ✏️ Ulasan Anda
+                        </span>
+                      )}
+                      {rev.verified ? (
+                        <span className="inline-flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
+                          <CheckCircle className="w-3 h-3 mr-1 text-emerald-600" />
+                          Pembeli Terverifikasi
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center text-[10px] font-semibold text-charcoal-500 bg-cream-100 px-2 py-0.5 rounded-full border border-cream-200/60">
+                          💬 Pengunjung Web
+                        </span>
+                      )}
+                    </div>
+                    {rev.location && !/^\+?\d+$/.test(rev.location.replace(/\s+/g, '')) && (
+                      <p className="text-[11px] text-charcoal-400 font-medium">{rev.location}</p>
+                    )}
+                  </div>
+                  <span className="text-xs font-medium text-charcoal-400 shrink-0">{rev.date}</span>
+                </div>
+
+                {/* Stars */}
+                <div className="flex items-center space-x-1 text-amber-400">
+                  {[...Array(rev.rating)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 stroke-amber-400" />
+                  ))}
+                </div>
+
+                {/* Title & Comment */}
+                <div>
+                  <h4 className="font-bold text-sm text-charcoal-800">{rev.title}</h4>
+                  <p className="text-xs text-charcoal-600 leading-relaxed mt-1">{rev.comment}</p>
+                </div>
+
+                {/* Official Seller Reply */}
+                {rev.reply && (
+                  <div className="mt-3 p-3.5 bg-primary-50/70 border-l-3 border-primary-500 rounded-r-xl space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-extrabold text-primary-900 flex items-center gap-1">
+                        💬 Balasan Penjual (Kembang Seladang Florist)
+                      </span>
+                      {rev.replyDate && <span className="text-[10px] text-primary-600 font-medium">{rev.replyDate}</span>}
+                    </div>
+                    <p className="text-xs text-primary-800 leading-relaxed font-normal">{rev.reply}</p>
+                  </div>
+                )}
+
+                {/* Like & Edit/Delete Action Row */}
+                <div className="pt-2 flex items-center justify-between border-t border-cream-50">
+                  <button
+                    onClick={() => handleToggleLike(rev.id)}
+                    className={`inline-flex items-center space-x-1.5 text-xs font-semibold px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+                      likedReviews[rev.id]
+                        ? 'bg-primary-50 text-primary-700'
+                        : 'text-charcoal-400 hover:bg-cream-100'
+                    }`}
+                  >
+                    <ThumbsUp className="w-3.5 h-3.5" />
+                    <span>Membantu ({rev.likes})</span>
+                  </button>
+
+                  {/* Customer Edit & Delete buttons */}
+                  {isMyReview && (
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => handleOpenEditModal(rev)}
+                        className="inline-flex items-center space-x-1 text-xs font-bold text-primary-700 bg-primary-50 hover:bg-primary-100 px-3 py-1.5 rounded-xl border border-primary-200/80 transition-colors cursor-pointer"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                        <span>Edit Ulasan</span>
+                      </button>
+                      <button
+                        onClick={() => setDeleteConfirmId(rev.id)}
+                        className="inline-flex items-center space-x-1 text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-xl border border-rose-200/80 transition-colors cursor-pointer"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Hapus</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )
+          })
+        )}
       </div>
 
       {/* Modal Tulis Ulasan */}
@@ -339,18 +443,26 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
 
             <div>
               <h3 className="font-display text-xl font-bold text-charcoal-900">
-                Tulis Ulasan Produk
+                {editingReviewId ? 'Edit Ulasan Anda' : 'Tulis Ulasan Produk'}
               </h3>
               <p className="text-xs text-charcoal-500 mt-1">
-                Bagikan pengalaman Anda memesan buket <strong className="text-primary-700">{productName}</strong>.
+                {editingReviewId
+                  ? `Perbarui ulasan Anda untuk buket ${productName}.`
+                  : `Bagikan pengalaman Anda memesan buket ${productName}.`}
               </p>
             </div>
 
             {formSubmitted ? (
               <div className="bg-emerald-50 border border-emerald-200 p-6 rounded-2xl text-center space-y-2">
                 <CheckCircle className="w-10 h-10 text-emerald-600 mx-auto" />
-                <h4 className="font-bold text-emerald-900 text-base">Terima Kasih Atas Ulasan Anda!</h4>
-                <p className="text-xs text-emerald-700">Ulasan Anda berhasil ditambahkan ke halaman produk.</p>
+                <h4 className="font-bold text-emerald-900 text-base">
+                  {editingReviewId ? 'Ulasan Berhasil Diperbarui!' : 'Terima Kasih Atas Ulasan Anda!'}
+                </h4>
+                <p className="text-xs text-emerald-700">
+                  {editingReviewId
+                    ? 'Perubahan ulasan Anda telah disimpan.'
+                    : 'Ulasan Anda berhasil ditambahkan ke halaman produk.'}
+                </p>
               </div>
             ) : (
               <form onSubmit={handleSubmitReview} className="space-y-4">
@@ -451,10 +563,43 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
 
                 {/* Submit CTA */}
                 <Button type="submit" size="lg" className="w-full rounded-xl py-3 text-xs font-bold">
-                  Kirim Ulasan Sekarang
+                  {editingReviewId ? 'Simpan Perubahan Ulasan' : 'Kirim Ulasan Sekarang'}
                 </Button>
               </form>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal for Deleting Review */}
+      {deleteConfirmId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-900/60 backdrop-blur-xs animate-fadeIn">
+          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-sm w-full shadow-2xl space-y-4 border border-rose-100 text-center">
+            <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto">
+              <Trash2 className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="font-display text-base font-bold text-charcoal-900">
+                Hapus Ulasan Anda?
+              </h3>
+              <p className="text-xs text-charcoal-500 mt-1">
+                Tindakan ini akan menghapus ulasan ini secara permanen dari halaman produk.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                onClick={() => setDeleteConfirmId(null)}
+                className="flex-1 py-2.5 px-4 rounded-xl border border-cream-200 text-charcoal-600 text-xs font-bold hover:bg-cream-100 transition-colors cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                onClick={() => handleDeleteReview(deleteConfirmId)}
+                className="flex-1 py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
+              >
+                Ya, Hapus
+              </button>
+            </div>
           </div>
         </div>
       )}
