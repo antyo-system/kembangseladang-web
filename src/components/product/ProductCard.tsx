@@ -6,6 +6,7 @@ import type { Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
 import { getProductDiscountPercentage, getProductOriginalPrice } from '../../utils/productPricing'
 import { formatSoldCount, getProductSoldCount } from '../../utils/productSales'
+import { getProductSlug } from '../../utils/slug'
 
 interface ProductCardProps {
   product: Product
@@ -31,11 +32,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const originalPrice = getProductOriginalPrice(product)
   const discountPercentage = getProductDiscountPercentage(product)
   const soldCount = getProductSoldCount(product)
+  const productSlug = getProductSlug(product)
 
   return (
     <article className="group flex h-full flex-col overflow-hidden border border-charcoal-100 bg-white transition-all duration-300 hover:border-primary-300 hover:shadow-md rounded-md">
       <Link
-        to={`/products/${product.id}`}
+        to={`/products/${productSlug}`}
         className="relative block aspect-square w-full overflow-hidden bg-cream-50 select-none"
       >
         <img
@@ -55,7 +57,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       <div className="flex flex-1 flex-col justify-between gap-2 p-3">
         <div className="flex flex-col gap-1">
-          <Link to={`/products/${product.id}`} className="block">
+          <Link to={`/products/${productSlug}`} className="block">
             <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-charcoal-900 transition-colors group-hover:text-primary-600">
               {product.name}
             </h3>

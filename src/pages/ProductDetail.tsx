@@ -12,6 +12,7 @@ import { calculateFlowerFreshness } from '../utils/flowerFreshness'
 import { Button } from '../components/ui/Button'
 import { trackWAClick } from '../utils/analytics'
 import { updateSEOMetadata } from '../utils/seo'
+import { getProductSlug } from '../utils/slug'
 
 export const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -26,7 +27,14 @@ export const ProductDetail: React.FC = () => {
 
   useEffect(() => {
     if (!product) return
-    const canonical = `https://kembangseladang.com/products/${product.id}`
+    const canonicalSlug = getProductSlug(product)
+
+    // Smooth URL upgrade: If accessed via raw UUID or old identifier, replace URL with clean slug
+    if (id && id !== canonicalSlug && canonicalSlug) {
+      navigate(`/products/${canonicalSlug}`, { replace: true })
+    }
+
+    const canonical = `https://kembangseladang.com/products/${canonicalSlug}`
     const title = `${product.name} — Buket Bunga Kembang Seladang`
     const description = product.description || `Pesan ${product.name} buket bunga segar premium di Kembang Seladang. Pengiriman cepat ke Tangerang Selatan & sekitarnya.`
     const { rating, count } = getProductRating(product.id)

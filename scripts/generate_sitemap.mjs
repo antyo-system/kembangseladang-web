@@ -45,6 +45,21 @@ function escapeXml(str = '') {
     .replace(/'/g, '&apos;')
 }
 
+function slugify(text = '') {
+  if (!text) return ''
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9 -]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+
 async function generateSitemapAndMerchantFeed() {
   console.log('🗺️ Generating dynamic sitemaps & Google Merchant RSS Feed for kembangseladang.com...')
 
@@ -107,7 +122,8 @@ async function generateSitemapAndMerchantFeed() {
 
       liveProducts.forEach(p => {
         const lastmod = p.updated_at ? new Date(p.updated_at).toISOString().split('T')[0] : today
-        urls.push({ loc: `${SITE_URL}/products/${p.id}`, priority: '0.7', changefreq: 'weekly', lastmod })
+        const prodSlug = (p.slug && p.slug.trim()) ? p.slug.trim() : (slugify(p.name) || p.id)
+        urls.push({ loc: `${SITE_URL}/products/${prodSlug}`, priority: '0.7', changefreq: 'weekly', lastmod })
 
         // Process Image URL for Google Merchant Feed
         let imageUrl = `${SITE_URL}/logo.png`
@@ -140,7 +156,7 @@ async function generateSitemapAndMerchantFeed() {
           id: p.id,
           title: escapeXml(title),
           description: escapeXml(description),
-          link: `${SITE_URL}/products/${p.id}`,
+          link: `${SITE_URL}/products/${prodSlug}`,
           image_link: escapeXml(imageUrl),
           price: `${price} IDR`,
           availability: 'in_stock',

@@ -6,6 +6,7 @@ export interface Product {
   id: string
   code: string
   name: string
+  slug?: string
   base_price: number
   original_price?: number | null
   sold_count?: number | null

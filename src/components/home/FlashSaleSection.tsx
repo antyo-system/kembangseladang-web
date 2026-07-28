@@ -6,6 +6,7 @@ import { type Product } from '../../store/useCartStore'
 import { formatRupiah } from '../../utils/formatCurrency'
 import { getProductOriginalPrice, getProductDiscountPercentage } from '../../utils/productPricing'
 import { getFlashSaleSession, rotateFlashSaleProducts, calculateFlashSaleStock } from '../../utils/flashSale'
+import { getProductSlug } from '../../utils/slug'
 
 export const FlashSaleSection: React.FC = () => {
   const { data: products, isLoading: isProductsLoading } = useProducts()
@@ -111,7 +112,7 @@ export const FlashSaleSection: React.FC = () => {
           return (
             <Link
               key={product.id}
-              to={`/products/${product.id}`}
+              to={`/products/${getProductSlug(product)}`}
               className="group bg-white border border-transparent hover:border-pink-200 transition-all duration-200 flex flex-col justify-between"
             >
               <div className="relative aspect-square w-full bg-cream-50 overflow-hidden rounded-none mb-2">
