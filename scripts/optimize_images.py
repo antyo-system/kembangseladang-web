@@ -32,7 +32,7 @@ def optimize_images():
 
                     # Save WebP version
                     webp_path = os.path.splitext(filepath)[0] + '.webp'
-                    img_resized.save(webp_path, 'WEBP', quality=75, method=6)
+                    img_resized.save(webp_path, 'WEBP', quality=70, method=6)
                     webp_size = os.path.getsize(webp_path)
 
                     # Overwrite/re-save compressed JPG

@@ -41,7 +41,7 @@ export function getOrCreateSessionId(): string {
 
 export function detectDeviceType(): 'mobile' | 'desktop' {
   if (typeof window === 'undefined') return 'mobile'
-  return window.innerWidth < 768 ? 'mobile' : 'desktop'
+  return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
 }
 
 export async function trackPageView(pagePath: string) {

@@ -182,7 +182,7 @@ export const Products: React.FC = () => {
   const [sortBy, setSortBy] = useState('terbaru')
   const [categoryTab, setCategoryTab] = useState<'bentuk' | 'momen'>('bentuk')
   const [isFilterVisible, setIsFilterVisible] = useState(
-    () => typeof window === 'undefined' || window.innerWidth >= 1024
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches
   )
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     harga: true,
