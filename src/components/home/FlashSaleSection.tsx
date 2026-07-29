@@ -81,7 +81,13 @@ export const FlashSaleSection: React.FC = () => {
     return rotateFlashSaleProducts(flashSalePool, sessionKey, 6, pinnedIds)
   }, [flashSalePool, sessionKey, pinnedIds])
 
-  if (!isFlashSaleActive || isProductsLoading || isConfigLoading || activeProducts.length === 0) return null
+  if (isProductsLoading || isConfigLoading) {
+    return (
+      <div className="bg-cream-50/50 border border-charcoal-100 p-4 sm:p-5 h-[260px] animate-pulse rounded-none" />
+    )
+  }
+
+  if (!isFlashSaleActive || activeProducts.length === 0) return null
 
   return (
     <div className="bg-white border border-charcoal-100 p-4 sm:p-5 space-y-4 rounded-none font-sans">

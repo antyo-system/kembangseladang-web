@@ -32,7 +32,14 @@ export const PromoBanner: React.FC = () => {
     }
   }, [isHovered, displaySlides.length])
 
-  if (displaySlides.length === 0) return null
+  if (displaySlides.length === 0) {
+    return (
+      <div
+        className="relative w-full h-[340px] sm:h-[380px] md:h-[400px] bg-charcoal-900 animate-pulse border border-charcoal-100/10"
+        aria-label="Loading promo banner"
+      />
+    )
+  }
 
   // Helper for Badge Icon
   const renderBadgeIcon = (badgeText: string) => {

@@ -48,6 +48,7 @@ export const DEFAULT_STOREFRONT_BANNERS: PromoBanner[] = [
 export function useBanners() {
   return useQuery<PromoBanner[]>({
     queryKey: ['active_promo_banners'],
+    initialData: DEFAULT_STOREFRONT_BANNERS,
     queryFn: async () => {
       try {
         const { data, error } = await supabase
