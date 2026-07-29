@@ -50,6 +50,10 @@ export default defineConfig({
             return 'vendor-supabase'
           }
 
+          if (id.includes('/lucide-react/')) {
+            return 'vendor-lucide'
+          }
+
           if (id.includes('/framer-motion/')) {
             return 'vendor-motion'
           }

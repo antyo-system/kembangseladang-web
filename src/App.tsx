@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom'
 import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { WhatsAppFAB } from './components/layout/WhatsAppFAB'
 import { CartDrawer } from './components/cart/CartDrawer'
 import { Products } from './pages/Products'
-import { ProductDetail } from './pages/ProductDetail'
-import { Articles } from './pages/Articles'
-import { ArticleDetail } from './pages/ArticleDetail'
-import { About } from './pages/About'
-import { Contact } from './pages/Contact'
-import { ReturnPolicy } from './pages/ReturnPolicy'
-import { NotFound } from './pages/NotFound'
 import { supabaseConfigError } from './lib/supabase'
 
 import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
 import { trackPageView } from './utils/analytics'
 import { updateSEOMetadata, getFloristLocalBusinessSchema, getHomepageFAQSchema, getCombinedGraphSchema } from './utils/seo'
 
-import { CategoryLanding } from './pages/CategoryLanding'
+// Lazy-loaded secondary route components for optimal initial bundle size
+const ProductDetail = lazy(() => import('./pages/ProductDetail').then(m => ({ default: m.ProductDetail })))
+const Articles = lazy(() => import('./pages/Articles').then(m => ({ default: m.Articles })))
+const ArticleDetail = lazy(() => import('./pages/ArticleDetail').then(m => ({ default: m.ArticleDetail })))
+const About = lazy(() => import('./pages/About').then(m => ({ default: m.About })))
+const Contact = lazy(() => import('./pages/Contact').then(m => ({ default: m.Contact })))
+const ReturnPolicy = lazy(() => import('./pages/ReturnPolicy').then(m => ({ default: m.ReturnPolicy })))
+const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })))
+const CategoryLanding = lazy(() => import('./pages/CategoryLanding').then(m => ({ default: m.CategoryLanding })))
 
 // Slug-aware redirects — carry :slug to canonical /articles/:slug
 const RedirectBlogSlug: React.FC = () => {
@@ -29,6 +30,13 @@ const RedirectArtikelSlug: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
   return <Navigate to={`/articles/${slug}`} replace />
 }
+
+// Lightweight fallback loader during route transition
+const PageFallback: React.FC = () => (
+  <div className="min-h-[40vh] flex items-center justify-center">
+    <div className="w-6 h-6 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
+  </div>
+)
 
 
 export const App: React.FC = () => {
@@ -83,26 +91,28 @@ export const App: React.FC = () => {
 
       {/* Main Pages Outlet */}
       <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Products />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/articles" element={<Articles />} />
-          <Route path="/articles/:slug" element={<ArticleDetail />} />
-          {/* /blog and /artikel redirect to canonical /articles path */}
-          <Route path="/blog" element={<Navigate to="/articles" replace />} />
-          <Route path="/blog/:slug" element={<RedirectBlogSlug />} />
-          <Route path="/artikel" element={<Navigate to="/articles" replace />} />
-          <Route path="/artikel/:slug" element={<RedirectArtikelSlug />} />
-          <Route path="/katalog" element={<Navigate to="/products" replace />} />
-          <Route path="/katalog/:slug" element={<CategoryLanding />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/return-policy" element={<ReturnPolicy />} />
-          <Route path="/kebijakan-pengembalian" element={<ReturnPolicy />} />
-          <Route path="/returns" element={<ReturnPolicy />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<PageFallback />}>
+          <Routes>
+            <Route path="/" element={<Products />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/articles" element={<Articles />} />
+            <Route path="/articles/:slug" element={<ArticleDetail />} />
+            {/* /blog and /artikel redirect to canonical /articles path */}
+            <Route path="/blog" element={<Navigate to="/articles" replace />} />
+            <Route path="/blog/:slug" element={<RedirectBlogSlug />} />
+            <Route path="/artikel" element={<Navigate to="/articles" replace />} />
+            <Route path="/artikel/:slug" element={<RedirectArtikelSlug />} />
+            <Route path="/katalog" element={<Navigate to="/products" replace />} />
+            <Route path="/katalog/:slug" element={<CategoryLanding />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/return-policy" element={<ReturnPolicy />} />
+            <Route path="/kebijakan-pengembalian" element={<ReturnPolicy />} />
+            <Route path="/returns" element={<ReturnPolicy />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
 
       {/* Footer Layout */}
