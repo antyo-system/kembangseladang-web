@@ -3,15 +3,12 @@ import { Routes, Route, useLocation, Navigate, useParams } from 'react-router-do
 import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { WhatsAppFAB } from './components/layout/WhatsAppFAB'
-import { CartDrawer } from './components/cart/CartDrawer'
 import { Products } from './pages/Products'
 import { supabaseConfigError } from './lib/supabase'
-
 import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
 import { trackPageView } from './utils/analytics'
 import { updateSEOMetadata, getFloristLocalBusinessSchema, getHomepageFAQSchema, getCombinedGraphSchema } from './utils/seo'
-
-// Lazy-loaded secondary route components for optimal initial bundle size
+// Lazy-loaded secondary route and UI components for optimal initial bundle size
 const ProductDetail = lazy(() => import('./pages/ProductDetail').then(m => ({ default: m.ProductDetail })))
 const Articles = lazy(() => import('./pages/Articles').then(m => ({ default: m.Articles })))
 const ArticleDetail = lazy(() => import('./pages/ArticleDetail').then(m => ({ default: m.ArticleDetail })))
@@ -20,6 +17,7 @@ const Contact = lazy(() => import('./pages/Contact').then(m => ({ default: m.Con
 const ReturnPolicy = lazy(() => import('./pages/ReturnPolicy').then(m => ({ default: m.ReturnPolicy })))
 const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })))
 const CategoryLanding = lazy(() => import('./pages/CategoryLanding').then(m => ({ default: m.CategoryLanding })))
+const CartDrawer = lazy(() => import('./components/cart/CartDrawer').then(m => ({ default: m.CartDrawer })))
 
 // Slug-aware redirects — carry :slug to canonical /articles/:slug
 const RedirectBlogSlug: React.FC = () => {
@@ -119,7 +117,9 @@ export const App: React.FC = () => {
       <Footer />
 
       {/* Cart Drawer Slide-over */}
-      <CartDrawer isOpen={isCartOpen} onClose={handleCartClose} />
+      <Suspense fallback={null}>
+        <CartDrawer isOpen={isCartOpen} onClose={handleCartClose} />
+      </Suspense>
 
       {/* Floating WhatsApp Action Button */}
       <WhatsAppFAB />
