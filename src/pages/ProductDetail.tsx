@@ -46,6 +46,18 @@ export const ProductDetail: React.FC = () => {
       .toISOString()
       .split('T')[0]
 
+    let validFrom = new Date().toISOString().split('T')[0]
+    if (product.created_at) {
+      try {
+        const parsedDate = new Date(product.created_at)
+        if (!isNaN(parsedDate.getTime())) {
+          validFrom = parsedDate.toISOString().split('T')[0]
+        }
+      } catch (e) {
+        // Fallback already set
+      }
+    }
+
     const productSchema = {
       '@type': 'Product',
       'name': product.name,
@@ -86,6 +98,7 @@ export const ProductDetail: React.FC = () => {
         'priceCurrency': 'IDR',
         'price': product.base_price,
         'priceValidUntil': priceValidUntil,
+        'validFrom': validFrom,
         'itemCondition': 'https://schema.org/NewCondition',
         'availability': 'https://schema.org/InStock',
         'seller': {
