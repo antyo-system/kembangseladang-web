@@ -7,10 +7,10 @@ def optimize_images():
     # 1. Category images optimization
     category_dir = os.path.join('public', 'images', 'categories')
     category_configs = {
-        'rangkaian-meja.jpg': {'max_width': 600},
-        'standing-flower.jpg': {'max_width': 600},
-        'buket-bunga.jpg': {'max_width': 600},
-        'bunga-potong-segar.jpg': {'max_width': 600},
+        'rangkaian-meja.jpg': {'max_width': 400},
+        'standing-flower.jpg': {'max_width': 400},
+        'buket-bunga.jpg': {'max_width': 400},
+        'bunga-potong-segar.jpg': {'max_width': 400},
     }
 
     if os.path.exists(category_dir):
@@ -32,11 +32,11 @@ def optimize_images():
 
                     # Save WebP version
                     webp_path = os.path.splitext(filepath)[0] + '.webp'
-                    img_resized.save(webp_path, 'WEBP', quality=82, method=6)
+                    img_resized.save(webp_path, 'WEBP', quality=75, method=6)
                     webp_size = os.path.getsize(webp_path)
 
                     # Overwrite/re-save compressed JPG
-                    img_resized.save(filepath, 'JPEG', quality=82, optimize=True)
+                    img_resized.save(filepath, 'JPEG', quality=75, optimize=True)
                     jpg_size = os.path.getsize(filepath)
 
                     print(f"Category {filename}: Orig {orig_size/1024:.1f}KB -> JPG {jpg_size/1024:.1f}KB | WebP {webp_size/1024:.1f}KB")

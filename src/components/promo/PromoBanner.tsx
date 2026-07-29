@@ -78,6 +78,8 @@ export const PromoBanner: React.FC = () => {
               <img
                 src={optimizeImageUrl(slide.image_url, 800)}
                 alt={slide.image_alt || `${slide.title} - Toko Bunga Terdekat Kembang Seladang`}
+                width="800"
+                height="400"
                 className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-10000 ease-linear scale-105 group-hover/banner:scale-100"
                 loading={index === 0 ? 'eager' : 'lazy'}
                 {...(index === 0 ? { fetchPriority: 'high' } : {})}

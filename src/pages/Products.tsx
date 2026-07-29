@@ -368,6 +368,8 @@ export const Products: React.FC = () => {
                       <img
                         src={slide.image}
                         alt={slide.label}
+                        width="400"
+                        height="400"
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                       />
                       <div className="absolute inset-x-0 bottom-0 space-y-2 border-t border-charcoal-100 bg-white/95 p-3">
