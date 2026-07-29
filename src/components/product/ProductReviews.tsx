@@ -501,6 +501,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
                     <input
                       type="text"
                       required
+                      aria-label="Nama Lengkap"
                       placeholder="Contoh: Budi Santoso"
                       value={formAuthor}
                       onChange={e => setFormAuthor(e.target.value)}
@@ -511,6 +512,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
                     <label className="block text-xs font-bold text-charcoal-700 mb-1">Wilayah / Area</label>
                     <input
                       type="text"
+                      aria-label="Wilayah atau Area"
                       placeholder="Contoh: Rempoa / Bintaro"
                       value={formLocation}
                       onChange={e => setFormLocation(e.target.value)}
@@ -526,6 +528,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
                   </label>
                   <input
                     type="text"
+                    aria-label="Kode Nota atau No. HP WhatsApp"
                     placeholder="Contoh: INV-87726 atau 0812345678"
                     value={formOrderRef}
                     onChange={e => setFormOrderRef(e.target.value)}
@@ -541,6 +544,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, produ
                   <label className="block text-xs font-bold text-charcoal-700 mb-1">Judul Ringkas Ulasan</label>
                   <input
                     type="text"
+                    aria-label="Judul Ringkas Ulasan"
                     placeholder="Contoh: Bunganya Segar Banget & Kirim Cepat!"
                     value={formTitle}
                     onChange={e => setFormTitle(e.target.value)}

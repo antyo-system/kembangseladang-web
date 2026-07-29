@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, Send, Sparkles, Wand2, Truck } from 'lucide-react'
 import { useBanners } from '../../hooks/useBanners'
+import { optimizeImageUrl } from '../../utils/image'
 
 export const PromoBanner: React.FC = () => {
   const { data: slides = [] } = useBanners()
@@ -68,9 +69,11 @@ export const PromoBanner: React.FC = () => {
             >
               {/* Background Image with Dynamic SEO Alt Text */}
               <img
-                src={slide.image_url}
+                src={optimizeImageUrl(slide.image_url, 800)}
                 alt={slide.image_alt || `${slide.title} - Toko Bunga Terdekat Kembang Seladang`}
                 className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-10000 ease-linear scale-105 group-hover/banner:scale-100"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                {...(index === 0 ? { fetchPriority: 'high' } : {})}
               />
 
               {/* Gradient Overlay */}

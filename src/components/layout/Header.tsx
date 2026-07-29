@@ -65,7 +65,14 @@ export const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
             className="inline-flex items-center justify-center whitespace-nowrap font-serif text-base font-semibold leading-none tracking-normal text-charcoal-900 transition-colors hover:text-primary-600 sm:text-xl"
             aria-label="Kembang Seladang"
           >
-            <img src="/logo.png" alt="Logo Kembang Seladang" className="mr-2 h-7 w-7 object-contain sm:h-8 sm:w-8" />
+            <img
+              src="/logo.webp"
+              alt="Logo Kembang Seladang"
+              width={32}
+              height={32}
+              className="mr-2 h-7 w-7 object-contain sm:h-8 sm:w-8"
+              fetchPriority="high"
+            />
             <span>Kembang Seladang</span>
           </Link>
         </div>

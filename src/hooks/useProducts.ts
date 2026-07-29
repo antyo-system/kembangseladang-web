@@ -39,14 +39,27 @@ const PRODUCT_SELECT_CANDIDATES = [
   { columns: BASE_PRODUCT_SELECT, defaults: { original_price: null, sold_count: 0, is_live: true } },
 ]
 
+function processProductImage(image: string | undefined | null, id: string): string {
+  if (!image) return ''
+  if (image.startsWith('data:image')) {
+    return `/images/products/prod_${id}.webp`
+  }
+  if (image.startsWith('/images/products/') && image.endsWith('.jpg')) {
+    return image.replace(/\.jpg$/, '.webp')
+  }
+  return image
+}
+
 function applyProductDefaults(products: unknown[] | null, defaults: Partial<Pick<Product, 'original_price' | 'sold_count' | 'is_live'>> = {}) {
   return (products || [])
     .filter((product) => (product as Product)?.code !== 'SYS_FLASH_SALE_CONFIG')
     .map((product) => {
       const p = (product || {}) as Product
       const slug = getProductSlug(p)
+      const image = processProductImage(p.image, p.id)
       return {
         ...p,
+        image,
         slug: p.slug || slug,
         is_live: (p as any).is_live !== false,
         is_flash_sale: (p as any).is_flash_sale === true,
@@ -60,8 +73,10 @@ function applyProductDefaults(products: unknown[] | null, defaults: Partial<Pick
 function applySingleProductDefaults(product: unknown, defaults: Partial<Pick<Product, 'original_price' | 'sold_count' | 'is_live'>>) {
   const p = product as Product
   const slug = getProductSlug(p)
+  const image = processProductImage(p.image, p.id)
   return {
     ...p,
+    image,
     slug: p.slug || slug,
     is_live: (p as any).is_live !== false,
     ...defaults,

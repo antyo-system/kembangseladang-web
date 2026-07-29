@@ -5,6 +5,31 @@
     <link>https://kembangseladang.com</link>
     <description>Katalog Rangkaian Bunga Segar, Buket Mawar, Standing Flower, dan Karangan Bunga Kembang Seladang</description>
     <item>
+      <g:id>dbc3de41-8512-4f52-8785-86e3684187bf</g:id>
+      <title>Handbouquet 20 mixed colour — Mawar Segar Premium | Kembang Seladang Florist Tangsel</title>
+      <description>Handbouquet 20 tangkai mawar dengan bunga pendamping Baby Breath (optional), dan kertas wrap cantik sesuai ketersediaan stok, ditambah kartu ucapan 100% Rangkaian Bunga Segar Asli Florist.</description>
+      <link>https://kembangseladang.com/products/handbouquet-20-mixed-colour</link>
+      <g:image_link>https://emgqlsmzijdyceahuifg.supabase.co/storage/v1/object/public/product-images/product-1785285166577-bbdb1.jpg</g:image_link>
+      <g:availability>in_stock</g:availability>
+      <g:price>300000 IDR</g:price>
+      <g:sale_price>250000 IDR</g:sale_price>
+      <g:condition>new</g:condition>
+      <g:brand>Kembang Seladang</g:brand>
+      <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
+      <g:product_type>Florist &gt; Bunga Segar &gt; Buket Mawar</g:product_type>
+      <g:custom_label_0>Bunga Segar</g:custom_label_0>
+      <g:custom_label_1>Tangerang Selatan</g:custom_label_1>
+      <g:custom_label_2>Garansi H+7</g:custom_label_2>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:shipping>
+        <g:country>ID</g:country>
+        <g:service>Kurir Florist Tangerang Selatan</g:service>
+        <g:price>0 IDR</g:price>
+      </g:shipping>
+    </item>
+    <item>
       <g:id>0e40d6f8-3dcf-4529-b3c4-53b21bf7a354</g:id>
       <title>Mawar Peach — Mawar Segar Premium | Kembang Seladang Florist Tangsel</title>
       <description>Mawar single colour , 1 (satu) warna dalam 1 kodi (1 kodi isi 20 tangkai) 100% Rangkaian Bunga Segar Asli Florist.</description>
@@ -81,14 +106,14 @@
       </g:shipping>
     </item>
     <item>
-      <g:id>9610baa2-c21e-431f-a261-b3f0132565f6</g:id>
-      <title>Mawar Merah — Mawar Segar Premium | Kembang Seladang Florist Tangsel</title>
+      <g:id>8997ee9e-3494-4016-8815-6191e43b25e9</g:id>
+      <title>Mawar Pinksweet — Mawar Segar Premium | Kembang Seladang Florist Tangsel</title>
       <description>Mawar single colour , 1 (satu) warna dalam 1 kodi (1 kodi isi 20 tangkai) 100% Rangkaian Bunga Segar Asli Florist.</description>
-      <link>https://kembangseladang.com/products/mawar-merah</link>
-      <g:image_link>https://emgqlsmzijdyceahuifg.supabase.co/storage/v1/object/public/product-images/product-9610baa2-c21e-431f-a261-b3f0132565f6.jpeg</g:image_link>
+      <link>https://kembangseladang.com/products/mawar-pinksweet</link>
+      <g:image_link>https://kembangseladang.com/images/products/prod_8997ee9e-3494-4016-8815-6191e43b25e9.jpg</g:image_link>
       <g:availability>in_stock</g:availability>
-      <g:price>95000 IDR</g:price>
-      <g:sale_price>85000 IDR</g:sale_price>
+      <g:price>85000 IDR</g:price>
+      
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -106,14 +131,14 @@
       </g:shipping>
     </item>
     <item>
-      <g:id>8997ee9e-3494-4016-8815-6191e43b25e9</g:id>
-      <title>Mawar Pinksweet — Mawar Segar Premium | Kembang Seladang Florist Tangsel</title>
+      <g:id>9610baa2-c21e-431f-a261-b3f0132565f6</g:id>
+      <title>Mawar Merah — Mawar Segar Premium | Kembang Seladang Florist Tangsel</title>
       <description>Mawar single colour , 1 (satu) warna dalam 1 kodi (1 kodi isi 20 tangkai) 100% Rangkaian Bunga Segar Asli Florist.</description>
-      <link>https://kembangseladang.com/products/mawar-pinksweet</link>
-      <g:image_link>https://kembangseladang.com/images/products/prod_8997ee9e-3494-4016-8815-6191e43b25e9.jpg</g:image_link>
+      <link>https://kembangseladang.com/products/mawar-merah</link>
+      <g:image_link>https://emgqlsmzijdyceahuifg.supabase.co/storage/v1/object/public/product-images/product-9610baa2-c21e-431f-a261-b3f0132565f6.jpeg</g:image_link>
       <g:availability>in_stock</g:availability>
-      <g:price>85000 IDR</g:price>
-      
+      <g:price>95000 IDR</g:price>
+      <g:sale_price>85000 IDR</g:sale_price>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -256,6 +281,31 @@
       </g:shipping>
     </item>
     <item>
+      <g:id>f95b1d15-9f79-4476-a627-fc09027e6b70</g:id>
+      <title>Mixed: Peach + Merah — Mawar Mixed (Pilih Warna) Segar Premium | Kembang Seladang Florist Tangsel</title>
+      <description>Mawar kodi mixed 2 (dua) warna, 1 kodi isi 20 tangkai 100% Rangkaian Bunga Segar Asli Florist.</description>
+      <link>https://kembangseladang.com/products/mixed-peach-merah</link>
+      <g:image_link>https://emgqlsmzijdyceahuifg.supabase.co/storage/v1/object/public/product-images/product-1785285965443-8mytu.jpg</g:image_link>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      
+      <g:condition>new</g:condition>
+      <g:brand>Kembang Seladang</g:brand>
+      <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
+      <g:product_type>Florist &gt; Bunga Segar &gt; Buket Mawar</g:product_type>
+      <g:custom_label_0>Bunga Segar</g:custom_label_0>
+      <g:custom_label_1>Tangerang Selatan</g:custom_label_1>
+      <g:custom_label_2>Garansi H+7</g:custom_label_2>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:shipping>
+        <g:country>ID</g:country>
+        <g:service>Kurir Florist Tangerang Selatan</g:service>
+        <g:price>0 IDR</g:price>
+      </g:shipping>
+    </item>
+    <item>
       <g:id>4305f10c-318f-47d7-9321-5dd58fb8ff0d</g:id>
       <title>Mixed: Pinksweet + Candy — Mawar Mixed (Pilih Warna) Segar Premium | Kembang Seladang Florist Tangsel</title>
       <description>Mawar mixed 2 (dua) warna dalam 1 kodi (1 kodi isi 20 tangkai) 100% Rangkaian Bunga Segar Asli Florist.</description>
@@ -307,9 +357,9 @@
     </item>
     <item>
       <g:id>47b379b4-4142-4769-9893-46463f066a30</g:id>
-      <title>Handbouquet 20 — Custom/Request Segar Premium | Kembang Seladang Florist Tangsel</title>
-      <description>Beli Handbouquet 20 segar berkualitas premium di Kembang Seladang. Pengiriman cepat sameday untuk wilayah Rempoa, Ciputat, Bintaro, dan Tangerang Selatan. 100% Rangkaian Bunga Segar Asli Florist.</description>
-      <link>https://kembangseladang.com/products/handbouquet-20</link>
+      <title>Handbouquet 20 pinksweet — Custom/Request Segar Premium | Kembang Seladang Florist Tangsel</title>
+      <description>Handbouquet mawar 20 tangkai  &amp; bunga pendamping Baby Breath putih (optional)  warna mawar sesuai dengan ketersediaan stock, dengan kertas wrap disesuaikan dengan ketersediaan stock, ditambah kartu ucapan 100% Rangkaian Bunga Segar Asli Florist.</description>
+      <link>https://kembangseladang.com/products/handbouquet-20-pinksweet</link>
       <g:image_link>https://emgqlsmzijdyceahuifg.supabase.co/storage/v1/object/public/product-images/product-47b379b4-4142-4769-9893-46463f066a30.jpeg</g:image_link>
       <g:availability>in_stock</g:availability>
       <g:price>300000 IDR</g:price>

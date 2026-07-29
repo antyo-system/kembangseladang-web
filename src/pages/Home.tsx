@@ -8,6 +8,8 @@ import { ArticleCard } from '../components/article/ArticleCard'
 import { FlashSaleSection } from '../components/home/FlashSaleSection'
 import { Button } from '../components/ui/Button'
 
+import { optimizeImageUrl } from '../utils/image'
+
 export const Home: React.FC = () => {
   const { data: products, isLoading: productsLoading } = useProducts()
   const { data: articles, isLoading: articlesLoading } = useArticles()
@@ -68,8 +70,8 @@ export const Home: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {featuredProducts.map((product, idx) => (
+              <ProductCard key={product.id} product={product} priority={idx < 2} />
             ))}
           </div>
         )}
@@ -102,9 +104,10 @@ export const Home: React.FC = () => {
 
           <div className="relative z-10 w-full max-w-sm lg:max-w-xs shrink-0 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-charcoal-800">
             <img
-              src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=600"
+              src={optimizeImageUrl('https://images.unsplash.com/photo-1526047932273-341f2a7631f9', 600)}
               alt="Custom arrangement flower table"
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         </div>

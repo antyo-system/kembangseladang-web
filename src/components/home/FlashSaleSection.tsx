@@ -7,10 +7,9 @@ import { formatRupiah } from '../../utils/formatCurrency'
 import { getProductOriginalPrice, getProductDiscountPercentage } from '../../utils/productPricing'
 import { getFlashSaleSession, rotateFlashSaleProducts, calculateFlashSaleStock } from '../../utils/flashSale'
 import { getProductSlug } from '../../utils/slug'
+import { optimizeImageUrl } from '../../utils/image'
 
-export const FlashSaleSection: React.FC = () => {
-  const { data: products, isLoading: isProductsLoading } = useProducts()
-  const { data: remoteConfig, isLoading: isConfigLoading } = useFlashSaleConfig()
+const FlashSaleTimer: React.FC<{ durationHours?: number }> = ({ durationHours = 3 }) => {
   const [now, setNow] = useState(new Date())
 
   useEffect(() => {
@@ -18,7 +17,31 @@ export const FlashSaleSection: React.FC = () => {
     return () => clearInterval(timer)
   }, [])
 
-  const session = useMemo(() => getFlashSaleSession(3, now), [now])
+  const session = useMemo(() => getFlashSaleSession(durationHours, now), [now, durationHours])
+
+  return (
+    <div className="flex items-center gap-1 font-mono font-bold text-xs">
+      <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
+        {String(session.hours).padStart(2, '0')}
+      </span>
+      <span className="text-charcoal-900 font-black">:</span>
+      <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
+        {String(session.minutes).padStart(2, '0')}
+      </span>
+      <span className="text-charcoal-900 font-black">:</span>
+      <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
+        {String(session.seconds).padStart(2, '0')}
+      </span>
+    </div>
+  )
+}
+
+export const FlashSaleSection: React.FC = () => {
+  const { data: products, isLoading: isProductsLoading } = useProducts()
+  const { data: remoteConfig, isLoading: isConfigLoading } = useFlashSaleConfig()
+
+  // Compute current session key static timestamp for product selection
+  const sessionKey = useMemo(() => getFlashSaleSession(3, new Date()).sessionKey, [])
 
   // Check if Flash Sale is active (ON / OFF)
   const isFlashSaleActive = useMemo(() => {
@@ -55,8 +78,8 @@ export const FlashSaleSection: React.FC = () => {
   }, [remoteConfig])
 
   const activeProducts = useMemo(() => {
-    return rotateFlashSaleProducts(flashSalePool, session.sessionKey, 6, pinnedIds)
-  }, [flashSalePool, session.sessionKey, pinnedIds])
+    return rotateFlashSaleProducts(flashSalePool, sessionKey, 6, pinnedIds)
+  }, [flashSalePool, sessionKey, pinnedIds])
 
   if (!isFlashSaleActive || isProductsLoading || isConfigLoading || activeProducts.length === 0) return null
 
@@ -70,20 +93,8 @@ export const FlashSaleSection: React.FC = () => {
             <span>FLASH SALE</span>
           </div>
 
-          {/* Black Timer Blocks */}
-          <div className="flex items-center gap-1 font-mono font-bold text-xs">
-            <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
-              {String(session.hours).padStart(2, '0')}
-            </span>
-            <span className="text-charcoal-900 font-black">:</span>
-            <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
-              {String(session.minutes).padStart(2, '0')}
-            </span>
-            <span className="text-charcoal-900 font-black">:</span>
-            <span className="bg-charcoal-900 text-white px-1.5 py-0.5 rounded-none">
-              {String(session.seconds).padStart(2, '0')}
-            </span>
-          </div>
+          {/* Isolated Timer Component */}
+          <FlashSaleTimer durationHours={3} />
         </div>
 
         <Link
@@ -100,7 +111,7 @@ export const FlashSaleSection: React.FC = () => {
         {activeProducts.map((product: Product) => {
           const stockInfo = calculateFlashSaleStock(
             product.id,
-            session.sessionKey,
+            sessionKey,
             5,
             product.sold_count,
             (product as any).stock_qty,
@@ -117,7 +128,7 @@ export const FlashSaleSection: React.FC = () => {
             >
               <div className="relative aspect-square w-full bg-cream-50 overflow-hidden rounded-none mb-2">
                 <img
-                  src={product.image || 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=600'}
+                  src={optimizeImageUrl(product.image || 'https://images.unsplash.com/photo-1490750967868-88aa4486c946', 400)}
                   alt={product.name}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"

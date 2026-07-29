@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Sparkles, Calendar, Heart, ShieldCheck } from 'lucide-react'
 import { updateSEOMetadata, getFloristLocalBusinessSchema } from '../utils/seo'
+import { optimizeImageUrl } from '../utils/image'
 
 export const About: React.FC = () => {
   useEffect(() => {
@@ -26,9 +27,10 @@ export const About: React.FC = () => {
         </div>
         <div className="aspect-[4/3] rounded-[2rem] overflow-hidden border border-primary-100 shadow-xl select-none">
           <img
-            src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800"
+            src={optimizeImageUrl('https://images.unsplash.com/photo-1513519245088-0e12902e5a38', 600)}
             alt="Florist tools and roses workspace"
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
       </section>

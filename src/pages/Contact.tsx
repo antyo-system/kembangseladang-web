@@ -152,6 +152,7 @@ export const Contact: React.FC = () => {
               <select
                 id="subject"
                 name="subject"
+                aria-label="Perihal pesan"
                 value={formData.subject}
                 onChange={handleChange}
                 className="w-full bg-cream-50/50 px-4 py-3 rounded-xl text-sm border-2 border-transparent focus:border-primary-100 focus:bg-white focus:outline-none transition-all cursor-pointer"

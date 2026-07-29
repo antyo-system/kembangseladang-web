@@ -12,7 +12,7 @@ const CATEGORY_SLIDES = [
     value: 'bunga-potong-segar',
     label: 'Bunga Potong Segar',
     description: 'Tangkai fresh untuk custom dan dekorasi.',
-    image: '/images/categories/bunga-potong-segar.jpg',
+    image: '/images/categories/bunga-potong-segar.webp',
     terms: [
       'bunga potong',
       'bunga segar',
@@ -34,21 +34,21 @@ const CATEGORY_SLIDES = [
     value: 'buket-bunga',
     label: 'Buket Bunga',
     description: 'Hadiah cantik untuk momen spesial.',
-    image: '/images/categories/buket-bunga.jpg',
+    image: '/images/categories/buket-bunga.webp',
     terms: ['buket', 'bouquet', 'hand bouquet', 'bunga tangan'],
   },
   {
     value: 'rangkaian-meja',
     label: 'Rangkaian Meja',
     description: 'Sentuhan elegan untuk meja dan ruangan.',
-    image: '/images/categories/rangkaian-meja.jpg',
+    image: '/images/categories/rangkaian-meja.webp',
     terms: ['rangkaian meja', 'table', 'centerpiece', 'meja', 'vas', 'vase', 'bloom box'],
   },
   {
     value: 'standing-flower',
     label: 'Standing Flower',
     description: 'Ucapan besar untuk acara dan peresmian.',
-    image: '/images/categories/standing-flower.jpg',
+    image: '/images/categories/standing-flower.webp',
     terms: ['standing', 'standing flower', 'papan bunga', 'grand opening', 'duka cita', 'congratulations'],
   },
 ]
@@ -58,7 +58,7 @@ const MOMENT_SLIDES = [
     value: 'buket-bunga-wisuda',
     label: '🎓 Wisuda & Kelulusan',
     description: 'Buket mawar & ucapan UIN, STAN, UNPAM, UI.',
-    image: '/images/categories/buket-bunga.jpg',
+    image: '/images/categories/buket-bunga.webp',
     targetPath: '/katalog/buket-bunga-wisuda',
     terms: ['wisuda', 'kelulusan', 'uin', 'stan', 'unpam']
   },
@@ -66,7 +66,7 @@ const MOMENT_SLIDES = [
     value: 'buket-mawar-merah',
     label: '❤️ Anniversary & Romantis',
     description: 'Ungkapan cinta sejati mawar merah Korean style.',
-    image: '/images/categories/bunga-potong-segar.jpg',
+    image: '/images/categories/bunga-potong-segar.webp',
     targetPath: '/katalog/buket-mawar-merah',
     terms: ['merah', 'red', 'valentine', 'anniversary', 'romantis']
   },
@@ -74,7 +74,7 @@ const MOMENT_SLIDES = [
     value: 'papan-bunga-tangerang-selatan',
     label: '🕊️ Duka Cita & Wedding',
     description: 'Karangan papan bunga ucapan & standing flower megah.',
-    image: '/images/categories/standing-flower.jpg',
+    image: '/images/categories/standing-flower.webp',
     targetPath: '/katalog/papan-bunga-tangerang-selatan',
     terms: ['papan', 'standing', 'duka', 'wedding', 'opening']
   },
@@ -82,7 +82,7 @@ const MOMENT_SLIDES = [
     value: 'bunga-meja-vas-kaca',
     label: '🏡 Bunga Vas Ruangan',
     description: 'Dekorasi vas kaca meja tamu & meja kerja kantor.',
-    image: '/images/categories/rangkaian-meja.jpg',
+    image: '/images/categories/rangkaian-meja.webp',
     targetPath: '/katalog/bunga-meja-vas-kaca',
     terms: ['meja', 'vas', 'vase', 'table', 'rangkaian']
   }
@@ -424,6 +424,8 @@ export const Products: React.FC = () => {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
           <input
             type="text"
+            id="search-products-input"
+            aria-label="Cari buket atau standing flower"
             placeholder="Cari buket, standing flower..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -458,8 +460,10 @@ export const Products: React.FC = () => {
           )}
 
           <div className="flex h-10 items-center space-x-2 border border-charcoal-100 bg-charcoal-50 px-3">
-            <span className="text-[10px] font-bold uppercase text-charcoal-500">Urutkan:</span>
+            <label htmlFor="sort-by-select" className="text-[10px] font-bold uppercase text-charcoal-500 cursor-pointer">Urutkan:</label>
             <select
+              id="sort-by-select"
+              aria-label="Urutkan pilihan produk"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="bg-transparent pr-2 text-xs font-bold uppercase text-charcoal-700 focus:outline-none cursor-pointer"
@@ -522,6 +526,7 @@ export const Products: React.FC = () => {
                   <div className="space-y-3 pt-1">
                     <input
                       type="range"
+                      aria-label="Batas harga maksimal"
                       min="250000"
                       max="2500000"
                       step="50000"

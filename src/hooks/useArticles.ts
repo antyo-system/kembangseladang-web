@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
+import { optimizeImageUrl } from '../utils/image'
 
 export interface Article {
   id: string
@@ -598,12 +599,12 @@ export function useArticles() {
           .order('published_at', { ascending: false })
 
         if (error || !data || data.length === 0) {
-          return INITIAL_SEO_ARTICLES
+          return INITIAL_SEO_ARTICLES.map(a => ({ ...a, cover_image: optimizeImageUrl(a.cover_image, 600) }))
         }
 
-        return data as Article[]
+        return (data as Article[]).map(a => ({ ...a, cover_image: optimizeImageUrl(a.cover_image, 600) }))
       } catch (err) {
-        return INITIAL_SEO_ARTICLES
+        return INITIAL_SEO_ARTICLES.map(a => ({ ...a, cover_image: optimizeImageUrl(a.cover_image, 600) }))
       }
     }
   })
@@ -622,14 +623,15 @@ export function useArticle(slug: string) {
 
         if (error || !data) {
           const found = INITIAL_SEO_ARTICLES.find(a => a.slug === slug)
-          if (found) return found
+          if (found) return { ...found, cover_image: optimizeImageUrl(found.cover_image, 800) }
           throw error || new Error('Article not found')
         }
 
-        return data as Article
+        const art = data as Article
+        return { ...art, cover_image: optimizeImageUrl(art.cover_image, 800) }
       } catch (err) {
         const found = INITIAL_SEO_ARTICLES.find(a => a.slug === slug)
-        if (found) return found
+        if (found) return { ...found, cover_image: optimizeImageUrl(found.cover_image, 800) }
         throw err
       }
     },

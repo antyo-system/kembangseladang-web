@@ -8,19 +8,22 @@ import { getProductDiscountPercentage, getProductOriginalPrice } from '../../uti
 import { formatSoldCount, getProductSoldCount } from '../../utils/productSales'
 import { getProductSlug } from '../../utils/slug'
 
+import { optimizeImageUrl } from '../../utils/image'
+
 interface ProductCardProps {
   product: Product
+  priority?: boolean
 }
 
 // Array of high quality bouquet photos from Unsplash to serve as fallback images
 const FALLBACK_BOUQUET_IMAGES = [
-  'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=600',
-  'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&q=80&w=600',
-  'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=600',
-  'https://images.unsplash.com/photo-1546842931-886c185b4c8c?auto=format&fit=crop&q=80&w=600',
+  'https://images.unsplash.com/photo-1490750967868-88aa4486c946',
+  'https://images.unsplash.com/photo-1561181286-d3fee7d55364',
+  'https://images.unsplash.com/photo-1526047932273-341f2a7631f9',
+  'https://images.unsplash.com/photo-1546842931-886c185b4c8c',
 ]
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) => {
   const addItem = useCartStore((state) => state.addItem)
 
   // Deterministic fallback image index based on product ID
@@ -28,7 +31,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     product.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
   ) % FALLBACK_BOUQUET_IMAGES.length
 
-  const productImage = product.image || FALLBACK_BOUQUET_IMAGES[imageIndex]
+  const rawImage = product.image || FALLBACK_BOUQUET_IMAGES[imageIndex]
+  const productImage = optimizeImageUrl(rawImage, 500)
   const originalPrice = getProductOriginalPrice(product)
   const discountPercentage = getProductDiscountPercentage(product)
   const soldCount = getProductSoldCount(product)
@@ -44,7 +48,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           src={productImage}
           alt={`${product.name} Segar — Kembang Seladang Florist Rempoa Tangerang Selatan`}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-          loading="lazy"
+          loading={priority ? 'eager' : 'lazy'}
+          {...(priority ? { fetchPriority: 'high' } : {})}
         />
         
         {/* Discount Badge Shopee style - Yellow flag at top right */}

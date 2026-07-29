@@ -65,6 +65,8 @@ export const Articles: React.FC = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
           <input
             type="text"
+            id="search-articles-input"
+            aria-label="Cari artikel tips mawar dan wisuda"
             placeholder="Cari artikel tips mawar, wisuda..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
