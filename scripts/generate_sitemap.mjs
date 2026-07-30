@@ -172,7 +172,9 @@ async function generateSitemapAndMerchantFeed() {
           image_link: escapeXml(imageUrl),
           price: hasSale ? `${origPrice} IDR` : `${basePrice} IDR`,
           sale_price: hasSale ? `${basePrice} IDR` : null,
-          availability: 'in_stock',
+          availability: p.in_stock === false ? 'out_of_stock' : 'in_stock',
+          quantity: p.stock_quantity || 10,
+          store_code: process.env.GOOGLE_STORE_CODE || envVars.GOOGLE_STORE_CODE || 'KS_REMPOA',
           condition: 'new',
           brand: 'Kembang Seladang',
           google_product_category: 'Home &amp; Garden &gt; Plants &gt; Flowers',
@@ -218,6 +220,8 @@ ${merchantItems.map(item => `    <item>
       <g:availability>${item.availability}</g:availability>
       <g:price>${item.price}</g:price>
       ${item.sale_price ? `<g:sale_price>${item.sale_price}</g:sale_price>` : ''}
+      <g:quantity>${item.quantity}</g:quantity>
+      <g:store_code>${item.store_code}</g:store_code>
       <g:condition>${item.condition}</g:condition>
       <g:brand>${item.brand}</g:brand>
       <g:google_product_category>${item.google_product_category}</g:google_product_category>
@@ -227,7 +231,7 @@ ${merchantItems.map(item => `    <item>
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -240,7 +244,30 @@ ${merchantItems.map(item => `    <item>
   fs.writeFileSync(path.join(publicDir, 'google-merchant-feed.xml'), merchantXmlFeed)
   fs.writeFileSync(path.join(publicDir, 'feed.xml'), merchantXmlFeed)
   fs.writeFileSync(path.join(publicDir, 'products-feed.xml'), merchantXmlFeed)
-  console.log(`🛍️ Google Merchant Feed generated: google-merchant-feed.xml (${merchantItems.length} products included)`)
+  console.log(`🛍️ Google Merchant Primary Feed generated: google-merchant-feed.xml (${merchantItems.length} products included)`)
+
+  // 5. Generate Dedicated Google Local Product Inventory Feed (For Free Local Listings & Local Inventory Ads)
+  const localInventoryXmlFeed = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>Kembang Seladang — Local Inventory Feed Rempoa</title>
+    <link>${SITE_URL}</link>
+    <description>Local Product Inventory Feed for Physical Store Rempoa Tangerang Selatan</description>
+${merchantItems.map(item => `    <item>
+      <g:id>${item.id}</g:id>
+      <g:store_code>${item.store_code}</g:store_code>
+      <g:availability>${item.availability}</g:availability>
+      <g:price>${item.sale_price || item.price}</g:price>
+      <g:quantity>${item.quantity}</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>`).join('\n')}
+  </channel>
+</rss>`
+
+  fs.writeFileSync(path.join(publicDir, 'local-inventory-feed.xml'), localInventoryXmlFeed)
+  console.log(`📍 Google Merchant Local Inventory Feed generated: local-inventory-feed.xml (${merchantItems.length} items included)`)
 }
 
 generateSitemapAndMerchantFeed().catch(console.error)
+

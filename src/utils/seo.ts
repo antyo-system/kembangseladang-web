@@ -281,6 +281,74 @@ export function getBreadcrumbSchema(items: { name: string; url: string }[]) {
 }
 
 /**
+ * Returns SiteNavigationElement Schema for Google Sitelinks
+ */
+export function getSiteNavigationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'itemListElement': [
+      {
+        '@type': 'SiteNavigationElement',
+        'position': 1,
+        'name': 'Katalog Buket Bunga',
+        'description': 'Katalog lengkap buket bunga mawar segar, wisuda, dan ucapan di Tangerang Selatan.',
+        'url': `${SITE_DOMAIN}/products`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        'position': 2,
+        'name': 'Artikel & Tips Florist',
+        'description': 'Panduan memilih bunga, makna warna mawar, dan tips merawat buket agar awet.',
+        'url': `${SITE_DOMAIN}/articles`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        'position': 3,
+        'name': 'Tentang Kembang Seladang',
+        'description': 'Profil toko bunga terdekat di Rempoa Ciputat dan cerita perjalanan florist.',
+        'url': `${SITE_DOMAIN}/about`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        'position': 4,
+        'name': 'Kontak & Lokasi Toko',
+        'description': 'Lokasi toko fisik Rempoa, nomor WhatsApp order, dan jam operasional florist.',
+        'url': `${SITE_DOMAIN}/contact`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        'position': 5,
+        'name': 'Kebijakan Garansi & Retur',
+        'description': 'Informasi garansi bunga segar dan kebijakan penggantian pesanan.',
+        'url': `${SITE_DOMAIN}/return-policy`
+      }
+    ]
+  }
+}
+
+/**
+ * Returns WebSite schema with Sitelinks Searchbox
+ */
+export function getWebSiteSearchSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    'name': 'Kembang Seladang',
+    'alternateName': 'Kembang Seladang Florist',
+    'url': SITE_DOMAIN,
+    'potentialAction': {
+      '@type': 'SearchAction',
+      'target': {
+        '@type': 'EntryPoint',
+        'urlTemplate': `${SITE_DOMAIN}/products?search={search_term_string}`
+      },
+      'query-input': 'required name=search_term_string'
+    }
+  }
+}
+
+/**
  * Combines multiple Schema.org JSON-LD objects into a single @graph structure
  */
 export function getCombinedGraphSchema(...schemas: Record<string, any>[]) {
@@ -296,4 +364,5 @@ export function getCombinedGraphSchema(...schemas: Record<string, any>[]) {
     '@graph': cleanSchemas
   }
 }
+
 

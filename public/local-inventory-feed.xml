@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>Kembang Seladang — Local Inventory Feed Rempoa</title>
+    <link>https://kembangseladang.com</link>
+    <description>Local Product Inventory Feed for Physical Store Rempoa Tangerang Selatan</description>
+    <item>
+      <g:id>dbc3de41-8512-4f52-8785-86e3684187bf</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>250000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>0e40d6f8-3dcf-4529-b3c4-53b21bf7a354</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>5d850599-ffa8-4f8f-9ac1-35d979e1b0b7</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>96a759e0-7acc-4651-9bfb-ba57c29b21d8</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>8997ee9e-3494-4016-8815-6191e43b25e9</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>9610baa2-c21e-431f-a261-b3f0132565f6</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>e2a5d15b-5d62-49a0-a4fc-2f6795d527d0</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>e3902b2f-2387-47be-a37e-203cee285d1f</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>18000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>bbf3fe9c-7f4c-40b2-96b4-2d1cdf791762</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>b7431837-a13e-46b2-9a62-afd4e706bdae</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>115000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>ac8e3731-77ce-4544-815c-d5f16f74e297</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>35000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>f95b1d15-9f79-4476-a627-fc09027e6b70</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>4305f10c-318f-47d7-9321-5dd58fb8ff0d</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>9d188950-405a-47b5-93d4-20983ca4eb3a</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>47b379b4-4142-4769-9893-46463f066a30</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>250000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>8f710c0a-de80-4d81-bffd-61e7ea09b503</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>bf5bc4cc-e930-454d-a10f-9f57b6e0f0cf</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>8500 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+    <item>
+      <g:id>a692d986-480c-4c8e-927b-ca513b8c8771</g:id>
+      <g:store_code>KS_REMPOA</g:store_code>
+      <g:availability>in_stock</g:availability>
+      <g:price>85000 IDR</g:price>
+      <g:quantity>10</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
+    </item>
+  </channel>
+</rss>

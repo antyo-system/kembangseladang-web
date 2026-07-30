@@ -7,7 +7,14 @@ import { Products } from './pages/Products'
 import { supabaseConfigError } from './lib/supabase'
 import { PWAUpdatePrompt } from './components/layout/PWAUpdatePrompt'
 import { trackPageView } from './utils/analytics'
-import { updateSEOMetadata, getFloristLocalBusinessSchema, getHomepageFAQSchema, getCombinedGraphSchema } from './utils/seo'
+import {
+  updateSEOMetadata,
+  getFloristLocalBusinessSchema,
+  getHomepageFAQSchema,
+  getSiteNavigationSchema,
+  getWebSiteSearchSchema,
+  getCombinedGraphSchema
+} from './utils/seo'
 // Lazy-loaded secondary route and UI components for optimal initial bundle size
 const ProductDetail = lazy(() => import('./pages/ProductDetail').then(m => ({ default: m.ProductDetail })))
 const Articles = lazy(() => import('./pages/Articles').then(m => ({ default: m.Articles })))
@@ -43,12 +50,14 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     trackPageView(location.pathname)
-    // Inject Florist LocalBusiness + FAQ Schema on root homepage and products catalog
+    // Inject Florist LocalBusiness + FAQ + Sitelinks Schema on root homepage and products catalog
     if (location.pathname === '/' || location.pathname === '/products') {
       updateSEOMetadata({
         jsonLd: getCombinedGraphSchema(
           getFloristLocalBusinessSchema(),
-          getHomepageFAQSchema()
+          getHomepageFAQSchema(),
+          getSiteNavigationSchema(),
+          getWebSiteSearchSchema()
         )
       })
     }

@@ -13,6 +13,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>300000 IDR</g:price>
       <g:sale_price>250000 IDR</g:sale_price>
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -22,7 +24,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -38,6 +40,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>85000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -47,7 +51,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -64,6 +68,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>85000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -73,7 +79,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -89,6 +95,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>100000 IDR</g:price>
       <g:sale_price>85000 IDR</g:sale_price>
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -98,7 +106,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -114,6 +122,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>85000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -123,7 +133,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -139,6 +149,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>95000 IDR</g:price>
       <g:sale_price>85000 IDR</g:sale_price>
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -148,7 +160,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -164,6 +176,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>85000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -173,7 +187,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -189,6 +203,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>18000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -198,7 +214,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -214,6 +230,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>95000 IDR</g:price>
       <g:sale_price>85000 IDR</g:sale_price>
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -223,7 +241,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -239,6 +257,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>150000 IDR</g:price>
       <g:sale_price>115000 IDR</g:sale_price>
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -248,7 +268,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -264,6 +284,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>35000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -273,7 +295,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -289,6 +311,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>85000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -298,7 +322,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -314,6 +338,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>85000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -323,7 +349,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -339,6 +365,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>95000 IDR</g:price>
       <g:sale_price>85000 IDR</g:sale_price>
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -348,7 +376,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -364,6 +392,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>300000 IDR</g:price>
       <g:sale_price>250000 IDR</g:sale_price>
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -373,7 +403,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -389,6 +419,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>85000 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -398,7 +430,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -414,6 +446,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>8500 IDR</g:price>
       
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -423,7 +457,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
@@ -439,6 +473,8 @@
       <g:availability>in_stock</g:availability>
       <g:price>95000 IDR</g:price>
       <g:sale_price>85000 IDR</g:sale_price>
+      <g:quantity>10</g:quantity>
+      <g:store_code>KS_REMPOA</g:store_code>
       <g:condition>new</g:condition>
       <g:brand>Kembang Seladang</g:brand>
       <g:google_product_category>Home &amp; Garden &gt; Plants &gt; Flowers</g:google_product_category>
@@ -448,7 +484,7 @@
       <g:custom_label_2>Garansi H+7</g:custom_label_2>
       <g:identifier_exists>no</g:identifier_exists>
       <g:pickup_method>buy</g:pickup_method>
-      <g:pickup_SLA>same_day</g:pickup_SLA>
+      <g:pickup_sla>same_day</g:pickup_sla>
       <g:shipping>
         <g:country>ID</g:country>
         <g:service>Kurir Florist Tangerang Selatan</g:service>
