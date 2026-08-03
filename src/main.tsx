@@ -16,6 +16,19 @@ const queryClient = new QueryClient({
   },
 })
 
+function dismissInitialLoader() {
+  const loader = document.getElementById('ks-global-loader')
+  if (loader) {
+    loader.style.opacity = '0'
+    loader.style.pointerEvents = 'none'
+    setTimeout(() => {
+      if (loader.parentNode) {
+        loader.parentNode.removeChild(loader)
+      }
+    }, 300)
+  }
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
@@ -25,3 +38,7 @@ createRoot(document.getElementById('root')!).render(
     </QueryClientProvider>
   </StrictMode>,
 )
+
+requestAnimationFrame(() => {
+  dismissInitialLoader()
+})

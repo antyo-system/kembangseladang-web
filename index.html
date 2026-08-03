@@ -57,11 +57,70 @@
     <meta name="p:domain_verify" content="14ef098d24b0f991aa347e1ec2035453" />
     <!-- LLM / AI Crawler Standard -->
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Summary" />
-    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full LLM Documentation" />
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fafaf9;
+        color: #1c1917;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      /* Visually hide fallback SEO header from screen while remaining accessible to search crawlers */
+      .seo-fallback-header {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+      @keyframes ksPulse {
+        0%, 100% { transform: scale(1); opacity: 0.95; }
+        50% { transform: scale(1.08); opacity: 1; }
+      }
+      #ks-global-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #fafaf9;
+        z-index: 2147483647;
+        transition: opacity 0.3s ease-out;
+      }
+      .ks-loader-logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background-color: #fce7f3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+        animation: ksPulse 1.4s ease-in-out infinite;
+        box-shadow: 0 6px 16px rgba(219, 39, 119, 0.15);
+      }
+    </style>
   </head>
   <body>
+    <div id="ks-global-loader">
+      <div class="ks-loader-logo">
+        <img src="/logo.png" alt="Kembang Seladang" style="width: 36px; height: 36px; object-fit: contain;" />
+      </div>
+      <span style="font-size: 14px; font-weight: 700; color: #1c1917; letter-spacing: -0.02em;">Kembang Seladang</span>
+      <span style="font-size: 11px; font-weight: 500; color: #a8a29e; margin-top: 4px;">Memuat toko...</span>
+    </div>
     <div id="root">
-      <header>
+      <header class="seo-fallback-header">
         <h1>Toko Bunga Mawar Segar Tangsel — Garansi Free Card | Kembang Seladang</h1>
         <p>Selamat datang di Kembang Seladang, toko bunga terdekat dan florist pilihan utama masyarakat Rempoa, Bintaro, Ciputat, Pamulang, BSD, dan Tangerang Selatan. Kami menghadirkan aneka buket mawar segar, mawar putih, standing flower ucapan, serta papan bunga dengan kualitas bunga terbaik langsung dari petani dan garansi segar 24 jam free card ucapan.</p>
         <p>Setiap Rangkaian Bunga Mawar di Kembang Seladang dirangkai secara teliti oleh florist berpengalaman untuk merayakan berbagai momen spesial Anda seperti ulang tahun, wisuda, anniversary, pernikahan, hingga ucapan duka cita. Kami memberikan garansi kesegaran bunga 24 jam free card dan layanan pengiriman instan Same-Day ke seluruh wilayah Tangerang Selatan dan sekitarnya.</p>
